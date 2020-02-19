@@ -8,7 +8,7 @@ class TeamMembersController < ApplicationController
     team = Team.find_by(name: params[:team_member][:team_name])
     team_member = TeamMember.new(team_member_params)
     team_member.user = current_user
-    if team.present? && (team_member.user != current_user)
+    if team.present?
       team_member.team = team
       team_member.save
       redirect_to team_path(team)
