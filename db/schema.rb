@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_19_041836) do
+ActiveRecord::Schema.define(version: 2020_02_19_051238) do
 
   create_table "issues", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 2020_02_19_041836) do
     t.datetime "settled_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "issue_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "issue_id"], name: "index_likes_on_user_id_and_issue_id", unique: true
   end
 
   create_table "taggings", force: :cascade do |t|
