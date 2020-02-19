@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   # teams/tags
     resources :tags, only: [:index, :create]
   # teams/issues
-    resources :issue do
+    resources :issues do
       resources :comments, only: [:create, :edit, :update, :destroy]
     end
     get '/issues/:id/choice' => 'issues#choice'
