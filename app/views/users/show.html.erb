@@ -1,7 +1,14 @@
 <h1>Profile</h1>
 
+<div class="row">
+  <div class="col-3">
+    <%= render 'users/members', team_members: @team_members %>
+  </div>
 
-<%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "noimage.jpg", size: "100x100" %><br>
-<span>name：</span><%= @user.name %><br>
-<span>introduction：</span><%= @user.introduction %><br>
+  <div class="col-9">
+    <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "noimage.jpg", size: "100x100" %><br>
+    <span>name：</span><%= @user.name %><br>
+    <span>introduction：</span><%= @user.introduction %><br>
+  </div>
+</div>
 
