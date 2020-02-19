@@ -1,2 +1,10 @@
-<h1>TeamMembers#new</h1>
-<p>Find me in app/views/team_members/new.html.erb</p>
+<h1>Join team</h1>
+
+<% if flash[:error] %>
+  <%= flash[:error] %>
+<% end %>
+
+<%= form_with model: @team_member do |f| %>
+  <%= f.text_field :team_name, placeholder: "Team name" %>
+  <%= f.submit %>
+<% end %>
