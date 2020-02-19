@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'teams/show'
   get 'team_members/new'
   get 'team_members/create'
   get 'users/my_page'
