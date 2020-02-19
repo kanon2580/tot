@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     end
     get '/issues/:id/choice' => 'issues#choice'
     get '/issues/:id/confirm' => 'issues#confirm'
-    put 'issues/:id/settled' => 'issues#settled'
+    put '/issues/:id/settled' => 'issues#settled'
 
   end
 
