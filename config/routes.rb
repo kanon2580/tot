@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get 'users/:id' => 'users#my_page'
 
   # team_members
-  resources :tesm_members, only: [:new, :create]
+  resources :team_members, only: [:new, :create]
 
   # teams
   resources :team, only: [:show] do
