@@ -1,0 +1,5 @@
+<h3>Teams</h3>
+
+<% team_members.each do |team_member| %>
+  <%= link_to team_member.team.name, team_path(team_member.team)%>
+<% end %>
