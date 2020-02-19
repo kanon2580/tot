@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    @team_members = TeamMember.where(team_id: params[:team_id])
   end
 
   def show
