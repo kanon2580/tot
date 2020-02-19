@@ -1,10 +1,18 @@
 <h1>Join team</h1>
 
-<% if flash[:error] %>
-  <%= flash[:error] %>
-<% end %>
+<div class="row">
+  <div class="col-3">
+    <%= render 'teams/teams', team_members: @team_members %>
+  </div>
 
-<%= form_with model: @team_member do |f| %>
-  <%= f.text_field :team_name, placeholder: "Team name" %>
-  <%= f.submit %>
-<% end %>
+  <div class="col-9">
+    <% if flash[:error] %>
+      <%= flash[:error] %>
+    <% end %>
+
+    <%= form_with model: @team_member do |f| %>
+      <%= f.text_field :team_name, placeholder: "Team name" %>
+      <%= f.submit %>
+    <% end %>
+  </div>
+</div>
