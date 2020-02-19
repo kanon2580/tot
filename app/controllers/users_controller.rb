@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def my_page
+    @team_members = TeamMember.where(user_id: current_user)
   end
 
   def edit
