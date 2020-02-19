@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :team_members, only: [:new, :create]
 
   # teams
-  resources :team, only: [:show] do
+  resources :teams, only: [:show] do
   # teams/users
     resources :users, only: [:index, :show] do
       resources :comments, only: [:index]
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     end
     get '/issues/:id/choice' => 'issues#choice'
     get '/issues/:id/confirm' => 'issues#confirm'
-    put 'issues/:id/settled' => 'issues#settled'
+    put '/issues/:id/settled' => 'issues#settled'
 
   end
 

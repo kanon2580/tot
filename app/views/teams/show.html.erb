@@ -1,2 +1,4 @@
 <h1>Teams#show</h1>
 <p>Find me in app/views/teams/show.html.erb</p>
+
+<%= link_to "Members", team_users_path(team_id: params[:id]) %>
