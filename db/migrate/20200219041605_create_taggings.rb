@@ -1,8 +1,8 @@
 class CreateTaggings < ActiveRecord::Migration[5.2]
   def change
     create_table :taggings do |t|
-      t.integer :tag_id
-      t.integer :issue_id
+      t.integer :tag_id, null: false
+      t.integer :issue_id, null:false
 
       t.timestamps
     end

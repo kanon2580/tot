@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_19_041122) do
+ActiveRecord::Schema.define(version: 2020_02_19_041605) do
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer "tag_id", null: false
+    t.integer "issue_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id", "issue_id"], name: "index_taggings_on_tag_id_and_issue_id", unique: true
+  end
 
   create_table "tags", force: :cascade do |t|
     t.integer "team_id", null: false
