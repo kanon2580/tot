@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_19_041605) do
+ActiveRecord::Schema.define(version: 2020_02_19_041836) do
+
+  create_table "issues", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "team_id", null: false
+    t.text "body", null: false
+    t.boolean "has_settled", default: false, null: false
+    t.datetime "settled_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "taggings", force: :cascade do |t|
     t.integer "tag_id", null: false
