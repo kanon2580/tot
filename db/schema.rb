@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_19_040506) do
+ActiveRecord::Schema.define(version: 2020_02_19_040808) do
+
+  create_table "team_members", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "team_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "team_id"], name: "index_team_members_on_user_id_and_team_id", unique: true
+  end
 
   create_table "teams", force: :cascade do |t|
     t.string "name", null: false
