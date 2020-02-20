@@ -11,7 +11,7 @@
   <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
   <%= comment.user.name %>
   <%= comment.comment %>
-  <%= link_to "edit comment", edit_team_issue_comment_path(params[:team_id], comment) %> <br>
+  <%= link_to "edit comment", edit_team_issue_comment_path(params[:team_id], params[:id], comment) %> <br>
 <% end %>
 
 <%= flash[:error] %>
