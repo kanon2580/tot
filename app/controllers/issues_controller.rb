@@ -4,13 +4,13 @@ class IssuesController < ApplicationController
   end
 
   def create
-    @issue = Issue.new(issue_params)
+    issue = Issue.new(issue_params)
     issue.team_id = params[:team_id]
     issue.user_id = current_user.id
     unless issue.save
       flash[:error] = "we couldn't save your issue :("
     end
-      redirect_back(fallback_location: root_path)
+      redirect_to team_issue_path(params[:team_id], issue.id)
   end
 
   def index
@@ -37,6 +37,9 @@ class IssuesController < ApplicationController
   end
 
   def destroy
+    issue = Issue.find(params[:id])
+    issue.destroy 
+    redirect_to team_path(params[:team_id])
   end
 
   def choice
