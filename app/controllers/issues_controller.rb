@@ -20,6 +20,7 @@ class IssuesController < ApplicationController
 
   def show
     @issue = Issue.find(params[:id])
+    @comment = Comment.new
   end
 
   def edit
