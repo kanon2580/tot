@@ -10,6 +10,8 @@
     <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "noimage.jpg", size: "100x100" %><br>
     <span>name：</span><%= @user.name %><br>
     <span>introduction：</span><%= @user.introduction %><br>
+
+    <%= link_to "comments", team_user_comments_path(params[:team_id], @user) %>
   </div>
 </div>
 
