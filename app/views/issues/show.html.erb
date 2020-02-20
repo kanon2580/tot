@@ -5,6 +5,12 @@
 <h3>comments</h3>
 <%= flash[:error] %>
 
+<% @comments.each do |comment| %>
+  <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
+  <%= comment.user.name %>
+  <%= comment.comment %><br>
+<% end %>
+
 <%= form_with model: @comment, url: team_issue_comments_path(params[:team_id], params[:id]) do |f| %>
   <%= f.text_field :comment %>
   <%= f.submit %>
