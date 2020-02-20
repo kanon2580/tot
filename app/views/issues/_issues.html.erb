@@ -1,0 +1,10 @@
+<h3>Issues</h3>
+
+<% issues.each do |issue| %>
+  <div class="row">
+    <%= link_to team_issue_path(params[:team_id], issue) do %>
+      <%= attachment_image_tag issue.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
+      <%= issue.title %>
+    <% end %>
+  </div>
+<% end %>
