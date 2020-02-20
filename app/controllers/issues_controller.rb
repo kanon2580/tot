@@ -53,6 +53,6 @@ class IssuesController < ApplicationController
 
   private
   def issue_params
-    params.require(:issue).permit(:user_id, :team_id, :body, :has_settled, :settled_at)
+    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at)
   end
 end

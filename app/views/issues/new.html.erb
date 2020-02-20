@@ -6,6 +6,7 @@
 
 <%= form_with model: @issue, url: team_issues_path do |f| %>
   <%= f.label :Issue %><br>
-  <%= f.text_area :body, placeholder: "What's happened ?" %><br>
+  <%= f.text_field :title, placeholder: "title" %><br>
+  <%= f.text_area :body, placeholder: "what's happened?" %><br>
   <%= f.submit %><br>
 <% end %>
