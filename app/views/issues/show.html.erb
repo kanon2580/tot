@@ -1,6 +1,7 @@
 <h1>Issue</h1>
 
 <%= @issue.body %>
+<%= link_to "edit issue", edit_team_issue_path(params[:team_id], @issue) %>
 
 <h3>comments</h3>
 <%= flash[:error] %>
@@ -15,3 +16,4 @@
   <%= f.text_field :comment %>
   <%= f.submit %>
 <% end %>
+
