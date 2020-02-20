@@ -7,12 +7,10 @@ class IssuesController < ApplicationController
     @issue = Issue.new(issue_params)
     issue.team_id = params[:team_id]
     issue.user_id = current_user.id
-    if issue.save
-      redirect_to team_issue_path(@issue)
-    else
+    unless issue.save
       flash[:error] = "we couldn't save your issue :("
-      redirect_back(fallback_location: root_path)
     end
+      redirect_back(fallback_location: root_path)
   end
 
   def index
@@ -25,9 +23,17 @@ class IssuesController < ApplicationController
   end
 
   def edit
+    @issue = Issue.find(params[:id])
   end
 
   def update
+    issue = Issue.find(params[:id])
+    if issue.update(issue_params)
+      redirect_to team_issue_path(issue)
+    else
+      flash[:error] = "sorry... it was not saved successfully :( please try again."
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   def destroy
