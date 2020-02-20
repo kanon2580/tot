@@ -24,6 +24,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @team_members = TeamMember.where(team_id: params[:team_id])
+    team = Team.find(params[:team_id])
+    @issues = team.issues
   end
 
   private
