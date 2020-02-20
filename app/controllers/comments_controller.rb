@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
   def destroy
     comment = Comment.find(params[:id])
     comment.destroy
-    redirect_back(fallback_location: root_path)
+    redirect_to team_issue_path(params[:team_id], params[:issue_id])
   end
 
   private
