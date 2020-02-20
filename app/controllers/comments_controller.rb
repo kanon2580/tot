@@ -29,6 +29,9 @@ class CommentsController < ApplicationController
     redirect_to team_issue_path(params[:team_id], params[:issue_id])
   end
 
+  def index
+  end
+
   private
   def comment_params
     params.require(:comment).permit(:user_id, :issue_id, :comment)
