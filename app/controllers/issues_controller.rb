@@ -16,6 +16,7 @@ class IssuesController < ApplicationController
   def index
     team = Team.find(params[:team_id])
     @issues = team.issues
+    # teamに関連するissuesだけ設定
   end
 
   def show
