@@ -1,2 +1,8 @@
-<h1>Comments#edit</h1>
-<p>Find me in app/views/comments/edit.html.erb</p>
+<h1>Edit comment</h1>
+
+<%= flash[:error] %>
+
+<%= form_with model: @comment, url: team_issue_comment_path(params[:team_id], params[:issue_id], params[:id]) do |f| %>
+  <%= f.text_area :comment %>
+  <%= f.submit %>
+<% end %>
