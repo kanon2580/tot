@@ -14,6 +14,8 @@ class IssuesController < ApplicationController
   end
 
   def index
+    team = Team.find(params[:team_id])
+    @issues = team.issues
   end
 
   def show
