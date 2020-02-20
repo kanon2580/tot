@@ -39,7 +39,7 @@ class IssuesController < ApplicationController
   def destroy
     issue = Issue.find(params[:id])
     issue.destroy 
-    redirect_to team_path(params[:team_id])
+    redirect_to team_path(team_id: params[:team_id])
   end
 
   def choice
