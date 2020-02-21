@@ -6,12 +6,13 @@ Rails.application.routes.draw do
 
   # users
   devise_for :users
-  resources :users, only: [:edit, :update], param: :user_id
+  resources :users, only: [:update], param: :user_id
   resources :users, only: [] do
     resources :comments, only: [:index]
     resources :issues, only: [:index]
   end
-  get 'users/:user_id' => 'users#my_page'
+  get 'mypage/:user_id' => 'users#my_page', as: "mypage"
+  get 'mypage/:user_id/edit' => 'users#edit', as: "edit_user"
 
   # team_members
   resources :team_members, only: [:new, :create]
