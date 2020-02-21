@@ -33,9 +33,9 @@ Rails.application.routes.draw do
     resources :issues, only: [] do
       resources :comments, only: [:create, :edit, :update, :destroy], param: :comment_id
     end
-    get '/issues/:issue_id/choice' => 'issues#choice'
-    get '/issues/:issue_id/confirm' => 'issues#confirm'
-    put '/issues/:issue_id/settled' => 'issues#settled'
+    get '/issues/:issue_id/choice' => 'issues#choice', as: "choice"
+    get '/issues/:issue_id/confirm' => 'issues#confirm', as: "confirm"
+    put '/issues/:issue_id/settled' => 'issues#settled', as: "settled"
 
   end
 
