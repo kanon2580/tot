@@ -27,11 +27,11 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @comment =  Comment.find(params[:id])
+    @comment =  Comment.find(params[:comment_id])
   end
 
   def update
-    comment = Comment.find(params[:id])
+    comment = Comment.find(params[:comment_id])
     if comment.update(comment_params)
       redirect_to team_issue_path(params[:team_id], params[:issue_id])
     else
@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find(params[:id])
+    comment = Comment.find(params[:comment_id])
     comment.destroy
     redirect_to team_issue_path(params[:team_id], params[:issue_id])
   end
