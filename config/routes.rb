@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   get 'mypage/:user_id/edit' => 'users#edit', as: "edit_user"
 
   # team_members
-  resources :team_members, only: [:new, :create]
+  resources :team_members, only: [:create]
+  get 'mypage/team_members/new' => 'team_members#new', as: "new_team_member"
 
   # teams
   resources :teams, only: [:show], param: :team_id
