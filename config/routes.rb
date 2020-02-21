@@ -6,32 +6,35 @@ Rails.application.routes.draw do
 
   # users
   devise_for :users
-  resources :users, only: [:edit, :update] do
+  resources :users, only: [:edit, :update], param: :user_id
+  resources :users, only: [] do
     resources :comments, only: [:index]
     resources :issues, only: [:index]
   end
-  get 'users/:id' => 'users#my_page'
+  get 'users/:user_id' => 'users#my_page'
 
   # team_members
   resources :team_members, only: [:new, :create]
 
   # teams
-  get '/teams/:team_id' => 'teams#show', as: 'team'
+  resources :teams, only: [:show], param: :team_id
   resources :teams, only: [] do
   # teams/users
-    resources :users, only: [:index, :show] do
+    resources :users, only: [:index, :show], param: :user_id
+    resources :users, only: [] do
       resources :comments, only: [:index]
       resources :issues, only: [:index]
     end
   # teams/tags
     resources :tags, only: [:index, :create]
   # teams/issues
-    resources :issues do
-      resources :comments, only: [:create, :edit, :update, :destroy]
+    resources :issues, param: :issue_id
+    resources :issues, only: [] do
+      resources :comments, only: [:create, :edit, :update, :destroy], param: :comment_id
     end
-    get '/issues/:id/choice' => 'issues#choice'
-    get '/issues/:id/confirm' => 'issues#confirm'
-    put '/issues/:id/settled' => 'issues#settled'
+    get '/issues/:issue_id/choice' => 'issues#choice'
+    get '/issues/:issue_id/confirm' => 'issues#confirm'
+    put '/issues/:issue_id/settled' => 'issues#settled'
 
   end
 
