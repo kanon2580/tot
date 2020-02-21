@@ -3,12 +3,15 @@
 <div class="row">
   <div class="col-3">
     <%= render 'users/members', team_members: @team_members %>
+    <%= render 'issues/issues', issues: @issues %>
   </div>
 
   <div class="col-9">
     <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "noimage.jpg", size: "100x100" %><br>
     <span>name：</span><%= @user.name %><br>
     <span>introduction：</span><%= @user.introduction %><br>
+
+    <%= link_to "comments", team_user_comments_path(params[:team_id], @user) %>
   </div>
 </div>
 

@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   resources :team_members, only: [:new, :create]
 
   # teams
-  resources :teams, only: [:show] do
+  get '/teams/:team_id' => 'teams#show', as: 'team'
+  resources :teams, only: [] do
   # teams/users
     resources :users, only: [:index, :show] do
       resources :comments, only: [:index]
@@ -25,7 +26,7 @@ Rails.application.routes.draw do
   # teams/tags
     resources :tags, only: [:index, :create]
   # teams/issues
-    resources :issue do
+    resources :issues do
       resources :comments, only: [:create, :edit, :update, :destroy]
     end
     get '/issues/:id/choice' => 'issues#choice'

@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2020_02_19_052803) do
   create_table "issues", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "team_id", null: false
+    t.string "title", null: false
     t.text "body", null: false
     t.boolean "has_settled", default: false, null: false
     t.datetime "settled_at"

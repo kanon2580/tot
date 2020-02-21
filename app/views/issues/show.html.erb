@@ -1,2 +1,24 @@
-<h1>Issues#show</h1>
-<p>Find me in app/views/issues/show.html.erb</p>
+<h1>Issue</h1>
+
+<%= @issue.title %><br>
+<%= @issue.body %><br>
+<%= link_to "edit issue", edit_team_issue_path(params[:team_id], @issue) %><br>
+<%= link_to "DESTROY", team_issue_path(params[:team_id], @issue), method: :delete, data: { confirm: "will you delete it?"} %>
+
+<h3>comments</h3>
+
+<% @comments.each do |comment| %>
+  <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
+  <%= comment.user.name %>
+  <%= comment.comment %>
+  <%= link_to "edit comment", edit_team_issue_comment_path(params[:team_id], params[:id], comment) %>
+  <%= link_to "DESTROY", team_issue_comment_path(params[:team_id], params[:id], comment), method: :delete, data: { confirm: "will you delete it?"} %> <br>
+<% end %>
+
+<%= flash[:error] %>
+
+<%= form_with model: @comment, url: team_issue_comments_path(params[:team_id], params[:id]) do |f| %>
+  <%= f.text_field :comment %>
+  <%= f.submit %>
+<% end %>
+
