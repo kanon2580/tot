@@ -20,17 +20,17 @@ class IssuesController < ApplicationController
   end
 
   def show
-    @issue = Issue.find(params[:id])
+    @issue = Issue.find(params[:issue_id])
     @comment = Comment.new
     @comments = @issue.comments
   end
 
   def edit
-    @issue = Issue.find(params[:id])
+    @issue = Issue.find(params[:issue_id])
   end
 
   def update
-    issue = Issue.find(params[:id])
+    issue = Issue.find(params[:issue_id])
     if issue.update(issue_params)
       redirect_to team_issue_path(issue)
     else
@@ -40,7 +40,7 @@ class IssuesController < ApplicationController
   end
 
   def destroy
-    issue = Issue.find(params[:id])
+    issue = Issue.find(params[:issue_id])
     issue.destroy 
     redirect_to team_path(team_id: params[:team_id])
   end
