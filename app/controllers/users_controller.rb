@@ -8,9 +8,9 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find(params[:id])
+    user = User.find(params[:user_id])
     if user.update(user_params)
-      redirect_to user
+      redirect_to mypage_path
     else
       flash[:error] = "ユーザー情報が正常に保存されませんでした"
       render 'edit'
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find(params[:user_id])
     @team_members = TeamMember.where(team_id: params[:team_id])
     team = Team.find(params[:team_id])
     @issues = team.issues

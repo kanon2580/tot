@@ -11,13 +11,13 @@
   <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
   <%= comment.user.name %>
   <%= comment.comment %>
-  <%= link_to "edit comment", edit_team_issue_comment_path(params[:team_id], params[:id], comment) %>
-  <%= link_to "DESTROY", team_issue_comment_path(params[:team_id], params[:id], comment), method: :delete, data: { confirm: "will you delete it?"} %> <br>
+  <%= link_to "edit comment", edit_team_issue_comment_path(params[:team_id], params[:issue_id], comment) %>
+  <%= link_to "DESTROY", team_issue_comment_path(params[:team_id], params[:issue_id], comment), method: :delete, data: { confirm: "will you delete it?"} %> <br>
 <% end %>
 
 <%= flash[:error] %>
 
-<%= form_with model: @comment, url: team_issue_comments_path(params[:team_id], params[:id]) do |f| %>
+<%= form_with model: @comment, url: team_issue_comments_path(params[:team_id], params[:issue_id]) do |f| %>
   <%= f.text_field :comment %>
   <%= f.submit %>
 <% end %>

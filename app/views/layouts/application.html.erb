@@ -12,12 +12,9 @@
   <body>
     <header>
       <% if user_signed_in? %>
-        <%= link_to "logout", destroy_user_session_path, method: :delete %>
-        <%= link_to "join team", new_team_member_path %>
-        <%= link_to "new issue", new_team_issue_path %>
+        <%= render 'layouts/signin_header' %>
       <% else %>
-        <%= link_to "signup", new_user_registration_path %>
-        <%= link_to "login", new_user_session_path %>
+        <%= render 'layouts/signout_header' %>
       <% end %>
     </header>
 

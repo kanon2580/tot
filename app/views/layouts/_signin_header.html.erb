@@ -1,0 +1,5 @@
+<%= link_to "logout", destroy_user_session_path, method: :delete %>
+<%= link_to "join team", new_team_member_path %>
+<% unless request.fullpath.include? "mypage" || "team_member" %>
+  <%= link_to "new issue", new_team_issue_path %>
+<% end %>
