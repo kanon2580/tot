@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  # before_action :set_team, if: :request.fullpath.include?(params[:team_id])
-  # before_action :set_issue, if: :request.fullpath.include?(params[:issue_id])
-  # before_action :set_user, if: :request.fullpath.include?(params[:user_id])
-  # before_action :set_comment, if: :request.fullpath.include?(params[:comment_id])
+  before_action :set_team
+  before_action :set_issue
+  before_action :set_user
+  before_action :set_comment
 
   private
   def configure_permitted_parameters
@@ -16,18 +16,27 @@ class ApplicationController < ActionController::Base
   end
 
   def set_team
-    @team = Team.find(params[:team_id])
+    if params[:team_id].present?
+      @team = Team.find(params[:team_id])
+    end
   end
 
   def set_issue
-    @issue = Issue.find(params[:issue_id])
+    if params[:issue_id].present?
+      @issue = Issue.find(params[:issue_id])
+    end
   end
 
   def set_user
-    @user = User.find(params[:user_id])
+    if params[:user_id].present?
+      @user = User.find(params[:user_id])
+    end
   end
 
   def set_comment
-    @comment = Comment.find(params[:comment_id])
+    if params[:comment_id].present?
+      @comment = Comment.find(params[:comment_id])
+    end
   end
+ 
 end
