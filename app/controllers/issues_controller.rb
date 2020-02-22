@@ -21,7 +21,7 @@ class IssuesController < ApplicationController
 
   def show
     @issue = Issue.find(params[:issue_id])
-    @comment = Comment.new
+    @new_comment = Comment.new
     @comments = @issue.comments
   end
 
