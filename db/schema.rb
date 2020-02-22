@@ -53,13 +53,13 @@ ActiveRecord::Schema.define(version: 2020_02_19_052803) do
 
   create_table "response_evaluations", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "issue_id", null: false
+    t.integer "comment_id", null: false
     t.datetime "created_issue_at", null: false
     t.datetime "first_comment_created_at", null: false
     t.float "difference", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "issue_id"], name: "index_response_evaluations_on_user_id_and_issue_id", unique: true
+    t.index ["user_id", "comment_id"], name: "index_response_evaluations_on_user_id_and_comment_id", unique: true
   end
 
   create_table "taggings", force: :cascade do |t|
