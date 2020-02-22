@@ -3,5 +3,4 @@ class Comment < ApplicationRecord
 
   belongs_to :user	
   belongs_to :issue	
-  belongs_to :response_evaluations
 end
