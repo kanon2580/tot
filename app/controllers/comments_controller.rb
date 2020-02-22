@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
     comment = Comment.new(comment_params)
     comment.user = current_user
     comment.issue_id = params[:issue_id]
-
+    binding.pry
     if issue.comments.where(user_id: current_user).blank?
       evaluation = ResponseEvaluation.new
       evaluation.user = current_user
@@ -12,15 +12,17 @@ class CommentsController < ApplicationController
       evaluation.first_comment_created_at = Time.current
       semi_difference = evaluation.first_comment_created_at - evaluation.created_issue_at
       evaluation.difference = semi_difference / 3600
-      evaluation.comment_id = comment.id
       evaluation.save
       # レスポンス評価を格納するだけ。ほんと汚い絶対メソッド化。
       # ストロングパラメータ効かない？
       # view側からパラメータとして送られてないから。アクション内で全部やってるからrequireとpermitの組み合わせがうまいこといかん。
       # メソッド化すればやりようあるので頑張れ
     end
-    binding.pry
-    unless comment.save(comment_params)
+    if comment.save(comment_params)
+      if evaluation.present?
+        evaluation.update(comment_id: comment.id)
+      end
+    else
       evaluation.destroy
       flash[:error] = "your comment had not save :("
     end
@@ -43,13 +45,9 @@ class CommentsController < ApplicationController
 
   def destroy
     comment = Comment.find(params[:comment_id])
-    comments = Comment.where(user_id: current_user).count
-    evaluation = current_user.response_evaluations
-    if comments == 1
-      evaluation.find_by(issue_id: params[:issue_id]).destroy  
-      # 最初のコメントに紐づいてない。
-      # commentに3つ目のbelongs_toつけたいんだができなかった
-      # commentにhas_firstみたいなカラム設けてフラグ立てるしか？
+    evaluation = ResponseEvaluation.find_by(comment_id: params[:comment_id])
+    if evaluation.present?
+      evaluation.destroy
     end
     unless comment.destroy
       flash[:error] = "your comment had not delete :("
