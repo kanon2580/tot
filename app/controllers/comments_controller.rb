@@ -8,19 +8,20 @@ class CommentsController < ApplicationController
     if issue.comments.where(user_id: current_user).blank?
       evaluation = ResponseEvaluation.new
       evaluation.user = current_user
-      evaluation.issue = comment.issue
-      evaluation.created_issue_at = issue.created_at
+      evaluation.created_issue_at = comment.issue.created_at
       evaluation.first_comment_created_at = Time.current
       semi_difference = evaluation.first_comment_created_at - evaluation.created_issue_at
       evaluation.difference = semi_difference / 3600
+      evaluation.comment_id = comment.id
+      evaluation.save
       # レスポンス評価を格納するだけ。ほんと汚い絶対メソッド化。
       # ストロングパラメータ効かない？
       # view側からパラメータとして送られてないから。アクション内で全部やってるからrequireとpermitの組み合わせがうまいこといかん。
       # メソッド化すればやりようあるので頑張れ
     end
-    if comment.save(comment_params)
-      evaluation.save
-    else
+    binding.pry
+    unless comment.save(comment_params)
+      evaluation.destroy
       flash[:error] = "your comment had not save :("
     end
     redirect_back(fallback_location: root_path)
