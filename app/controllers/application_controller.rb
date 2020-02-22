@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  # before_action :set_team, if: :request.fullpath.include?(params[:team_id])
+  # before_action :set_issue, if: :request.fullpath.include?(params[:issue_id])
+  # before_action :set_user, if: :request.fullpath.include?(params[:user_id])
+  # before_action :set_comment, if: :request.fullpath.include?(params[:comment_id])
+
   private
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
