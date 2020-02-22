@@ -15,6 +15,8 @@ class CommentsController < ApplicationController
       evaluation.difference = semi_difference / 3600
       # レスポンス評価を格納するだけ。ほんと汚い絶対メソッド化。
       # ストロングパラメータ効かない？
+      # view側からパラメータとして送られてないから。アクション内で全部やってるからrequireとpermitの組み合わせがうまいこといかん。
+      # メソッド化すればやりようあるので頑張れ
     end
     if comment.save(comment_params)
       evaluation.save
