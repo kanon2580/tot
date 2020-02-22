@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2020_02_19_052803) do
 
   create_table "response_evaluations", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "comment_id", null: false
+    t.integer "comment_id"
     t.datetime "created_issue_at", null: false
     t.datetime "first_comment_created_at", null: false
     t.float "difference", null: false
