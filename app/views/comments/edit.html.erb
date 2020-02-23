@@ -1,0 +1,10 @@
+<h1>Edit comment</h1>
+
+<%= flash[:error] %>
+
+<%= form_with model: @comment, url: team_issue_comment_path(params[:team_id], params[:issue_id], params[:id]) do |f| %>
+  <%= f.text_area :comment %>
+  <%= f.submit %>
+<% end %>
+
+<%= link_to "DESTROY", team_issue_comment_path(params[:team_id], params[:issue_id], @comment), method: :delete, data: { confirm: "will you delete it?"} %> <br>

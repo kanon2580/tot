@@ -10,6 +10,18 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <% if user_signed_in? %>
+        <%= render 'layouts/signin_header' %>
+      <% else %>
+        <%= render 'layouts/signout_header' %>
+      <% end %>
+    </header>
+
+    <main>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </main>
   </body>
 </html>

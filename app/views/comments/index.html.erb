@@ -1,0 +1,13 @@
+<h1>Comments</h1>
+
+<div class="row ml-5">
+  <%= attachment_image_tag @user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
+  <%= @user.name %>
+</div>
+
+<% @comments.each do |comment| %>
+  <div class="row ml-5">
+    <%= comment.comment %>
+    <%= link_to "show issue", team_issue_path(params[:team_id], id: comment.issue_id) %>
+  </div>
+<% end %>

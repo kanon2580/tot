@@ -1,0 +1,18 @@
+<h1>Edit profile</h1>
+
+<%= flash[:error] %>
+
+<%= form_with model: @user do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %><br>
+
+  <%= f.label :introduction %>
+  <%= f.text_field :introduction %><br>
+
+  <%= f.label :image %>
+  <%= f.attachment_field :profile_image %>
+
+  <%= f.submit %>
+<% end %>
+
+<%= link_to "My page", current_user %>
