@@ -14,25 +14,21 @@ class IssuesController < ApplicationController
   end
 
   def index
-    team = Team.find(params[:team_id])
     @issues = team.issues
     # teamに関連するissuesだけ設定
   end
 
   def show
-    @issue = Issue.find(params[:issue_id])
     @new_comment = Comment.new
     @comments = @issue.comments
   end
 
   def edit
-    @issue = Issue.find(params[:issue_id])
   end
 
   def update
-    issue = Issue.find(params[:issue_id])
-    if issue.update(issue_params)
-      redirect_to team_issue_path(issue)
+    if @issue.update(issue_params)
+      redirect_to @issue
     else
       flash[:error] = "sorry... it was not saved successfully :( please try again."
       redirect_back(fallback_location: root_path)
@@ -40,8 +36,7 @@ class IssuesController < ApplicationController
   end
 
   def destroy
-    issue = Issue.find(params[:issue_id])
-    issue.destroy 
+    @issue.destroy 
     redirect_to team_path(team_id: params[:team_id])
   end
 
