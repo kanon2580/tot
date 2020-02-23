@@ -41,6 +41,7 @@ class IssuesController < ApplicationController
   end
 
   def choice
+    @comments = @issue.comments
   end
 
   def confirm
