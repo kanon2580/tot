@@ -71,3 +71,9 @@ gem "refile-mini_magick"
 # bootstrap
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
+
+# deploy setting
+gem 'dotenv-rails'
+group :production do
+  gem 'mysql2'
+end
