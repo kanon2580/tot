@@ -3,5 +3,6 @@ class Comment < ApplicationRecord
 
   belongs_to :user	
   belongs_to :issue
-  belongs_to :response_evaluation, optional: true, dependent: :destroy
+
+  has_one :response_evaluation, dependent: :destroy
 end
