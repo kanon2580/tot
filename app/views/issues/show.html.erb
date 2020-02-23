@@ -2,8 +2,8 @@
 
 <%= @issue.title %><br>
 <%= @issue.body %><br>
-<%= link_to "edit issue", edit_team_issue_path(params[:team_id], @issue) %><br>
-<%= link_to "DESTROY", team_issue_path(params[:team_id], @issue), method: :delete, data: { confirm: "will you delete it?"} %>
+<%= link_to "edit issue", edit_team_issue_path(@team, @issue) %><br>
+<%= link_to "DESTROY", team_issue_path(@team, @issue), method: :delete, data: { confirm: "will you delete it?"} %>
 
 <h3>comments</h3>
 
