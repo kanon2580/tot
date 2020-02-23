@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2020_02_19_052803) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "issue_id", null: false
+    t.integer "response_evaluation_id"
     t.text "comment", null: false
     t.boolean "has_best_answer", default: false, null: false
     t.datetime "created_at", null: false
