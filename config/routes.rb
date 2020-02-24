@@ -28,7 +28,9 @@ Rails.application.routes.draw do
       resources :issues, only: [:index]
     end
   # teams/tags
-    resources :tags, only: [:index, :create]
+    resources :tags, only: [:index, :create] do
+      resources :issues, only: [:index]
+    end
   # teams/issues
     resources :issues, param: :issue_id
     resources :issues, only: [] do
