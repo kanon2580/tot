@@ -1,5 +1,9 @@
 <h1>Issue</h1>
 
+<% if @issue.has_settled == true %>
+  <h3 class="text-warning">＼ Well done！／</h3>
+<% end %>
+
 <%= @issue.title %><br>
 <%= @issue.body %><br>
 <%= link_to "edit issue", edit_team_issue_path(@team, @issue) %><br>
