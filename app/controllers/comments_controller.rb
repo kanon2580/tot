@@ -6,11 +6,8 @@ class CommentsController < ApplicationController
     comment.issue_id = params[:issue_id]
     if issue.comments.where(user_id: current_user).blank?
       response = ResponseEvaluation.new
+      comment.is_first = true
     end
-      # レスポンス評価を格納するだけ。ほんと汚い絶対メソッド化。
-      # ストロングパラメータ効かない？
-      # view側からパラメータとして送られてないから。アクション内で全部やってるからrequireとpermitの組み合わせがうまいこといかん。
-      # メソッド化すればやりようあるので頑張れ
     if comment.save(comment_params)
       if response.present?
         response.user = current_user
@@ -45,8 +42,8 @@ class CommentsController < ApplicationController
     response = @comment.response_evaluation
     if @comment.destroy
       if @issue.comments.where(user_id: current_user).present?
-        binding.pry
         oldest_comment = @issue.comments.where(user_id: current_user).order("created_at").min
+        oldest_comment.update(is_first: true)
         response = ResponseEvaluation.new
         response.user = current_user
         response.comment = oldest_comment
