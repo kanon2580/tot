@@ -4,7 +4,9 @@
       <%= link_to "＼(ToT)／", root_path, class: "navbar-brand" %>
 
         <ul class="navbar-nav">
-          <% unless request.fullpath.include? "teams" %>
+          <% if  request.fullpath.include? "teams" %>
+            <%= link_to "issues", team_issues_path, class: "nav-link" %>
+          <% else %>
             <li class="nav-item">
               <%= link_to "join team", new_team_member_path, class: "nav-link" %>
             </li>
