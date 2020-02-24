@@ -2,5 +2,5 @@
 <%= link_to "join team", new_team_member_path %>
 <% unless request.fullpath.include? "mypage" %>
   <%= link_to "new issue", new_team_issue_path %>
-  <%= link_to "tags", team_tags_path %>
+  <%= link_to "tags", team_tags_path(@team) %>
 <% end %>
