@@ -4,6 +4,8 @@
   <h3 class="text-warning">＼ Well done！／</h3>
 <% end %>
 
+<%= attachment_image_tag @issue.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
+<%= @issue.user.name %><br>
 <%= @issue.title %><br>
 <%= @issue.body %><br>
 <%= link_to "edit issue", edit_team_issue_path(@team, @issue) %><br>
