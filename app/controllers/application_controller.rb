@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :set_issue
   before_action :set_user
   before_action :set_comment
+  before_action :set_tag
   # 条件分岐、path拾わなくてもパラメータ送られてるか否かで分岐すれば良くない？って結論に至る
 
   private
@@ -37,6 +38,12 @@ class ApplicationController < ActionController::Base
   def set_comment
     if params[:comment_id].present?
       @comment = Comment.find(params[:comment_id])
+    end
+  end
+
+  def set_tag
+    if params[:tag_id].present?
+      @tag = Tag.find(params[:tag_id])
     end
   end
  
