@@ -1,2 +1,13 @@
-<h1>Tags#index</h1>
-<p>Find me in app/views/tags/index.html.erb</p>
+<h1>Tags</h1>
+
+<% @team.tags.each do |tag| %>
+  <%= link_to tag.name, team_tag_issues_path(@team, tag) %><br>
+<% end %>
+<p>リンク先は未設定</p>
+
+<%= form_with model: @new_tag, url: team_tags_path do |f| %>
+  <%= f.text_field :name, placeholder: "Tag name" %>
+  <%= f.submit %>
+<% end %>
+
+<%# パラメータがネストされないのでストロングパラメータが効かない %>
