@@ -8,8 +8,10 @@
 <%= @issue.user.name %><br>
 <%= @issue.title %><br>
 <%= @issue.body %><br>
-<%= link_to "edit issue", edit_team_issue_path(@team, @issue) %><br>
-<%= link_to "DESTROY", team_issue_path(@team, @issue), method: :delete, data: { confirm: "will you delete it?"} %>
+<% unless @issue.has_settled == true %>
+  <%= link_to "edit issue", edit_team_issue_path(@team, @issue) %><br>
+  <%= link_to "DESTROY", team_issue_path(@team, @issue), method: :delete, data: { confirm: "will you delete it?"} %>
+<% end %>
 
 <h3>comments</h3>
 
@@ -17,8 +19,10 @@
   <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
   <%= comment.user.name %>
   <%= comment.comment %>
-  <%= link_to "edit comment", edit_team_issue_comment_path(params[:team_id], params[:issue_id], comment) %>
-  <%= link_to "DESTROY", team_issue_comment_path(params[:team_id], params[:issue_id], comment), method: :delete, data: { confirm: "will you delete it?"} %> <br>
+  <% unless @issue.has_settled == true %>
+    <%= link_to "edit comment", edit_team_issue_comment_path(params[:team_id], params[:issue_id], comment) %>
+    <%= link_to "DESTROY", team_issue_comment_path(params[:team_id], params[:issue_id], comment), method: :delete, data: { confirm: "will you delete it?"} %> <br>
+  <% end %>
 <% end %>
 
 <%= flash[:error] %>
