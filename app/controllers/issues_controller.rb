@@ -14,7 +14,7 @@ class IssuesController < ApplicationController
   end
 
   def index
-    @issues = team.issues
+    @issues = @team.issues
     # teamに関連するissuesだけ設定
   end
 
@@ -50,6 +50,18 @@ class IssuesController < ApplicationController
   def settled
     @issue.update(has_settled: true)
     @comment.update(has_best_answer: true)
+    evaluated_comments = @issue.comments.where(is_first: true)
+    binding.pry
+    evaluated_comments.each do |comment|
+      required_time = RequiredTimeEvaluation.new
+      required_time.user = comment.user
+      required_time.comment = comment
+      required_time.first_comment_created_at = comment.created_at
+      required_time.issue_settled_at = @issue.updated_at
+      semi_difference = required_time.issue_settled_at - required_time.first_comment_created_at
+      required_time.difference = semi_difference / 3600
+      required_time.save
+    end
     redirect_to team_issue_path(@issue)
   end
 
