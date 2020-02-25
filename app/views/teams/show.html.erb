@@ -1,5 +1,6 @@
 <h1>Teams#show</h1>
 <p>Find me in app/views/teams/show.html.erb</p>
 
+<%= render 'tags/tags', tags: @tags %>
 <%= link_to "members", team_users_path %><br>
 <%= link_to "issues", team_issues_path %>
