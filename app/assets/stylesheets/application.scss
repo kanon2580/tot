@@ -14,8 +14,8 @@
 
  @import "bootstrap";
 
-//  fotterデザイン
- body{
+// fotterデザイン
+body{
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -25,3 +25,17 @@ footer {
   margin-top: auto;
   height: 60px;
 }
+
+// titleデザイン
+.titlemark{
+  border-left: double 7px #ff7f50;
+  border-right: double 7px #ff7f50;
+  padding: 5px 10px;
+}
+
+// semi titleデザイン
+.headline{
+  border-bottom: solid 1px #ff7f50;
+  padding: 0 5px
+}
+
