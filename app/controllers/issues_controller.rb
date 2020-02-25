@@ -24,6 +24,8 @@ class IssuesController < ApplicationController
   def index
     @issues = @team.issues
     # teamに関連するissuesだけ設定
+    @tags = @team.tags
+    @team_members = TeamMember.where(team_id: @team.id)
   end
 
   def show
@@ -76,7 +78,7 @@ class IssuesController < ApplicationController
 
   private
   def issue_params
-    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at )
+    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at, {tag_ids: []} )
   end
 
 end
