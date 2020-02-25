@@ -39,7 +39,7 @@ class IssuesController < ApplicationController
 
   def update
     if @issue.update(issue_params)
-      redirect_to team_issue_path(@issue)
+      redirect_to team_issue_path(@team, @issue)
     else
       flash[:error] = "sorry... it was not saved successfully :( please try again."
       redirect_back(fallback_location: root_path)
