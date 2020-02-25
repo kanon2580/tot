@@ -1,0 +1,5 @@
+<h3>Tags</h3>
+
+<% tags.each do |tag| %>
+  <%= link_to tag.name, team_tag_issues_path(@team, tag) %>
+<% end %>
