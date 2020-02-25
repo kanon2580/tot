@@ -1,13 +1,21 @@
 class IssuesController < ApplicationController
   def new
-    @issue = Issue.new
   end
 
   def create
     issue = Issue.new(issue_params)
-    issue.team_id = params[:team_id]
-    issue.user_id = current_user.id
-    unless issue.save
+    issue.team = @team
+    issue.user = current_user
+    if issue.save
+      if params[:tagging]
+          params[:tagging][:tag_ids].each do |tag|
+          tagging = Tagging.new
+          tagging.tag_id = tag
+          tagging.issue = issue
+          tagging.save
+        end
+      end
+    else
       flash[:error] = "we couldn't save your issue :("
     end
       redirect_to team_issue_path(params[:team_id], issue.id)
@@ -21,6 +29,7 @@ class IssuesController < ApplicationController
   def show
     @new_comment = Comment.new
     @comments = @issue.comments
+    @tagging = Tagging.where(issue_id: @issue)
   end
 
   def edit
@@ -67,6 +76,7 @@ class IssuesController < ApplicationController
 
   private
   def issue_params
-    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at)
+    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at )
   end
+
 end

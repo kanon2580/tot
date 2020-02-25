@@ -1,12 +1,14 @@
 <h1>New issue</h1>
 
-<% if flash[:error] %>
-  <%= flash[:error] %>
-<% end %>
+<%= flash[:error] %>
 
-<%= form_with model: Issue.new, url: team_issues_path do |f| %>
+<%= form_with model: [@team, Issue.new] do |f| %>
   <%= f.label :Issue %><br>
   <%= f.text_field :title, placeholder: "title" %><br>
   <%= f.text_area :body, placeholder: "what's happened?" %><br>
-  <%= f.submit %><br>
+  <%= f.label :Tags %>
+  <%= collection_check_boxes :tagging, :tag_ids, @team.tags, :id, :name, include_hidden: false %>
+    <%= tag.check_box %>
+    <%= tag.label {tag.text} %>
+  <%= f.submit %>
 <% end %>

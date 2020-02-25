@@ -8,6 +8,9 @@
 <%= @issue.user.name %><br>
 <%= @issue.title %><br>
 <%= @issue.body %><br>
+<% @tagging.each do |tagging| %>
+  <%= tagging.tag.name %>
+<% end %><br>
 <% unless @issue.has_settled == true %>
   <%= link_to "edit issue", edit_team_issue_path(@team, @issue) %><br>
   <%= link_to "DESTROY", team_issue_path(@team, @issue), method: :delete, data: { confirm: "will you delete it?"} %>
