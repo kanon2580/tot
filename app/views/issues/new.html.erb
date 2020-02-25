@@ -7,8 +7,6 @@
   <%= f.text_field :title, placeholder: "title" %><br>
   <%= f.text_area :body, placeholder: "what's happened?" %><br>
   <%= f.label :Tags %>
-  <%= collection_check_boxes :tagging, :tag_ids, @team.tags, :id, :name, include_hidden: false %>
-    <%= tag.check_box %>
-    <%= tag.label {tag.text} %>
+  <%= f.collection_check_boxes :tag_ids, @team.tags, :id, :name, include_hidden: false %>
   <%= f.submit %>
 <% end %>
