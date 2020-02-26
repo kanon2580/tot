@@ -31,7 +31,6 @@ class IssuesController < ApplicationController
   def show
     @new_comment = Comment.new
     @comments = @issue.comments
-    @tagging = Tagging.where(issue_id: @issue)
   end
 
   def edit
