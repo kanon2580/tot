@@ -10,24 +10,24 @@
   </head>
 
   <body>
-    <header>
-      <% if user_signed_in? %>
-        <%= render 'layouts/signin_header' %>
-      <% else %>
-        <%= render 'layouts/signout_header' %>
-      <% end %>
-    </header>
+    <div class="row">
 
-    <main>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <%= yield %>
-    </main>
-
-    <footer class="footer text-white bg-dark">
-      <div class="container text-center mt-3">
-        <strong>© 2020 Kanon inc.</strong>
+<%# sidebar %>
+      <div class="col-3">
+        <% if user_signed_in? %>
+          <%= render 'layouts/signin_header' %>
+        <% else %>
+          <%= render 'layouts/signout_header' %>
+        <% end %>
       </div>
-    </footer>
+
+<%# body %>
+      <div class="col-9">
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+        <%= yield %>
+      </div>
+    </div>
+
   </body>
 </html>

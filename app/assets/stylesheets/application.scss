@@ -14,18 +14,6 @@
 
  @import "bootstrap";
 
-// fotterデザイン
-body{
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  font-family: 'Helvetica Neue', 'Helvetica', 'Hiragino Kaku Gothic ProN', YuGothic, 'Yu Gothic Medium', Meiryo, sans-serif;
-}
-footer {
-  margin-top: auto;
-  height: 60px;
-}
-
 // titleデザイン
 .titlemark{
   border-left: double 7px #ff7f50;
@@ -42,4 +30,9 @@ footer {
 // リンク文字色
 a{
   color: black;
+}
+
+// 余白
+main{
+  margin-bottom: 50px;
 }
