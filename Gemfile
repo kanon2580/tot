@@ -72,6 +72,10 @@ gem "refile-mini_magick"
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 
+# chart js
+gem 'chart-js-rails'
+gem 'gon'
+
 # deploy setting
 gem 'dotenv-rails'
 group :production do
