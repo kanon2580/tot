@@ -1,13 +1,21 @@
 class IssuesController < ApplicationController
   def new
-    @issue = Issue.new
   end
 
   def create
     issue = Issue.new(issue_params)
-    issue.team_id = params[:team_id]
-    issue.user_id = current_user.id
-    unless issue.save
+    issue.team = @team
+    issue.user = current_user
+    if issue.save
+      if params[:tagging]
+          params[:tagging][:tag_ids].each do |tag|
+          tagging = Tagging.new
+          tagging.tag_id = tag
+          tagging.issue = issue
+          tagging.save
+        end
+      end
+    else
       flash[:error] = "we couldn't save your issue :("
     end
       redirect_to team_issue_path(params[:team_id], issue.id)
@@ -16,6 +24,8 @@ class IssuesController < ApplicationController
   def index
     @issues = @team.issues
     # teamに関連するissuesだけ設定
+    @tags = @team.tags
+    @team_members = TeamMember.where(team_id: @team.id)
   end
 
   def show
@@ -28,7 +38,7 @@ class IssuesController < ApplicationController
 
   def update
     if @issue.update(issue_params)
-      redirect_to team_issue_path(@issue)
+      redirect_to team_issue_path(@team, @issue)
     else
       flash[:error] = "sorry... it was not saved successfully :( please try again."
       redirect_back(fallback_location: root_path)
@@ -67,6 +77,7 @@ class IssuesController < ApplicationController
 
   private
   def issue_params
-    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at)
+    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at, {tag_ids: []} )
   end
+
 end

@@ -10,18 +10,24 @@
   </head>
 
   <body>
-    <header>
-      <% if user_signed_in? %>
-        <%= render 'layouts/signin_header' %>
-      <% else %>
-        <%= render 'layouts/signout_header' %>
-      <% end %>
-    </header>
+    <div class="row">
 
-    <main>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <%= yield %>
-    </main>
+<%# sidebar %>
+      <div class="col-3">
+        <% if user_signed_in? %>
+          <%= render 'layouts/signin_header' %>
+        <% else %>
+          <%= render 'layouts/signout_header' %>
+        <% end %>
+      </div>
+
+<%# body %>
+      <div class="col-9">
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+        <%= yield %>
+      </div>
+    </div>
+
   </body>
 </html>

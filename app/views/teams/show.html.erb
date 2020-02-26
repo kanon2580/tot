@@ -1,5 +1,20 @@
-<h1>Teams#show</h1>
-<p>Find me in app/views/teams/show.html.erb</p>
+<div class="container">
+  <div class="row flex-column align-items-center">
+    <h1 class="titlemark mb-5">Team</h1>
+  </div>
 
-<%= link_to "members", team_users_path %><br>
-<%= link_to "issues", team_issues_path %>
+  <div class="row">
+    <div class="offset-1 col-2">
+      <%= render 'tags/tags', tags: @tags %>
+    </div>
+
+    <div class="col-4">
+      <%= render 'users/members', team_members: @team_members %>
+    </div>
+
+    <div class="col-4">
+      <%= render 'issues/issues', issues: @issues %>
+    </div>
+  </div>
+
+</div>

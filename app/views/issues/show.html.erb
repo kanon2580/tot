@@ -1,31 +1,38 @@
-<h1>Issue</h1>
+<div class="row flex-column align-items-center">
+  <h1 class="titlemark">Issue</h1>
+</div>
 
 <% if @issue.has_settled == true %>
-  <h3 class="text-warning">＼ Well done！／</h3>
+  <div class="row flex-column align-items-center mt-3">
+    <h3 style="color: #ff7f50;">＼ Well done！／</h3>
+  </div>
 <% end %>
 
-<%= attachment_image_tag @issue.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
-<%= @issue.user.name %><br>
-<%= @issue.title %><br>
-<%= @issue.body %><br>
-<%= link_to "edit issue", edit_team_issue_path(@team, @issue) %><br>
-<%= link_to "DESTROY", team_issue_path(@team, @issue), method: :delete, data: { confirm: "will you delete it?"} %>
+<div class="row flex-column align-items-center mt-3">
+  <%= render 'issue_card', team: @team, issue: @issue %>
+</div>
 
-<h3>comments</h3>
-
-<% @comments.each do |comment| %>
-  <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
-  <%= comment.user.name %>
-  <%= comment.comment %>
-  <%= link_to "edit comment", edit_team_issue_comment_path(params[:team_id], params[:issue_id], comment) %>
-  <%= link_to "DESTROY", team_issue_comment_path(params[:team_id], params[:issue_id], comment), method: :delete, data: { confirm: "will you delete it?"} %> <br>
-<% end %>
+<div class="row flex-column align-items-center mt-3">
+  <% @comments.each do |comment| %>
+    <%= render 'comments/comment_card', team: @team, issue: @issue, comment: comment %>
+  <% end %>
+</div>
 
 <%= flash[:error] %>
 
-<%= form_with model: @new_comment, url: team_issue_comments_path(params[:team_id], params[:issue_id]) do |f| %>
-  <%= f.text_field :comment %>
-  <%= f.submit %>
-<% end %>
+<div class="row mt-3">
+  <div class="offset-3 col-6">
+    <%= form_with model: @new_comment, url: team_issue_comments_path(params[:team_id], params[:issue_id]) do |f| %>
+      <div class="form-group">
+        <%= f.text_area :comment, class: "form-control" %>
+        <%= f.submit :post, class: "btn btn-outline-dark float-right mt-1" %>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-<%= link_to "Is the issue solved?", team_choice_path(@team, @issue) %>
+<div class="row mt-3">
+  <div class="offset-4 col-4">
+    <%= link_to "Is the issue solved?", team_choice_path(@team, @issue), class: "btn btn-dark btn-block" %>
+  </div>
+</div>
