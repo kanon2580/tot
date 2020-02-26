@@ -2,7 +2,7 @@
 
 <%= flash[:error] %>
 
-<%= form_with model: @comment, url: team_issue_comment_path(params[:team_id], params[:issue_id], params[:id]) do |f| %>
+<%= form_with model: [@team, @issue, @comment] do |f| %>
   <%= f.text_area :comment %>
   <%= f.submit %>
 <% end %>
