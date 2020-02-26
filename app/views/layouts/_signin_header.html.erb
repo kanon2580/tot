@@ -1,29 +1,31 @@
-<nav class="navbar navbar-expand navbar-dark navbar-fixed-top", style="background-color: #006400;">
-  <div class="container">
-    <div class="row">
-      <%= link_to "＼(ToT)／", root_path, class: "navbar-brand" %>
+<div class="row vh-100">
+  <nav class="navbar navbar-dark bg-dark navbar-fixed-left flex-column col-12">
 
-        <ul class="navbar-nav">
-          <% if  request.fullpath.include? "teams" %>
-            <%= link_to "issues", team_issues_path, class: "nav-link" %>
-          <% else %>
+          <ul class="navbar-nav">
+            <% if  request.fullpath.include? "teams" %>
+              <%= link_to "issues", team_issues_path, class: "nav-link" %>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to "join team", new_team_member_path, class: "nav-link" %>
+              </li>
+            <% end %>
+            <% unless request.fullpath.include? "mypage" %>
+              <li class="nav-item">
+                <%= link_to "new issue", new_team_issue_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "tags", team_tags_path(@team), class: "nav-link" %>
+              </li>
+            <% end %>
             <li class="nav-item">
-              <%= link_to "join team", new_team_member_path, class: "nav-link" %>
+              <%= link_to "logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
             </li>
-          <% end %>
-          <% unless request.fullpath.include? "mypage" %>
-            <li class="nav-item">
-              <%= link_to "new issue", new_team_issue_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "tags", team_tags_path(@team), class: "nav-link" %>
-            </li>
-          <% end %>
-          <li class="nav-item">
-            <%= link_to "logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
-          </li>
-        </ul>
+          </ul>
 
-    </div>
-  </div>
-</nav>
+        <%= link_to team_path do %>
+          <%= image_tag 'logo-white.png', size: '100x100'  %>
+        <% end %>
+
+
+  </nav>
+</div>

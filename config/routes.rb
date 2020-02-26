@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     resources :issues, param: :issue_id
     resources :issues, only: [] do
       resources :comments, only: [:create, :edit, :update, :destroy], param: :comment_id
+      resource :likes, only: [:create, :destroy]
     end
     get '/issues/:issue_id/choice' => 'issues#choice', as: "choice"
     get '/issues/:issue_id/confirm' => 'issues#confirm', as: "confirm"

@@ -24,12 +24,13 @@ class IssuesController < ApplicationController
   def index
     @issues = @team.issues
     # teamに関連するissuesだけ設定
+    @tags = @team.tags
+    @team_members = TeamMember.where(team_id: @team.id)
   end
 
   def show
     @new_comment = Comment.new
     @comments = @issue.comments
-    @tagging = Tagging.where(issue_id: @issue)
   end
 
   def edit
@@ -37,7 +38,7 @@ class IssuesController < ApplicationController
 
   def update
     if @issue.update(issue_params)
-      redirect_to team_issue_path(@issue)
+      redirect_to team_issue_path(@team, @issue)
     else
       flash[:error] = "sorry... it was not saved successfully :( please try again."
       redirect_back(fallback_location: root_path)
@@ -76,7 +77,7 @@ class IssuesController < ApplicationController
 
   private
   def issue_params
-    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at )
+    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at, {tag_ids: []} )
   end
 
 end
