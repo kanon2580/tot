@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def my_page
     @team_members = TeamMember.where(user_id: current_user)
+    gon.user_name = current_user.name
   end
 
   def edit
@@ -24,8 +25,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:user_id])
     @team_members = TeamMember.where(team_id: params[:team_id])
-    team = Team.find(params[:team_id])
-    @issues = team.issues
+    @issues = @team.issues
   end
 
   private
