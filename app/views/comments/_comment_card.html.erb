@@ -1,0 +1,19 @@
+<div class="card w-50">
+  <div class="row no-gutters">
+
+    <div class="my-auto ml-3">
+      <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
+    </div>
+
+    <div class="card-body">
+      <span class="card-text"><%= comment.comment %></span>
+      <% unless issue.has_settled == true %>
+        <div class="float-right">
+          <%= link_to "edit", edit_team_issue_comment_path(team, issue, comment), class: "btn btn-outline-success btn-sm" %>
+          <%= link_to "delete", team_issue_comment_path(team, issue, comment), method: :delete, data: { confirm: "will you delete it?"}, class: "btn btn-outline-danger btn-sm" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>
