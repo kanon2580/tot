@@ -2,8 +2,10 @@
   <h3 class="headline">Teams</h3>
 </div>
 
-<% user.teams.each do |team| %>
-  <div class="row mt-3 flex-column align-items-center">
-    <%= link_to team.name, team_path(team), class: "btn btn-sm btn-dark"%>
+<div class="row mt-3">
+  <div class="offset-3 col-6">
+    <% user.teams.each do |team| %>
+      <%= link_to team.name, team_path(team), class: "btn btn-sm btn-dark"%>
+    <% end %>
   </div>
-<% end %>
+</div>
