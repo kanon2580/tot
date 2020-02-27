@@ -1,35 +1,7 @@
-<div class="container">
-  <div class="row flex-column align-items-center">
-    <h1 class="titlemark mb-5">My page</h1>
-  </div>
+<div class="row flex-column align-items-center">
+  <h1 class="titlemark mb-5">My page</h1>
+</div>
 
-  <div class="row">
-    <div class="col-2">
-      <%= render 'teams/teams', team_members: @team_members %>
-    </div>
-
-    <div class="offset-1 col-9">
-      <div class="row">
-
-        <div class="col-2">
-          <%= attachment_image_tag current_user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "noimage.jpg", size: "100x100" %>
-        </div>
-
-        <div class="col-5 d-flex flex-column justify-content-between">
-          <div class="row mt-3">
-            <span>name：</span><%= current_user.name %>
-          </div>
-          <div class="row mb-3">
-            <span>introduction：</span><br>
-            <%= current_user.introduction %>
-          </div>
-        </div>
-
-        <div class="col-2 d-flex align-items-end">
-          <%= link_to "Edit profile", edit_user_path(current_user), class: "btn btn-dark" %>
-        </div>
-
-      </div>
-    </div>
-
+<div class="row">
+    <%= render 'users/profile_card', user: current_user %>
 </div>
