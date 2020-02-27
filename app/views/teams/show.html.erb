@@ -4,16 +4,22 @@
   </div>
 
   <div class="row">
-    <div class="offset-1 col-2">
-      <%= render 'tags/tags', tags: @tags %>
-    </div>
+    <div class="offst-1 col-11">
+      <div class="row">
 
-    <div class="col-4">
-      <%= render 'users/members', team_members: @team_members %>
-    </div>
+        <div class="col-3">
+          <%= render 'tags/tags', tags: @tags %>
+        </div>
 
-    <div class="col-4">
-      <%= render 'issues/issues', issues: @issues %>
+        <div class="col-5">
+          <%= render 'users/members', team_members: @team_members %>
+        </div>
+
+        <div class="col-4">
+          <%= render 'issues/issues', team: @team, issues: @issues %>
+        </div>
+
+      </div>
     </div>
   </div>
 

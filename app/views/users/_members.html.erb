@@ -4,9 +4,9 @@
 
 <div class="row">
   <% team_members.each do |team_member| %>
-    <div class="offset-2 mt-3">
+    <div class="offset-1 mt-3">
       <%= link_to team_user_path(user_id: team_member.user.id) do %>
-        <%= attachment_image_tag team_member.user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "noimage.jpg", size: "100x100" %><br>
+        <%= attachment_image_tag team_member.user, :profile_image, :fill, 120, 120, format: 'jpeg', fallback: "noimage.jpg", size: "120x120" %><br>
         <%= team_member.user.name %>
       <% end %>
     </div>
