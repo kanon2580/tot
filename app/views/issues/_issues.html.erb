@@ -2,11 +2,12 @@
   <h3 class="headline">Issues</h3>
 </div>
 
-  <% issues.each do |issue| %>
-    <div class="row mt-3">
-      <%= link_to team_issue_path(params[:team_id], issue) do %>
-        <%= attachment_image_tag issue.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
-        <%= issue.title %>
-      <% end %>
-    </div>
-  <% end %>
+<% issues.last(5).each do |issue| %>
+  <div class="row mt-3">
+    <%= render 'issues/index_card', team: team, issue: issue %>
+  </div>
+<% end %>
+
+<div class="row flex-column align-items-end mt-3 mr-3">
+  <%= link_to "more", team_issues_path, class:"btn btn-sm btn-dark" %>
+</div>
