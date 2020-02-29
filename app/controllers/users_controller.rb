@@ -2,13 +2,11 @@ class UsersController < ApplicationController
   def my_page
     @team_members = TeamMember.where(user_id: current_user)
 
-
-
 # chart.jsに渡す値
     gon.user_name = current_user.name
-    gon.response_evaluation_datas = evaluation_datas(ResponseEvaluation)
-    gon.required_time_evaluation_datas = evaluation_datas(RequiredTimeEvaluation)
-
+    gon.response_evaluation_datas = time_related_evaluation(ResponseEvaluation)
+    gon.required_time_evaluation_datas = time_related_evaluation(RequiredTimeEvaluation)
+    gon.like_evaluation_datas = like_evaluation_datas
   end
 
   def edit
@@ -38,13 +36,23 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :introduction, :profile_image)
   end
 
-  def evaluation_datas(evaluation_type)
-    # 全ユーザーの平均値計算
-    users_average = evaluation_type.group(:user_id).average(:difference).map{|k,v| v.to_i}
+  def time_related_evaluation(evaluation_type)
+    evaluation_base = evaluation_type.group(:user_id).average(:difference).map{|k,v| v.to_i}
+    evaluation_datas(evaluation_base)
+  end
 
+  def like_evaluation_datas
+    # 標本不足により、いいね総数で算出
+    user_issues_array = User.joins(:issues).group("users.id").map{|o| [o.id, o.issue_ids]}.to_h
+    liked_count_array = user_issues_array.map{|k,v| v.map{|o| Issue.find(o).likes.count}.sum}
+    evaluation_datas(liked_count_array)
+  end
+
+  def evaluation_datas(evaluation_base)
     # 階級幅の計算
-    min = users_average.min
-    max = users_average.max
+    binding.pry
+    min = evaluation_base.min
+    max = evaluation_base.max
     evaluation_class = (max - min)/10
 
     # 階級が切り替わる値を計算、配列に渡す
@@ -61,17 +69,17 @@ class UsersController < ApplicationController
     n = 8
     i = evaluation_classes[n]
 
-    count_evaluations = users_average.select{|o| (i..max) === o}.count
+    count_evaluations = evaluation_base.select{|o| (i..max) === o}.count
     evaluation_datas << count_evaluations
 
     8.times{|m|
-    count_evaluations = users_average.select{|o| (i...evaluation_classes[n]) === o}.count
-    evaluation_datas << count_evaluations
     n -= 1
+    count_evaluations = evaluation_base.select{|o| (evaluation_classes[n]...i) === o}.count
+    evaluation_datas << count_evaluations
     i = evaluation_classes[n]
     }
 
-    count_evaluations = users_average.select{|o| (min...evaluation_classes[n]) === o}.count
+    count_evaluations = evaluation_base.select{|o| (min...i) === o}.count
     evaluation_datas << count_evaluations
   end
 
