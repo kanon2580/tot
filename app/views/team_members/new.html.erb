@@ -1,18 +1,20 @@
-<h1>Join team</h1>
+<div class="row flex-column align-items-center">
+  <h1 class="titlemark">Join team</h1>
+</div>
 
-<div class="row">
-  <div class="col-3">
-    <%= render 'teams/teams', team_members: @team_members %>
-  </div>
+<div class="row mt-5">
+  <div class="offset-3 col-6">
 
-  <div class="col-9">
-    <% if flash[:error] %>
-      <%= flash[:error] %>
+    <%= flash[:error] %>
+
+    <%= form_with model: TeamMember.new do |f| %>
+      <div class="form-group">
+        <%= f.text_field :team_name, placeholder: "Team name", class: "form-control" %>
+        <div class="row flex-column align-items-center mt-3">
+          <%= f.submit "Join team !", class: "btn btn-dark" %>
+        </div>
+      </div>
     <% end %>
 
-    <%= form_with model: @team_member do |f| %>
-      <%= f.text_field :team_name, placeholder: "Team name" %>
-      <%= f.submit %>
-    <% end %>
   </div>
 </div>

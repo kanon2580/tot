@@ -3,27 +3,12 @@
 </div>
 
 <div class="row">
-  <div class="offset-1 col-10">
-<%# profile %>
-    <div class="row">
-      <div class="col-2">
-        <%= attachment_image_tag current_user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "noimage.jpg", size: "100x100" %>
-      </div>
+  <%= render 'users/profile_card', user: current_user %>
+</div>
 
-      <div class="col-5 d-flex flex-column justify-content-between">
-        <div class="row mt-3">
-          <span>name：</span><%= current_user.name %>
-        </div>
-        <div class="row mb-3">
-          <span>introduction：</span><br>
-          <%= current_user.introduction %>
-        </div>
-      </div>
-
-      <div class="col-2 d-flex align-items-end">
-        <%= link_to "edit", edit_user_path(current_user), class: "btn btn-outline-success" %>
-      </div>
-    </div>
+<div class="mt-5">
+  <%= render 'teams/teams', user: current_user %>
+</div>
 
 <%# charts %>
   <div class="row flex-column align-items-start">

@@ -1,7 +1,5 @@
 class TeamMembersController < ApplicationController
   def new
-    @team_member = TeamMember.new
-    @team_members = TeamMember.where(user_id: current_user)
   end
 
   def create

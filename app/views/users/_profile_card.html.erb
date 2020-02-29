@@ -1,0 +1,27 @@
+<div class="offset-2 col-8">
+  <div class="card">
+    <div class="row no-gutters">
+
+      <div class="col-3">
+        <%= attachment_image_tag user, :profile_image, :fill, 150, 150, format: 'jpeg', fallback: "noimage.jpg", size: "150x150" %>
+      </div>
+
+      <div class="col-9">
+        <div class="card-body">
+          <h5 class="card-title headline">
+            <%= user.name %>
+          </h5>
+
+          <p class="card-text">
+            <%= user.introduction %>  
+          </p>
+
+          <div class="float-right">
+            <%= link_to "edit", edit_user_path(user), class: "btn btn-outline-success btn-sm" %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
