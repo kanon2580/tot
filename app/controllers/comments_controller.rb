@@ -15,7 +15,8 @@ class CommentsController < ApplicationController
         response.created_issue_at = comment.issue.created_at
         response.first_comment_created_at = Time.current
         semi_difference = response.first_comment_created_at - response.created_issue_at
-        response.difference = semi_difference / 3600
+        binding.pry
+        response.difference = semi_difference / 60
         response.save
       end
     else
@@ -50,7 +51,7 @@ class CommentsController < ApplicationController
         response.created_issue_at = @issue.created_at
         response.first_comment_created_at = Time.current
         semi_difference = response.first_comment_created_at - response.created_issue_at
-        response.difference = semi_difference / 3600
+        response.difference = semi_difference / 60
         response.save
       end
     else
