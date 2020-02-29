@@ -6,8 +6,8 @@ class UsersController < ApplicationController
 
 # chart.jsに渡す値
     gon.user_name = current_user.name
-    gon.response_evaluation_datas = response_evaluation_datas
-    gon.required_time_evaluation_datas = required_time_evaluation_datas
+    gon.response_evaluation_datas = evaluation_datas(ResponseEvaluation)
+    gon.required_time_evaluation_datas = evaluation_datas(RequiredTimeEvaluation)
 
   end
 
@@ -16,8 +16,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find(params[:user_id])
-    if user.update(user_params)
+    if @user.update(user_params)
       redirect_to mypage_path
     else
       flash[:error] = "ユーザー情報が正常に保存されませんでした"
@@ -30,7 +29,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:user_id])
     @team_members = TeamMember.where(team_id: params[:team_id])
     @issues = @team.issues
   end
@@ -40,105 +38,41 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :introduction, :profile_image)
   end
 
-  def response_evaluation_datas
+  def evaluation_datas(evaluation_type)
     # 全ユーザーの平均値計算
-    all_users_average = []
-    User.all.each do |user|
-      users_evaluations = user.response_evaluations
-      unless users_evaluations.count == 0
-        sum_users_evaluation = users_evaluations.pluck(:difference).map{|n| n.ceil}.sum
-        users_average = sum_users_evaluation / users_evaluations.count
-        all_users_average << users_average
-      end
-    end
+    users_average = evaluation_type.group(:user_id).average(:difference).map{|k,v| v.to_i}
 
-    # 階級まわりの計算で使う変数
-    min_evaluation = all_users_average.min
-    max_evaluation = all_users_average.max
-    evaluation_diff = max_evaluation - min_evaluation
-    evaluation_class = (evaluation_diff / 10) # 階級幅
-    # 切り替わる値としてほしいのは8つだけど、階級幅を割り出す時は10段階なので10！
+    # 階級幅の計算
+    min = users_average.min
+    max = users_average.max
+    evaluation_class = (max - min)/10
 
     # 階級が切り替わる値を計算、配列に渡す
     evaluation_classes = []
-    i = min_evaluation
+    i = min
 
     9.times{|n|
-      i += (evaluation_class + min_evaluation)
+      i += (evaluation_class + min)
       evaluation_classes << i
     }
 
-    responses = ResponseEvaluation.all
-    evaluation_datas = []
-    i = 0
-    n = 0
-
     # 度数計算、配列に渡す
-    count_evaluations = all_users_average.select{|o| (min_evaluation...evaluation_classes[n]) === o}.count
-    evaluation_datas << count_evaluations
+    evaluation_datas = []
+    n = 8
     i = evaluation_classes[n]
-    n += 1
+
+    count_evaluations = users_average.select{|o| (i..max) === o}.count
+    evaluation_datas << count_evaluations
 
     8.times{|m|
-      count_evaluations = all_users_average.select{|o| (i...evaluation_classes[n]) === o}.count
-      evaluation_datas << count_evaluations
-      i = evaluation_classes[n]
-      n += 1
+    count_evaluations = users_average.select{|o| (i...evaluation_classes[n]) === o}.count
+    evaluation_datas << count_evaluations
+    n -= 1
+    i = evaluation_classes[n]
     }
 
-    i = evaluation_classes[8]
-    count_evaluations = all_users_average.select{|o| (i..max_evaluation) === o}.count
+    count_evaluations = users_average.select{|o| (min...evaluation_classes[n]) === o}.count
     evaluation_datas << count_evaluations
   end
 
-  def required_time_evaluation_datas
-    # 全ユーザーの平均値計算
-    all_users_average = []
-    User.all.each do |user|
-      users_evaluations = user.required_time_evaluations
-      unless users_evaluations.count == 0
-        sum_users_evaluation = users_evaluations.pluck(:difference).map{|n| n.ceil}.sum
-        users_average = sum_users_evaluation / users_evaluations.count
-        all_users_average << users_average
-      end
-    end
-
-    # 階級まわりの計算で使う変数
-    min_evaluation = all_users_average.min
-    max_evaluation = all_users_average.max
-    evaluation_diff = max_evaluation - min_evaluation
-    evaluation_class = (evaluation_diff / 10) # 階級幅
-    # 切り替わる値としてほしいのは8つだけど、階級幅を割り出す時は10段階なので10！
-
-    # 階級が切り替わる値を計算、配列に渡す
-    evaluation_classes = []
-    i = min_evaluation
-
-    9.times{|n|
-      i += (evaluation_class + min_evaluation)
-      evaluation_classes << i
-    }
-
-    responses = ResponseEvaluation.all
-    evaluation_datas = []
-    i = 0
-    n = 0
-
-    # 度数計算、配列に渡す
-    count_evaluations = all_users_average.select{|o| (min_evaluation...evaluation_classes[n]) === o}.count
-    evaluation_datas << count_evaluations
-    i = evaluation_classes[n]
-    n += 1
-
-    8.times{|m|
-      count_evaluations = all_users_average.select{|o| (i...evaluation_classes[n]) === o}.count
-      evaluation_datas << count_evaluations
-      i = evaluation_classes[n]
-      n += 1
-    }
-
-    i = evaluation_classes[8]
-    count_evaluations = all_users_average.select{|o| (i..max_evaluation) === o}.count
-    evaluation_datas << count_evaluations
-  end
 end
