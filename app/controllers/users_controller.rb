@@ -37,15 +37,23 @@ class UsersController < ApplicationController
   end
 
   def time_related_evaluation(evaluation_type)
-    evaluation_base = evaluation_type.group(:user_id).average(:difference).map{|k,v| v.to_i}
-    evaluation_datas(evaluation_base)
+    if evaluation_type == []
+      time_related_evaluation = [0]
+    else
+      evaluation_base = evaluation_type.group(:user_id).average(:difference).map{|k,v| v.to_i}
+      evaluation_datas(evaluation_base)
+    end
   end
 
   def like_evaluation_datas
     # 標本不足により、いいね総数で算出
-    user_issues_array = User.joins(:issues).group("users.id").map{|o| [o.id, o.issue_ids]}.to_h
-    liked_count_array = user_issues_array.map{|k,v| v.map{|o| Issue.find(o).likes.count}.sum}
-    evaluation_datas(liked_count_array)
+    if Like.all == []
+      like_evaluation_datas = [0]
+    else
+      user_issues_array = User.joins(:issues).group("users.id").map{|o| [o.id, o.issue_ids]}.to_h
+      liked_count_array = user_issues_array.map{|k,v| v.map{|o| Issue.find(o).likes.count}.sum}
+      evaluation_datas(liked_count_array)
+    end
   end
 
   def evaluation_datas(evaluation_base)
