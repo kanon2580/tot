@@ -50,7 +50,6 @@ class UsersController < ApplicationController
 
   def evaluation_datas(evaluation_base)
     # 階級幅の計算
-    binding.pry
     min = evaluation_base.min
     max = evaluation_base.max
     evaluation_class = (max - min)/10
