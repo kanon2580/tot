@@ -49,37 +49,41 @@ class UsersController < ApplicationController
   end
 
   def evaluation_datas(evaluation_base)
-    # 階級幅の計算
-    min = evaluation_base.min
-    max = evaluation_base.max
-    evaluation_class = (max - min)/10
+    if evaluation_base.all? {|base| base == 0}
+      evaluation_base = [0]
+    else
+      # 階級幅の計算
+      min = evaluation_base.min
+      max = evaluation_base.max
+      evaluation_class = (max - min)/10
 
-    # 階級が切り替わる値を計算、配列に渡す
-    evaluation_classes = []
-    i = min
+      # 階級が切り替わる値を計算、配列に渡す
+      evaluation_classes = []
+      i = min
 
-    9.times{|n|
-      i += (evaluation_class + min)
-      evaluation_classes << i
-    }
+      9.times{|n|
+        i += (evaluation_class + min)
+        evaluation_classes << i
+      }
 
-    # 度数計算、配列に渡す
-    evaluation_datas = []
-    n = 8
-    i = evaluation_classes[n]
+      # 度数計算、配列に渡す
+      evaluation_datas = []
+      n = 8
+      i = evaluation_classes[n]
 
-    count_evaluations = evaluation_base.select{|o| (i..max) === o}.count
-    evaluation_datas << count_evaluations
+      count_evaluations = evaluation_base.select{|o| (i..max) === o}.count
+      evaluation_datas << count_evaluations
 
-    8.times{|m|
-    n -= 1
-    count_evaluations = evaluation_base.select{|o| (evaluation_classes[n]...i) === o}.count
-    evaluation_datas << count_evaluations
-    i = evaluation_classes[n]
-    }
+      8.times{|m|
+      n -= 1
+      count_evaluations = evaluation_base.select{|o| (evaluation_classes[n]...i) === o}.count
+      evaluation_datas << count_evaluations
+      i = evaluation_classes[n]
+      }
 
-    count_evaluations = evaluation_base.select{|o| (min...i) === o}.count
-    evaluation_datas << count_evaluations
+      count_evaluations = evaluation_base.select{|o| (min...i) === o}.count
+      evaluation_datas << count_evaluations
+    end
   end
 
 end
