@@ -1,18 +1,30 @@
-<h1>Edit profile</h1>
+<div class="row flex-column align-items-center">
+  <h1 class="titlemark">Edit profile</h1>
+</div>
 
 <%= flash[:error] %>
 
-<%= form_with model: @user do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %><br>
+<div class="offset-2 col-8">
+  <%= form_with model: @user do |f| %>
+    <div class="form-group mt-3">
+      <%= f.label :name, class: "headline" %>
+      <%= f.text_field :name, class: "form-control offset-1 col-10" %>
+    </div>
 
-  <%= f.label :introduction %>
-  <%= f.text_field :introduction %><br>
+    <div class="form-group mt-3">
+      <%= f.label :introduction, class: "headline" %>
+      <%= f.text_area :introduction, class: "form-control offset-1 col-10" %>
+    </div>
 
-  <%= f.label :image %>
-  <%= f.attachment_field :profile_image %>
+    <div class="form-group mt-3">
+      <%= f.label :image, class: "headline" %><br>
+      <%= f.attachment_field :profile_image, class: "offset-1 col-10" %>
+    </div>
 
-  <%= f.submit %>
-<% end %>
+    <div class="offset-4 col-4">
+      <%= f.submit "update", class:"btn btn-success btn-block" %>
+    </div>
+  <% end %>
+</div>
 
-<%= link_to "My page", current_user %>
+<%= link_to "My page", mypage_path, class: "btn btn-dark btn-sm float-left mt-5 ml-5" %>
