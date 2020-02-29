@@ -61,7 +61,6 @@ class IssuesController < ApplicationController
     @issue.update(has_settled: true)
     @comment.update(has_best_answer: true)
     evaluated_comments = @issue.comments.where(is_first: true)
-    binding.pry
     evaluated_comments.each do |comment|
       required_time = RequiredTimeEvaluation.new
       required_time.user = comment.user
@@ -72,7 +71,7 @@ class IssuesController < ApplicationController
       required_time.difference = semi_difference / 3600
       required_time.save
     end
-    redirect_to team_issue_path(@issue)
+    redirect_to team_issue_path(@team)
   end
 
   private

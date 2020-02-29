@@ -48,6 +48,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'hirb'
+  gem 'hirb-unicode'
 end
 
 group :test do
@@ -71,6 +73,10 @@ gem "refile-mini_magick"
 # bootstrap
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
+
+# chart js
+gem 'chart-js-rails'
+gem 'gon'
 
 # deploy setting
 gem 'dotenv-rails'
