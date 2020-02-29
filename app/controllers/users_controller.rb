@@ -37,57 +37,53 @@ class UsersController < ApplicationController
   end
 
   def time_related_evaluation(evaluation_type)
-    if evaluation_type == []
-      time_related_evaluation = [0]
-    else
-      evaluation_base = evaluation_type.group(:user_id).average(:difference).map{|k,v| v.to_i}
-      evaluation_datas(evaluation_base)
-    end
+    evaluation_base = evaluation_type.group(:user_id).average(:difference).map{|k,v| v.to_i}
+    evaluation_datas(evaluation_base)
   end
 
   def like_evaluation_datas
     # 標本不足により、いいね総数で算出
-    if Like.all == []
-      like_evaluation_datas = [0]
-    else
-      user_issues_array = User.joins(:issues).group("users.id").map{|o| [o.id, o.issue_ids]}.to_h
-      liked_count_array = user_issues_array.map{|k,v| v.map{|o| Issue.find(o).likes.count}.sum}
-      evaluation_datas(liked_count_array)
-    end
+    user_issues_array = User.joins(:issues).group("users.id").map{|o| [o.id, o.issue_ids]}.to_h
+    liked_count_array = user_issues_array.map{|k,v| v.map{|o| Issue.find(o).likes.count}.sum}
+    evaluation_datas(liked_count_array)
   end
 
   def evaluation_datas(evaluation_base)
-    # 階級幅の計算
-    min = evaluation_base.min
-    max = evaluation_base.max
-    evaluation_class = (max - min)/10
+    if evaluation_base.all? {|base| base == 0}
+      evaluation_base = [0]
+    else
+      # 階級幅の計算
+      min = evaluation_base.min
+      max = evaluation_base.max
+      evaluation_class = (max - min)/10
 
-    # 階級が切り替わる値を計算、配列に渡す
-    evaluation_classes = []
-    i = min
+      # 階級が切り替わる値を計算、配列に渡す
+      evaluation_classes = []
+      i = min
 
-    9.times{|n|
-      i += (evaluation_class + min)
-      evaluation_classes << i
-    }
+      9.times{|n|
+        i += (evaluation_class + min)
+        evaluation_classes << i
+      }
 
-    # 度数計算、配列に渡す
-    evaluation_datas = []
-    n = 8
-    i = evaluation_classes[n]
+      # 度数計算、配列に渡す
+      evaluation_datas = []
+      n = 8
+      i = evaluation_classes[n]
 
-    count_evaluations = evaluation_base.select{|o| (i..max) === o}.count
-    evaluation_datas << count_evaluations
+      count_evaluations = evaluation_base.select{|o| (i..max) === o}.count
+      evaluation_datas << count_evaluations
 
-    8.times{|m|
-    n -= 1
-    count_evaluations = evaluation_base.select{|o| (evaluation_classes[n]...i) === o}.count
-    evaluation_datas << count_evaluations
-    i = evaluation_classes[n]
-    }
+      8.times{|m|
+      n -= 1
+      count_evaluations = evaluation_base.select{|o| (evaluation_classes[n]...i) === o}.count
+      evaluation_datas << count_evaluations
+      i = evaluation_classes[n]
+      }
 
-    count_evaluations = evaluation_base.select{|o| (min...i) === o}.count
-    evaluation_datas << count_evaluations
+      count_evaluations = evaluation_base.select{|o| (min...i) === o}.count
+      evaluation_datas << count_evaluations
+    end
   end
 
 end
