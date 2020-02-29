@@ -1,2 +1,13 @@
-<h1>Issues#choice</h1>
-<p>Find me in app/views/issues/choice.html.erb</p>
+<h1>Issue</h1>
+
+<%= @issue.title %><br>
+<%= @issue.body %><br>
+
+<h3>comments</h3>
+
+<% @comments.each do |comment| %>
+  <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
+  <%= comment.user.name %>
+  <%= comment.comment %>
+  <%= link_to "☆", team_confirm_path(@team, @issue, comment_id: comment) %><br>
+<% end %>

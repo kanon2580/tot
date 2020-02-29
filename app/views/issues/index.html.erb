@@ -1,13 +1,9 @@
+<div class="row flex-column align-items-center">
+  <h1 class="titlemark">Issues</h1>
+</div>
 
-<h1>Issues</h1>
-
-<table>
-  <% @issues.each do |issue| %>
-      <div class="row">
-        <%= link_to team_issue_path(params[:team_id], issue) do %>
-          <%= attachment_image_tag issue.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
-          <%= issue.title %>
-        <% end %>
-      </div>
-  <% end %>
-</table>
+<% @issues.each do |issue| %>
+    <div class="row mt-1">
+      <%= render 'issues/index_card', team: @team, issue: issue %>
+    </div>
+<% end %>

@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates	:name, presence: true
 
   has_many :team_members, dependent: :destroy
+  has_many :teams, through: :team_members
 	has_many :issues, dependent: :destroy
 	has_many :likes, dependent: :destroy
 	has_many :comments, dependent: :destroy
@@ -15,3 +16,4 @@ class User < ApplicationRecord
 
   attachment :profile_image
 end
+

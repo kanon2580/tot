@@ -1,4 +1,4 @@
 class RequiredTimeEvaluation < ApplicationRecord
   belongs_to :user
-	belongs_to :issue
+	belongs_to :comment
 end

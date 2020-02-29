@@ -1,2 +1,13 @@
-<h1>Issues#confirm</h1>
-<p>Find me in app/views/issues/confirm.html.erb</p>
+<h1>Issue</h1>
+
+<%= @issue.title %><br>
+<%= @issue.body %><br>
+
+<h3>comments</h3>
+
+  <%= attachment_image_tag @comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
+  <%= @comment.user.name %>
+  <%= @comment.comment %>
+
+<p>Once you decide, you can't undo.</p>
+<%= link_to "It's done !", team_settled_path(@team, @issue, comment_id: @comment), method: :put %>

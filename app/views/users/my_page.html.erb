@@ -1,15 +1,33 @@
-<h1>My page</h1>
-
-<div class="row">
-  <div class="col-3">
-    <%= render 'teams/teams', team_members: @team_members %>
-  </div>
-
-  <div class="col-9">
-    <%= attachment_image_tag current_user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "noimage.jpg", size: "100x100" %><br>
-    <span>name：</span><%= current_user.name %><br>
-    <span>introduction：</span><%= current_user.introduction %><br>
-  </div>
+<div class="row flex-column align-items-center">
+  <h1 class="titlemark mb-5">My page</h1>
 </div>
 
-  <%= link_to "Edit user", edit_user_path(current_user) %>
+<div class="row">
+  <%= render 'users/profile_card', user: current_user %>
+</div>
+
+<div class="mt-5">
+  <%= render 'teams/teams', user: current_user %>
+</div>
+
+<%# charts %>
+  <div class="row flex-column align-items-start">
+    <p>total</p>
+    <canvas id="totalChart"></canvas>
+    <%= render 'users/charts/total_chart' %>
+
+    <p>response</p>
+    <canvas id="responseChart"></canvas>
+    <%= render 'users/charts/response_chart' %>
+
+    <p>required time</p>
+    <canvas id="requiredTimeChart"></canvas>
+    <%= render 'users/charts/required_time_chart' %>
+
+    <p>likes</p>
+    <canvas id="likeChart"></canvas>
+    <%= render 'users/charts/like_chart' %>
+  </div>
+  
+  </div>
+</div>

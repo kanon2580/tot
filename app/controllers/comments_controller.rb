@@ -4,26 +4,22 @@ class CommentsController < ApplicationController
     comment = Comment.new(comment_params)
     comment.user = current_user
     comment.issue_id = params[:issue_id]
-    binding.pry
     if issue.comments.where(user_id: current_user).blank?
-      evaluation = ResponseEvaluation.new
-      evaluation.user = current_user
-      evaluation.created_issue_at = comment.issue.created_at
-      evaluation.first_comment_created_at = Time.current
-      semi_difference = evaluation.first_comment_created_at - evaluation.created_issue_at
-      evaluation.difference = semi_difference / 3600
-      evaluation.save
-      # レスポンス評価を格納するだけ。ほんと汚い絶対メソッド化。
-      # ストロングパラメータ効かない？
-      # view側からパラメータとして送られてないから。アクション内で全部やってるからrequireとpermitの組み合わせがうまいこといかん。
-      # メソッド化すればやりようあるので頑張れ
+      response = ResponseEvaluation.new
+      comment.is_first = true
     end
     if comment.save(comment_params)
-      if evaluation.present?
-        evaluation.update(comment_id: comment.id)
+      if response.present?
+        response.user = current_user
+        response.comment = comment
+        response.created_issue_at = comment.issue.created_at
+        response.first_comment_created_at = Time.current
+        semi_difference = response.first_comment_created_at - response.created_issue_at
+        binding.pry
+        response.difference = semi_difference / 60
+        response.save
       end
     else
-      evaluation.destroy
       flash[:error] = "your comment had not save :("
     end
     redirect_back(fallback_location: root_path)
@@ -44,12 +40,21 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find(params[:comment_id])
-    evaluation = ResponseEvaluation.find_by(comment_id: params[:comment_id])
-    if evaluation.present?
-      evaluation.destroy
-    end
-    unless comment.destroy
+    response = @comment.response_evaluation
+    if @comment.destroy
+      if @issue.comments.where(user_id: current_user).present?
+        oldest_comment = @issue.comments.where(user_id: current_user).order("created_at").min
+        oldest_comment.update(is_first: true)
+        response = ResponseEvaluation.new
+        response.user = current_user
+        response.comment = oldest_comment
+        response.created_issue_at = @issue.created_at
+        response.first_comment_created_at = Time.current
+        semi_difference = response.first_comment_created_at - response.created_issue_at
+        response.difference = semi_difference / 60
+        response.save
+      end
+    else
       flash[:error] = "your comment had not delete :("
     end
     redirect_to team_issue_path(params[:team_id], params[:issue_id])
