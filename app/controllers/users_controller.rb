@@ -8,6 +8,8 @@ class UsersController < ApplicationController
     gon.required_time_evaluation_datas = time_related_evaluation(RequiredTimeEvaluation)
     gon.like_evaluation_datas = like_evaluation_datas
     gon.best_answer_evaluation_datas = best_answer_evaluation_datas
+    gon.issue_tags_labels = issue_tags_labels
+    gon.issue_tags_evaluation_datas = issue_tags_evaluation_datas
   end
 
   def edit
@@ -44,8 +46,8 @@ class UsersController < ApplicationController
 
   def like_evaluation_datas
     # 標本不足により、いいね総数で算出
-    user_issues_array = User.joins(:issues).group("users.id").map{|o| [o.id, o.issue_ids]}.to_h
-    like_count_array = user_issues_array.map{|k,v| v.map{|o| Issue.find(o).likes.count}.sum}
+    user_issues_array = User.joins(:issues).group("users.id").map{|user| [user.id, user.issue_ids]}.to_h
+    like_count_array = user_issues_array.map{|user,issues| issues.map{|o| Issue.find(o).likes.count}.sum}
     evaluation_datas_sort_by_min(like_count_array)
   end
 
@@ -130,6 +132,18 @@ class UsersController < ApplicationController
       count_evaluations = evaluation_base.select{|o| (min...i) === o}.count
       evaluation_datas << count_evaluations
     end
+  end
+
+  def issue_tags_labels
+    user_issue_tags_array = current_user.issues.map{|issue| issue.tags.map{|tag| tag.name}}.flatten
+    tags_count_array = user_issue_tags_array.group_by(&:itself).map{|k,v| k}
+  end
+
+  def issue_tags_evaluation_datas
+    user_issue_tags_array = current_user.issues.map{|issue| issue.tags.map{|tag| tag.id}}.flatten
+    tags_count_array = user_issue_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
+    base = tags_count_array.values.sum.to_f
+    evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
   end
 
 end
