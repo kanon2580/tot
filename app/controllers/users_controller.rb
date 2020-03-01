@@ -10,6 +10,8 @@ class UsersController < ApplicationController
     gon.best_answer_evaluation_datas = best_answer_evaluation_datas
     gon.issue_tags_labels = issue_tags_labels
     gon.issue_tags_evaluation_datas = issue_tags_evaluation_datas
+    gon.comment_tags_labels = comment_tags_labels
+    gon.comment_tags_evaluation_datas = comment_tags_evaluation_datas
   end
 
   def edit
@@ -136,7 +138,7 @@ class UsersController < ApplicationController
 
   def issue_tags_labels
     user_issue_tags_array = current_user.issues.map{|issue| issue.tags.map{|tag| tag.name}}.flatten
-    tags_count_array = user_issue_tags_array.group_by(&:itself).map{|k,v| k}
+    tags_count_array = user_issue_tags_array.group_by(&:itself).keys
   end
 
   def issue_tags_evaluation_datas
@@ -146,4 +148,17 @@ class UsersController < ApplicationController
     evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
   end
 
+  def comment_tags_labels
+    user_comment_tags_array = current_user.comments.map{|comment| comment.issue.tags.map{|tag| tag.name}}.flatten
+    tags_count_array = user_comment_tags_array.group_by(&:itself).keys
+  end
+
+  def comment_tags_evaluation_datas
+    user_comment_tags_array = current_user.comments.map{|comment| comment.issue.tags.map{|tag| tag.id}}.flatten
+    tags_count_array = user_comment_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
+    base = tags_count_array.values.sum.to_f
+    evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
+  end
+
 end
+
