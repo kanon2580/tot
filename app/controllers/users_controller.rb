@@ -28,7 +28,8 @@ class UsersController < ApplicationController
   end
 
   def index
-    @team_members = TeamMember.where(team_id: params[:team_id])
+    users = @team.users
+    @pagenated_users = users.page(params[:page]).per(12)
   end
 
   def show
