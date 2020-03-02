@@ -7,18 +7,24 @@
 
     <div class="nav-items mt-5">
       <% if  request.fullpath.include? "teams" %>
-        <%= link_to "issues", team_issues_path, class: "nav-link" %>
-        <%= link_to "new issue", new_team_issue_path, class: "nav-link" %>
-        <%= link_to "tags", team_tags_path(@team), class: "nav-link" %>
+        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">About team</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <%= link_to "Issues", team_issues_path, class:"dropdown-item" %>
+          <%= link_to "Tags", team_tags_path(@team), class:"dropdown-item" %>
+          <%= link_to "Members", team_users_path(@team), class:"dropdown-item" %>
+        </div>    
+        <%= link_to "New issue", new_team_issue_path, class: "nav-link" %>
+        <%= link_to "My page", mypage_path(current_user), class:"nav-link" %>
       <% else %>
-        <%= link_to "join team", new_team_member_path, class: "nav-link" %>
-
         <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">teams</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <% current_user.teams.each do |team| %>
             <%= link_to team.name, team_path(team), class:"dropdown-item" %>
           <% end %>
         </div>
+
+        <%= link_to "join team", new_team_member_path, class: "nav-link" %>
+        
       <% end %>
 
       <%= link_to "logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
