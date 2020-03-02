@@ -3,21 +3,18 @@
 </div>
 
 <div class="row">
-  <%= render 'users/profile_card', user: current_user %>
-</div>
-
-<div class="mt-5">
-  <%= render 'teams/teams', user: current_user %>
-</div>
-
-<%# charts %>
-  <div class="row">
-    <p>total</p>
+  <div class="offset-1 col-4">
+    <%= render 'users/profile_card', user: current_user %>
+  </div>
+  
+  <div class="col-7">
     <canvas id="totalChart" style="height:100%;"></canvas>
     <%= render 'users/charts/total_chart' %>
   </div>
+</div>
 
-  <div class="row">
+<%# chart tabs %>
+  <div class="row m-5">
     <div class="ml-3 my-auto col-3">
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <a class="nav-link active" id="response-tab" data-toggle="pill" href="#response" role="tab" aria-controls="response" aria-selected="true">response</a>
