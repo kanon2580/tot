@@ -4,18 +4,21 @@
   <h1 class="titlemark">・</h1>
 </div>
 
+<%# selled issues title %>
 <% if @issue.has_settled == true %>
   <div class="row flex-column align-items-center mt-3">
     <h3 style="color: #ff7f50;">＼ Well done！／</h3>
   </div>
 <% end %>
 
+<%# issue %>
 <div class="row">
   <div class="offset-1 col-10">
     <%= render 'issue_card', team: @team, issue: @issue %>
   </div>
 </div>
 
+<%# comments %>
 <div class="row mt-5">
   <div class="offset-2 col-8">
     <% @comments.each do |comment| %>
@@ -24,6 +27,7 @@
   </div>
 </div>
 
+<%# comment form %>
 <%= flash[:error] %>
 
 <div class="row mt-3">
