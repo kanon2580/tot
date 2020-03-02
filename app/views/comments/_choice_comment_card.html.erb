@@ -7,11 +7,9 @@
 
     <div class="card-body">
       <span class="card-text"><%= comment.comment %></span>
-      <% unless issue.has_settled == true %>
-        <div class="float-right">
-          <%= link_to "☆", team_confirm_path(@team, @issue, comment_id: comment), class:"text-warning h3" %>
-        </div>
-      <% end %>
+      <div class="float-right">
+        <%= link_to "☆", team_confirm_path(@team, @issue, comment_id: comment), class:"text-warning h3" %>
+      </div>
     </div>
 
   </div>

@@ -35,7 +35,7 @@
     <%= form_with model: @new_comment, url: team_issue_comments_path(params[:team_id], params[:issue_id]) do |f| %>
       <div class="form-group">
         <%= f.text_area :comment, class: "form-control" %>
-        <%= f.submit :post, class: "btn btn-outline-dark float-right mt-1" %>
+        <%= f.submit :post, class: "btn btn-dark float-right mt-1" %>
       </div>
     <% end %>
   </div>
@@ -43,6 +43,6 @@
 
 <div class="row my-5">
   <div class="offset-4 col-4">
-    <%= link_to "Is the issue solved?", team_choice_path(@team, @issue), class: "btn btn-dark btn-block" %>
+    <%= link_to "Is the issue solved?", team_choice_path(@team, @issue), class: "btn btn-danger btn-block" %>
   </div>
 </div>
