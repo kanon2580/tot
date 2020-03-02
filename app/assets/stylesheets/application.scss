@@ -51,6 +51,14 @@ a{
   color: #fff;
 }
 
+.nav-link:hover{
+  color: rgb(163, 163, 163);
+}
+
+.dropdown-item.active, .dropdown-item:active{
+  background-color: #ff7f50;
+}
+
 // cardデザイン
 .callout-dark{
   border-left: solid 5px #343a40;
