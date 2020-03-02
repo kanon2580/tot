@@ -5,8 +5,12 @@
 </div>
 
 <div class="row my-5">
-  <div class="offset-1 col-10">
-    <%= render 'users/members', users: @pagenated_users %>
+  <div class="offset-2 col-8">
+    <div class="card-columns">
+      <% @pagenated_users.each do |user| %>
+        <%= render 'users/member_card', team: @team, user: user  %>
+      <% end %>
+    </div>
   </div>
 </div>
 
