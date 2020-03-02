@@ -16,20 +16,23 @@
 
 // titleデザイン
 .titlemark{
-  border-left: double 7px #ff7f50;
-  border-right: double 7px #ff7f50;
-  padding: 5px 10px;
+  color: #ff7f50;
+  font-weight: bold;
 }
 
 // semi titleデザイン
 .headline{
   border-bottom: solid 1px #ff7f50;
-  padding: 0 5px
 }
 
 // 余白
 main{
   margin-bottom: 50px;
+}
+
+// リンク文字色
+a{
+  color: #343a40;
 }
 
 // タブデザイン
@@ -46,4 +49,9 @@ main{
 // サイドバーデザイン
 .nav-link{
   color: #fff;
+}
+
+// issue-indexデザイン
+.issue-index > .card{
+  border-left: solid 5px #343a40;
 }

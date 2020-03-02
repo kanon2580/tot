@@ -1,22 +1,39 @@
-<div class="container">
-  <div class="row flex-column align-items-center">
-    <h1 class="titlemark mb-5">Team</h1>
+<div class="container headline sticky-top bg-white">
+  <h1><%= @team.name %></h1>
+</div>
+
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Issues</h3>
+  <h1 class="titlemark">・</h1>
+</div>
+
+<div class="row">
+  <div class="offset-1 col-10">
+    <%= render 'issues/issues', team: @team, issues: @issues %>
   </div>
+</div>
 
-  <div class="row">
-    <div class="offset-1 col-10">
-      <%= render 'issues/issues', team: @team, issues: @issues %>
-    </div>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Members</h3>
+  <h1 class="titlemark">・</h1>
+</div>
+
+<div class="row mt-5">
+  <div class="offset-1 col-10">
+    <%= render 'users/members', team_members: @team_members %>
   </div>
+</div>
 
-  <div class="row">
-    <div class="offset-1 col-4">
-      <%= render 'tags/tags', tags: @tags %>
-    </div>
+<div class="row flex-column align-items-center mt-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Tags</h3>
+  <h1 class="titlemark">・</h1>
+</div>
 
-    <div class="col-6">
-      <%= render 'users/members', team_members: @team_members %>
-    </div>
+<div class="row mb-5">
+  <div class="offset-1 col-10">
+    <%= render 'tags/tags', tags: @tags %>
   </div>
-
 </div>

@@ -1,16 +1,17 @@
-<div class="card mt-3">
-  <div class="row no-gutters">
-    <div class="col-3">
-      <%= attachment_image_tag user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %><br>
+<div class="card">
+  <%= attachment_image_tag user, :profile_image, format: 'jpeg', fallback: "noimage.jpg", class: "card-img-top " %>
+  <div class="card-body">
+    <h5 class="card-title"><%= user.name %></h5>
+
+    <div class="d-flex justify-content-end">
+      <%= link_to user_issues_path(user), class:"text-dark" do %>
+        <i class="fas fa-pen-fancy"></i><%= user.issues.count %>
+      <% end %>
+      <%= link_to user_comments_path(user), class:"text-dark ml-2" do %>
+        <i class="fas fa-comment"></i><%= user.comments.count %>
+      <% end %>
     </div>
 
-    <div class="offset-1 col-8">
-      <h5 class="card-title">
-        <%= link_to team_user_path(user_id: user.id) do %>
-          <%= user.name %>
-        <% end %>
-      </h5>
-    </div>
   </div>
 </div>
 

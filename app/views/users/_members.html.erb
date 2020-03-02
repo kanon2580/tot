@@ -1,11 +1,7 @@
-<div class="row flex-column align-items-center">
-  <h3 class="headline">Members</h3>
-</div>
-
 <div class="row">
     <% @team.users.each do |user| %>
-      <div class="col-6">
-        <%= render 'users/member_card', team: @team, user: user %>
+      <div class="col-3">
+      <%= render 'users/member_card', team: @team, user: user %>
       </div>
     <% end %>
 </div>

@@ -1,7 +1,3 @@
-<div class="row flex-column align-items-center">
-  <h3 class="headline">Tags</h3>
-</div>
-
 <% tags.each do |tag| %>
     <%= link_to tag.name, team_tag_issues_path(@team, tag), class: "btn btn-sm btn-dark mt-3" %>
 <% end %>
