@@ -1,7 +1,7 @@
 <div class="card">
   <%= attachment_image_tag user, :profile_image, format: 'jpeg', fallback: "noimage.jpg", class: "card-img-top " %>
   <div class="card-body">
-    <h5 class="card-title"><%= link_to user.name, team_user_path(@team, user) %></h5>
+    <h5 class="card-title"><%= link_to user.name, team_mypage_path(@team, user) %></h5>
 
     <div class="d-flex justify-content-end">
       <%= link_to user_issues_path(user), class:"text-dark" do %>

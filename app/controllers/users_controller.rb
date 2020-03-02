@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   def my_page
-    @team_members = TeamMember.where(user_id: current_user)
 
 # chart.jsに渡す値
     gon.user_name = current_user.name
@@ -30,11 +29,6 @@ class UsersController < ApplicationController
   def index
     users = @team.users
     @pagenated_users = users.page(params[:page]).per(12)
-  end
-
-  def show
-    @team_members = TeamMember.where(team_id: params[:team_id])
-    @issues = @team.issues
   end
 
   private
