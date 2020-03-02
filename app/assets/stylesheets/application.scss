@@ -51,7 +51,36 @@ a{
   color: #fff;
 }
 
-// issue-indexデザイン
-.issue-index > .card{
+// cardデザイン
+.callout-dark{
   border-left: solid 5px #343a40;
+}
+.callout-coral{
+  border-left: solid 5px #ff7f50;
+}
+
+// pagenateデザイン
+.pagination>li>a {
+  color: #343a40;
+}
+
+.pagination>.active>a {
+  background-color: #ff7f50;
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #ff7f50;
+  border-color: #ff7f50;
+}
+
+.pagination>li>a:hover {
+  background-color: #ff7f50;
+  border-color: #ff7f50;
+  color: #fff;
+}
+
+.page-link:focus {
+  box-shadow: 0 0 0 0.2rem #ff7f50; /*ボックス周りの影の色*/
 }

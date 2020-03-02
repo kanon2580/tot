@@ -1,9 +1,17 @@
-<div class="row flex-column align-items-center">
-  <h1 class="titlemark">Issues</h1>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Issues</h3>
+  <h1 class="titlemark">・</h1>
 </div>
 
-<% @issues.each do |issue| %>
-    <div class="row mt-1">
-      <%= render 'issues/index_card', team: @team, issue: issue %>
-    </div>
-<% end %>
+<div class="offset-1 col-10">
+  <% @pagenate_issues.each do |issue| %>
+      <div class="row mt-3">
+        <%= render 'issues/index_card', team: @team, issue: issue %>
+      </div>
+  <% end %>
+</div>
+
+<div class="row justify-content-center my-5">
+  <%= paginate @pagenate_issues %>
+</div>
