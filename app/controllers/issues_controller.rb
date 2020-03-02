@@ -48,7 +48,7 @@ class IssuesController < ApplicationController
 
   def destroy
     @issue.destroy 
-    redirect_to team_path(team_id: params[:team_id])
+    redirect_to team_issues_path(@team)
   end
 
   def choice
