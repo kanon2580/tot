@@ -1,10 +1,10 @@
 <div class="container headline sticky-top bg-white">
-  <h1>My page</h1>
+  <h1>User information</h1>
 </div>
 
 <div class="row mt-5">
   <div class="offset-1 col-4">
-    <%= render 'users/profile_card', user: current_user %>
+    <%= render 'users/profile_card', user: @user %>
   </div>
   
   <div class="col-7">

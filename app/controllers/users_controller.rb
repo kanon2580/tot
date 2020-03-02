@@ -2,15 +2,18 @@ class UsersController < ApplicationController
   def my_page
 
 # chart.jsに渡す値
-    gon.user_name = current_user.name
+    gon.user_name = @user.name
+
     gon.response_evaluation_datas = time_related_evaluation(ResponseEvaluation)
     gon.required_time_evaluation_datas = time_related_evaluation(RequiredTimeEvaluation)
+
     gon.like_evaluation_datas = like_evaluation_datas
     gon.best_answer_evaluation_datas = best_answer_evaluation_datas
-    gon.issue_tags_labels = issue_tags_labels
-    gon.issue_tags_evaluation_datas = issue_tags_evaluation_datas
-    gon.comment_tags_labels = comment_tags_labels
-    gon.comment_tags_evaluation_datas = comment_tags_evaluation_datas
+
+    gon.issue_tags_labels = issue_tags_labels(@user)
+    gon.issue_tags_evaluation_datas = issue_tags_evaluation_datas(@user)
+    gon.comment_tags_labels = comment_tags_labels(@user)
+    gon.comment_tags_evaluation_datas = comment_tags_evaluation_datas(@user)
   end
 
   def edit
@@ -131,28 +134,44 @@ class UsersController < ApplicationController
     end
   end
 
-  def issue_tags_labels
-    user_issue_tags_array = current_user.issues.map{|issue| issue.tags.map{|tag| tag.name}}.flatten
-    tags_count_array = user_issue_tags_array.group_by(&:itself).keys
+  def issue_tags_labels(user)
+    user_issue_tags_array = user.issues.map{|issue| issue.tags.map{|tag| tag.name}}.flatten
+    if user_issue_tags_array == []
+      tags_name = ["nothing issues tags"]
+    else
+      tags_name = user_issue_tags_array.group_by(&:itself).keys
+    end
   end
 
-  def issue_tags_evaluation_datas
-    user_issue_tags_array = current_user.issues.map{|issue| issue.tags.map{|tag| tag.id}}.flatten
-    tags_count_array = user_issue_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
-    base = tags_count_array.values.sum.to_f
-    evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
+  def issue_tags_evaluation_datas(user)
+    user_issue_tags_array = user.issues.map{|issue| issue.tags.map{|tag| tag.id}}.flatten
+    if user_issue_tags_array == []
+      evaluation_datas = [100]
+    else
+      tags_count_array = user_issue_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
+      base = tags_count_array.values.sum.to_f
+      evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
+    end
   end
 
-  def comment_tags_labels
-    user_comment_tags_array = current_user.comments.map{|comment| comment.issue.tags.map{|tag| tag.name}}.flatten
-    tags_count_array = user_comment_tags_array.group_by(&:itself).keys
+  def comment_tags_labels(user)
+    user_comment_tags_array = user.comments.map{|comment| comment.issue.tags.map{|tag| tag.name}}.flatten
+    if user_comment_tags_array == []
+      tags_name = ["nothing comments tags"]
+    else
+      tags_name = user_comment_tags_array.group_by(&:itself).keys
+    end
   end
 
-  def comment_tags_evaluation_datas
-    user_comment_tags_array = current_user.comments.map{|comment| comment.issue.tags.map{|tag| tag.id}}.flatten
-    tags_count_array = user_comment_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
-    base = tags_count_array.values.sum.to_f
-    evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
+  def comment_tags_evaluation_datas(user)
+    user_comment_tags_array = user.comments.map{|comment| comment.issue.tags.map{|tag| tag.id}}.flatten
+    if user_comment_tags_array == []
+      evaluation_datas = [100]
+    else
+      tags_count_array = user_comment_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
+      base = tags_count_array.values.sum.to_f
+      evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
+    end
   end
 
 end
