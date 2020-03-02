@@ -1,10 +1,34 @@
-<h1>Edit issue</h1>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Edit issue</h3>
+  <h1 class="titlemark">・</h1>
+</div>
 
 <%= flash[:error] %>
 
-<%= form_with model: [@team, @issue] do |f| %>
-  <%= f.text_field :title %><br>
-  <%= f.text_area :body %><br>
-  <%= f.collection_check_boxes :tag_ids, @team.tags, :id, :name, include_hidden: false %>
-  <%= f.submit %>
-<% end %>
+<div class="row">
+  <div class="offset-2 col-8">
+    <%= form_with model: [@team, @issue] do |f| %>
+      <div class="form-group checkboxes">
+
+        <p class="headline">Tags</p>
+        <%= f.collection_check_boxes :tag_ids, @team.tags, :id, :name, include_hidden: false do |tag| %>
+          <%= tag.check_box %>
+          <%= tag.label %>
+        <% end %>
+      </div>
+
+      <p class="headline mt-5">Title</p>
+      <div class="form-group">
+        <%= f.text_field :title, class:"form-control offset-1 col-10" %>
+      </div>
+
+      <p class="headline mt-5">Body</p>
+      <div class="form-group">
+        <%= f.text_area :body, class:"form-control offset-1 col-10" %>
+      </div>
+
+      <%= f.submit "Update issue", class:"btn btn-dark btn-block offset-2 col-8 my-5" %>
+    <% end %>
+  </div>
+</div>
