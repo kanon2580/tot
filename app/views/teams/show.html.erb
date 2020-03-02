@@ -35,7 +35,7 @@
     <div class="row">
         <% @team.users.last(4).each do |user| %>
           <div class="col-3">
-            <%= render 'users/member_card', user: user %>
+            <%= render 'users/member_card', team: @team, user: user %>
           </div>
         <% end %>
     </div>

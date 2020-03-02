@@ -22,11 +22,18 @@ class IssuesController < ApplicationController
   end
 
   def index
-    issues = @team.issues
+    if @team.present? && @user.present?
+      issues = @team.issues.where(user_id: @user).order(created_at: :desc)
+      @tags = @team.tags
+      binding.pry
+    elsif @team.present?
+      issues = @team.issues.order(created_at: :desc)
+      @tags = @team.tags
+    else
+      issues = @user.issues.order(created_at: :desc)
+    end
+
     @pagenated_issues = issues.page(params[:page]).per(10)
-    # teamに関連するissuesだけ設定
-    @tags = @team.tags
-    @team_members = TeamMember.where(team_id: @team.id)
   end
 
   def show
