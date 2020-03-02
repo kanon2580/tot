@@ -1,12 +1,32 @@
-<h1>New issue</h1>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>New issue</h3>
+  <h1 class="titlemark">・</h1>
+</div>
 
 <%= flash[:error] %>
 
-<%= form_with model: [@team, Issue.new] do |f| %>
-  <%= f.label :Issue %><br>
-  <%= f.text_field :title, placeholder: "title" %><br>
-  <%= f.text_area :body, placeholder: "what's happened?" %><br>
-  <%= f.label :Tags %>
-  <%= f.collection_check_boxes :tag_ids, @team.tags, :id, :name, include_hidden: false %>
-  <%= f.submit %>
-<% end %>
+<div class="row">
+  <div class="offset-2 col-8">
+    <%= form_with model: [@team, Issue.new] do |f| %>
+      <div class="form-group checkboxes">
+        <%= f.collection_check_boxes :tag_ids, @team.tags, :id, :name, include_hidden: false do |tag| %>
+          <%= tag.check_box %>
+          <%= tag.label %>
+        <% end %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.text_field :title, placeholder: "title", class:"form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.text_area :body, placeholder: "what's happened?", class:"form-control" %>
+      </div>
+
+      <div class="row">
+        <%= f.submit "Create issue", class:"btn btn-dark btn-block offset-2 col-8" %>
+      </div>
+    <% end %>
+  </div>
+</div>
