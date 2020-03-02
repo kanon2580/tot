@@ -36,3 +36,10 @@ a{
 main{
   margin-bottom: 50px;
 }
+
+// タブデザイン
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #343a40;
+}

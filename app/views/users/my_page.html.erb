@@ -11,35 +11,54 @@
 </div>
 
 <%# charts %>
-  <div class="row flex-column align-items-start">
+  <div class="row">
     <p>total</p>
-    <canvas id="totalChart"></canvas>
+    <canvas id="totalChart" style="height:100%;"></canvas>
     <%= render 'users/charts/total_chart' %>
-
-    <p>response</p>
-    <canvas id="responseChart"></canvas>
-    <%= render 'users/charts/response_chart' %>
-
-    <p>required time</p>
-    <canvas id="requiredTimeChart"></canvas>
-    <%= render 'users/charts/required_time_chart' %>
-
-    <p>likes</p>
-    <canvas id="likeChart"></canvas>
-    <%= render 'users/charts/like_chart' %>
-
-    <p>best answer</p>
-    <canvas id="bestAnswerChart"></canvas>
-    <%= render 'users/charts/best_answer_chart' %>
-
-    <p>issue tags</p>
-    <canvas id="issueTagsChart"></canvas>
-    <%= render 'users/charts/issue_tags_chart' %>
-
-    <p>comment tags</p>
-    <canvas id="commentTagsChart"></canvas>
-    <%= render 'users/charts/comment_tags_chart' %>
   </div>
-  
+
+  <div class="row">
+    <div class="ml-3 my-auto col-3">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a class="nav-link active" id="response-tab" data-toggle="pill" href="#response" role="tab" aria-controls="response" aria-selected="true">response</a>
+        <a class="nav-link" id="required-time-tab" data-toggle="pill" href="#required-time" role="tab" aria-controls="required-time" aria-selected="false">required time</a>
+        <a class="nav-link" id="likes-tab" data-toggle="pill" href="#likes" role="tab" aria-controls="likes" aria-selected="false">likes</a>
+        <a class="nav-link" id="best-answer-tab" data-toggle="pill" href="#best-answer" role="tab" aria-controls="best-answer" aria-selected="false">best answer</a>
+        <a class="nav-link" id="issue-tags-tab" data-toggle="pill" href="#issue-tags" role="tab" aria-controls="issue-tags" aria-selected="false">issue tags</a>
+        <a class="nav-link" id="comment-tags-tab" data-toggle="pill" href="#comment-tags" role="tab" aria-controls="comment-tags" aria-selected="false">comment tags</a>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="response" role="tabpanel" aria-labelledby="response-tab">
+          <canvas id="responseChart" style="height:100%;"></canvas>
+          <%= render 'users/charts/response_chart' %>
+        </div>
+
+        <div class="tab-pane fade" id="required-time" role="tabpanel" aria-labelledby="required-time-tab">
+          <canvas id="requiredTimeChart"></canvas>
+          <%= render 'users/charts/required_time_chart' %>
+        </div>
+
+        <div class="tab-pane fade" id="likes" role="tabpanel" aria-labelledby="likes-tab">
+          <canvas id="likeChart"></canvas>
+          <%= render 'users/charts/like_chart' %>
+        </div>
+
+        <div class="tab-pane fade" id="best-answer" role="tabpanel" aria-labelledby="best-answer-tab">
+          <canvas id="bestAnswerChart"></canvas>
+          <%= render 'users/charts/best_answer_chart' %>
+        </div>
+
+        <div class="tab-pane fade" id="issue-tags" role="tabpanel" aria-labelledby="issue-tags-tab">
+          <canvas id="issueTagsChart"></canvas>
+          <%= render 'users/charts/issue_tags_chart' %>
+        </div>
+
+        <div class="tab-pane fade" id="comment-tags" role="tabpanel" aria-labelledby="comment-tags-tab">
+          <canvas id="commentTagsChart"></canvas>
+          <%= render 'users/charts/comment_tags_chart' %>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
