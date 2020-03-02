@@ -10,22 +10,26 @@
   <div class="offset-2 col-8">
     <%= form_with model: [@team, Issue.new] do |f| %>
       <div class="form-group checkboxes">
+
+        <p class="headline">Tags</p>
         <%= f.collection_check_boxes :tag_ids, @team.tags, :id, :name, include_hidden: false do |tag| %>
           <%= tag.check_box %>
           <%= tag.label %>
         <% end %>
       </div>
       
+      <p class="headline mt-5">Title</p>
       <div class="form-group">
-        <%= f.text_field :title, placeholder: "title", class:"form-control" %>
+        <%= f.text_field :title, placeholder: "title", class:"form-control offset-1 col-10" %>
       </div>
 
+      <p class="headline mt-5">Body</p>
       <div class="form-group">
-        <%= f.text_area :body, placeholder: "what's happened?", class:"form-control" %>
+        <%= f.text_area :body, placeholder: "what's happened?", class:"form-control offset-1 col-10" %>
       </div>
 
       <div class="row">
-        <%= f.submit "Create issue", class:"btn btn-dark btn-block offset-2 col-8" %>
+        <%= f.submit "Create issue", class:"btn btn-dark btn-block offset-2 col-8 my-5" %>
       </div>
     <% end %>
   </div>
