@@ -27,11 +27,6 @@
   padding: 0 5px
 }
 
-// リンク文字色
-a{
-  color: black;
-}
-
 // 余白
 main{
   margin-bottom: 50px;
@@ -39,7 +34,16 @@ main{
 
 // タブデザイン
 .nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
+.nav-pills .show > .nav-link{
   color: #fff;
   background-color: #343a40;
+}
+.nav-pills .nav-link,
+.nav-pills .show > .nav-link{
+  color: #343a40;
+}
+
+// サイドバーデザイン
+.nav-link{
+  color: #fff;
 }
