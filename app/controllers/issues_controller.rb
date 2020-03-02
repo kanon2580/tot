@@ -22,8 +22,8 @@ class IssuesController < ApplicationController
   end
 
   def index
-    @issues = @team.issues
-    @pagenate_issues = @issues.page(params[:page]).per(10)
+    issues = @team.issues
+    @pagenated_issues = issues.page(params[:page]).per(10)
     # teamに関連するissuesだけ設定
     @tags = @team.tags
     @team_members = TeamMember.where(team_id: @team.id)
