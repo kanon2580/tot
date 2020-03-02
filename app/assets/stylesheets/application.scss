@@ -118,3 +118,25 @@ a{
   background-color: #343a40;
   color: white;
 }
+
+// ボタンデザイン
+.btn-danger,
+.btn-danger.disabled,
+.btn-danger:disabled {
+  color: #fff;
+  background-color: #ff7f50;
+  border-color: #ff7f50;
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #ff6347;
+  border-color: #ff6347;
+}
+
+.btn-danger:active,
+.btn-danger.active {
+  color: #fff;
+  background-color: #ff6347;
+  border-color: #ff6347;
+}
