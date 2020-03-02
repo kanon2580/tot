@@ -1,5 +1,9 @@
 <div class="container headline sticky-top bg-white">
-  <h1>User information</h1>
+  <% if @team.present? %>
+    <h1>User information</h1>
+  <% else %>
+    <h1>My page</h1>
+  <% end %>
 </div>
 
 <div class="row mt-5">

@@ -6,10 +6,11 @@
     </div>
 
     <div class="nav-items mt-5">
-      <% if  request.fullpath.include? "teams" %>
+      <% if @team.present? %>
 
-        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">About team</a>
+        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">Team</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <%= link_to "About", team_path, class:"dropdown-item" %>
           <%= link_to "Issues", team_issues_path, class:"dropdown-item" %>
           <%= link_to "Tags", team_tags_path(@team), class:"dropdown-item" %>
           <%= link_to "Members", team_users_path(@team), class:"dropdown-item" %>
