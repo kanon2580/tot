@@ -1,0 +1,18 @@
+<div class="card callout-dark mt-3">
+  <div class="row no-gutters">
+
+    <div class="my-auto ml-3">
+      <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50", class:"rounded-circle" %>
+    </div>
+
+    <div class="card-body">
+      <span class="card-text"><%= comment.comment %></span>
+      <% unless issue.has_settled == true %>
+        <div class="float-right">
+          <%= link_to "☆", team_confirm_path(@team, @issue, comment), class:"text-warning h3" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>
