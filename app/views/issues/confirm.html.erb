@@ -1,13 +1,23 @@
-<h1>Issue</h1>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Once you decide, you can't undo.</h3>
+  <h1 class="titlemark">・</h1>
+</div>
 
-<%= @issue.title %><br>
-<%= @issue.body %><br>
+<div class="row">
+  <div class="offset-1 col-10">
+    <%= render 'issue_card', team: @team, issue: @issue %>
+  </div>
+</div>
 
-<h3>comments</h3>
+<div class="row my-5">
+  <div class="offset-2 col-8">
+    <%= render 'comments/confirm_comment_card', team: @team, issue: @issue, comment: @comment %>
+  </div>
+</div>
 
-  <%= attachment_image_tag @comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
-  <%= @comment.user.name %>
-  <%= @comment.comment %>
-
-<p>Once you decide, you can't undo.</p>
-<%= link_to "It's done !", team_settled_path(@team, @issue, comment_id: @comment), method: :put %>
+<div class="row mb-5">
+  <div class="offset-3 col-6">
+    <%= link_to "It's done !", team_settled_path(@team, @issue, comment_id: @comment), method: :put, class:"btn btn-dark btn-block" %>
+  </div>
+</div>
