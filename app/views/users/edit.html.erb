@@ -1,30 +1,31 @@
-<div class="row flex-column align-items-center">
-  <h1 class="titlemark">Edit profile</h1>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Edit profile</h3>
+  <h1 class="titlemark">・</h1>
 </div>
 
 <%= flash[:error] %>
 
 <div class="offset-2 col-8">
   <%= form_with model: @user do |f| %>
-    <div class="form-group mt-3">
-      <%= f.label :name, class: "headline" %>
+
+    <p class="headline mt-5">Name</p>
+    <div class="form-group">
       <%= f.text_field :name, class: "form-control offset-1 col-10" %>
     </div>
 
-    <div class="form-group mt-3">
-      <%= f.label :introduction, class: "headline" %>
+    <p class="headline mt-5">Introduction</p>
+    <div class="form-group">
       <%= f.text_area :introduction, class: "form-control offset-1 col-10" %>
     </div>
 
-    <div class="form-group mt-3">
-      <%= f.label :image, class: "headline" %><br>
+    <p class="headline mt-5">Image</p>
+    <div class="form-group">
       <%= f.attachment_field :profile_image, class: "offset-1 col-10" %>
     </div>
 
-    <div class="offset-4 col-4">
-      <%= f.submit "update", class:"btn btn-success btn-block" %>
-    </div>
+    <%= f.submit "Update profile", class:"btn btn-danger btn-block offset-1 col-10 mt-5" %>
   <% end %>
 </div>
 
-<%= link_to "My page", mypage_path, class: "btn btn-dark btn-sm float-left mt-5 ml-5" %>
+<%= link_to "My page", mypage_path, class: "btn btn-dark btn-sm float-left m-5" %>
