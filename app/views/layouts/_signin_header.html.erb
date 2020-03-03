@@ -1,35 +1,49 @@
-<div class="row vh-100">
-  <nav class="navbar navbar-dark bg-dark flex-column col-12 p-0">
+<div class="sidebar vh-100 sticky-top bg-dark d-flex">
 
-    <ul class="navbar-nav">
-      <% if  request.fullpath.include? "teams" %>
-        <%= link_to "issues", team_issues_path, class: "nav-link" %>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to "join team", new_team_member_path, class: "nav-link" %>
-        </li>
-      <% end %>
-      <% unless request.fullpath.include? "mypage" %>
-        <li class="nav-item">
-          <%= link_to "new issue", new_team_issue_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "tags", team_tags_path(@team), class: "nav-link" %>
-        </li>
-      <% end %>
-      <li class="nav-item">
-        <%= link_to "logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
-      </li>
-    </ul>
-
-    <div class="mt-auto mb-5">
-      <div class="row">
-        <%= image_tag 'logo-white.png', width: '100', class: "mx-auto" %>
-      </div>
-      <div class="row mt-3">
-        <p class="text-white">© 2020 Kanon inc.</p>
-      </div>
+  <nav class="nav flex-column align-items-center col-12">
+    <div class="row mx-auto mt-5">
+      <%= image_tag 'logo-white.png', width: '100' %>
     </div>
 
+    <div class="nav-items mt-5">
+      <% if @team.present? %>
+
+        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">Team</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <%= link_to "About", team_path, class:"dropdown-item" %>
+          <%= link_to "Issues", team_issues_path, class:"dropdown-item" %>
+          <%= link_to "Tags", team_tags_path(@team), class:"dropdown-item" %>
+          <%= link_to "Members", team_users_path(@team), class:"dropdown-item" %>
+        </div>
+
+        <%= link_to "New issue", new_team_issue_path, class: "nav-link" %>
+
+        <%= link_to "My page", team_mypage_path(@team, current_user), class:"nav-link" %>
+
+        <%= link_to "leave team", mypage_path(current_user), class:"nav-link" %>
+
+      <% else %>
+        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">Teams</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <% current_user.teams.each do |team| %>
+            <%= link_to team.name, team_path(team), class:"dropdown-item" %>
+          <% end %>
+        </div>
+
+        <%= link_to "Join team", new_team_member_path, class: "nav-link" %>
+
+        <%= link_to "My page", mypage_path(current_user), class:"nav-link" %>
+        
+      <% end %>
+      <%= link_to "logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
+    </div>
+
+
+    <div class="row mt-auto">
+      <p class="text-white mx-auto">© 2020 Kanon inc.</p>
+    </div>
   </nav>
+
+
+
 </div>

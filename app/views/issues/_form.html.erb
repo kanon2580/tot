@@ -1,0 +1,26 @@
+<%= form_with model: [team, issue] do |f| %>
+
+  <p class="headline pb-2">
+    Tags
+    <span class="rounded border border-dark bg-dark text-white p-1 ml-5">selected</span>
+    <span class="rounded border border-dark p-1">not selected</span>
+  </p>
+  <div class="form-group checkboxes">
+    <%= f.collection_check_boxes :tag_ids, team.tags, :id, :name, include_hidden: false do |tag| %>
+      <%= tag.check_box %>
+      <%= tag.label %>
+    <% end %>
+  </div>
+
+  <p class="headline mt-5">Title</p>
+  <div class="form-group">
+    <%= f.text_field :title, class:"form-control offset-1 col-10" %>
+  </div>
+
+  <p class="headline mt-5">Body</p>
+  <div class="form-group">
+    <%= f.text_area :body, class:"form-control offset-1 col-10" %>
+  </div>
+
+  <%= f.submit "Update issue", class:"btn btn-dark btn-block offset-2 col-8 my-5" %>
+<% end %>

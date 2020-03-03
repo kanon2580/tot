@@ -1,2 +1,37 @@
-<h1>Home#top</h1>
-<p>Find me in app/views/home/top.html.erb</p>
+<div class="container sticky-top bg-dark text-white py-2">
+  <span class="h1 align-middle">Welcome to</span><%= image_tag 'logo-white.png', width: "70px", class:"mx-3" %>
+</div>
+
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>使い方</h3>
+  <h1 class="titlemark">・</h1>
+</div>
+
+<div class="row">
+  <%= render 'howto1' %>
+</div>
+
+<div class="row mt-5">
+  <%= render 'howto2' %>
+</div>
+
+<div class="row mt-5">
+  <%= render 'howto3' %>
+</div>
+
+<div class="row mt-5">
+  <%= render 'howto4' %>
+</div>
+
+<div class="row my-5">
+  <div class="offset-2 col-8">
+    <%= link_to "ToTをはじめる", new_user_registration_path, class:"btn btn-danger btn-block" %>
+  </div>
+</div>
+
+<%# <div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>評価基準</h3>
+  <h1 class="titlemark">・</h1>
+</div> %>

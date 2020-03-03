@@ -22,10 +22,18 @@ class IssuesController < ApplicationController
   end
 
   def index
-    @issues = @team.issues
-    # teamに関連するissuesだけ設定
-    @tags = @team.tags
-    @team_members = TeamMember.where(team_id: @team.id)
+    if @team.present? && @user.present?
+      issues = @team.issues.where(user_id: @user).order(created_at: :desc)
+      @tags = @team.tags
+      binding.pry
+    elsif @team.present?
+      issues = @team.issues.order(created_at: :desc)
+      @tags = @team.tags
+    else
+      issues = @user.issues.order(created_at: :desc)
+    end
+
+    @pagenated_issues = issues.page(params[:page]).per(10)
   end
 
   def show
@@ -47,7 +55,7 @@ class IssuesController < ApplicationController
 
   def destroy
     @issue.destroy 
-    redirect_to team_path(team_id: params[:team_id])
+    redirect_to team_issues_path(@team)
   end
 
   def choice

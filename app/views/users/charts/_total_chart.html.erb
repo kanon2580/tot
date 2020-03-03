@@ -4,16 +4,21 @@ var totalChart = new Chart(ctx, {
   type: 'radar',
   data: {
     labels: ["Response", "Required time", "Likes", "Best answer", "Viewed"],
+    
     datasets: [{
       label: gon.user_name,
       backgroundColor: "rgba(255,180,153,0.4)",
       borderColor: "rgba(255,127,80,1)",
-      data: [10, 3, 5, 1, 9, 7]
+      borderWidth: 1,
+      pointRadius: 2,
+      data: [3, 5, 1, 9, 7]
     },{
       label: 'average',
       backgroundColor: "rgba(52,58,64,0.4)",
       borderColor: "rgba(52,58,64,1)",
-      data: [5, 5, 5, 5, 5, 5]
+      borderWidth: 1,
+      pointRadius: 2,
+      data: [5, 5, 5, 5, 5]
     }]
   }
 });
