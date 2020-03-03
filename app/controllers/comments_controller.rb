@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
         create_response_evaluation(response, comment)
       end
     else
-      flash[:error] = "your comment had not save :("
+      flash[:error] = "コメントが空欄のようです。もう一度お試しください。"
     end
     redirect_back(fallback_location: root_path)
   end
@@ -23,10 +23,10 @@ class CommentsController < ApplicationController
   end
 
   def update
-    if comment.update(comment_params)
+    if @comment.update(comment_params)
       redirect_to team_issue_path(params[:team_id], params[:issue_id])
     else
-      flash[:error] = "your comment had not save :("
+      flash[:error] = "コメントが空欄のようです。もう一度お試しください。"
       redirect_back(fallback_location: root_path)
     end
   end
@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
         create_response_evaluation(response, oldest_comment)
       end
     else
-      flash[:error] = "your comment had not delete :("
+      flash[:error] = "コメントが削除できませんでした。もう一度お試しください。"
     end
     redirect_to team_issue_path(params[:team_id], params[:issue_id])
   end

@@ -1,9 +1,10 @@
 <%= form_with model: [team, issue] do |f| %>
 
-  <p class="headline pb-2">
-    Tags
-    <span class="rounded border border-dark bg-dark text-white p-1 ml-5">selected</span>
-    <span class="rounded border border-dark p-1">not selected</span>
+  <p class="headline pb-2">Tags</p>
+  <p class="mb-3">
+    status：
+    <span class="rounded border border-dark bg-dark text-white px-1">selected</span>
+    <span class="rounded border border-dark px-1">not selected</span>
   </p>
   <div class="form-group checkboxes">
     <%= f.collection_check_boxes :tag_ids, team.tags, :id, :name, include_hidden: false do |tag| %>
@@ -22,5 +23,8 @@
     <%= f.text_area :body, class:"form-control offset-1 col-10" %>
   </div>
 
-  <%= f.submit "Update issue", class:"btn btn-dark btn-block offset-2 col-8 my-5" %>
+  <div class="row flex-column align-items-center mt-5">
+    <span class="titlemark"><%= flash[:error] %></span>
+  </div>
+  <%= f.submit "Update issue", class:"btn btn-dark btn-dark offset-2 col-8" %>
 <% end %>
