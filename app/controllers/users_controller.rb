@@ -1,6 +1,13 @@
 class UsersController < ApplicationController
-  def my_page
+  before_action :only_team_user, only: [:index]
+  before_action :only_current_user, only: [:edit, :update]
 
+  def my_page
+    if @team.present? && @user.present?
+      only_team_user
+    else
+      only_current_user
+    end
 # chart.jsに渡す値
     gon.user_name = @user.name
 
@@ -17,7 +24,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
   end
 
   def update
@@ -35,6 +41,18 @@ class UsersController < ApplicationController
   end
 
   private
+  def only_team_user
+    unless TeamMember.where(team_id: @team).any? {|team| team.user_id == current_user.id}
+      redirect_to mypage_path(current_user)
+    end
+  end
+
+  def only_current_user
+    unless @user == current_user
+      redirect_to mypage_path(current_user)
+    end
+  end
+
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
   end

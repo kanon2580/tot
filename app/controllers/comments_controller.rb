@@ -1,4 +1,7 @@
 class CommentsController < ApplicationController
+  before_action :only_team_user
+  before_action :only_current_user, only: [:edit, :update, :destroy]
+
   def create
     issue = Issue.find(params[:issue_id])
     comment = Comment.new(comment_params)
@@ -17,11 +20,9 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @comment =  Comment.find(params[:comment_id])
   end
 
   def update
-    comment = Comment.find(params[:comment_id])
     if comment.update(comment_params)
       redirect_to team_issue_path(params[:team_id], params[:issue_id])
     else
@@ -52,6 +53,18 @@ class CommentsController < ApplicationController
   end
 
   private
+  def only_team_user
+    unless TeamMember.where(team_id: @team).any? {|team| team.user_id == current_user.id}
+      redirect_to mypage_path(current_user)
+    end
+  end
+
+  def only_current_user
+    unless @comment.user == current_user
+      redirect_to team_path(@team)
+    end
+  end
+
   def comment_params
     params.require(:comment).permit(:user_id, :issue_id, :comment)
   end

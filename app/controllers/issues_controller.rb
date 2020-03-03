@@ -1,4 +1,7 @@
 class IssuesController < ApplicationController
+  before_action :only_team_user
+  before_action :only_current_user, except: [:new, :create, :index, :show]
+
   def new
   end
 
@@ -73,6 +76,18 @@ class IssuesController < ApplicationController
   end
 
   private
+  def only_team_user
+    unless TeamMember.where(team_id: @team).any? {|team| team.user_id == current_user.id}
+      redirect_to mypage_path(current_user)
+    end
+  end
+
+  def only_current_user
+    unless @issue.user == current_user
+      redirect_to team_path(@team)
+    end
+  end
+
   def issue_params
     params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at, {tag_ids: []} )
   end
