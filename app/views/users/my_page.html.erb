@@ -1,9 +1,11 @@
-<div class="container headline sticky-top bg-white">
-  <% if @team.present? %>
-    <h1>User information</h1>
-  <% else %>
-    <h1>My page</h1>
-  <% end %>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+    <% if @team.present? %>
+      <h1>User information</h1>
+    <% else %>
+      <h1>My page</h1>
+    <% end %>
+  <h1 class="titlemark">・</h1>
 </div>
 
 <div class="row mt-5">

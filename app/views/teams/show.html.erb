@@ -1,4 +1,4 @@
-<div class="container headline sticky-top bg-white">
+<div class="container sticky-top bg-dark text-white p-2"">
   <h1><%= @team.name %></h1>
 </div>
 
@@ -41,7 +41,7 @@
     </div>
 
     <div class="row flex-column align-items-end mt-3 mr-3">
-      <%= link_to "more >>", team_members_path, class:"btn btn-danger btn-sm" %>
+      <%= link_to "more >>", team_users_path, class:"btn btn-danger btn-sm" %>
     </div>
   </div>
 </div>
@@ -62,7 +62,8 @@
     </div>
 
     <div class="row flex-column align-items-end mt-3 mr-3">
-      <%= link_to "more >>", team_members_path, class:"btn btn-danger btn-sm" %>
+      <%= link_to "more >>", team_tags_path, class:"btn btn-danger btn-sm" %>
     </div>
   </div>
+
 </div>

@@ -1,4 +1,7 @@
 class IssuesController < ApplicationController
+  before_action :only_team_user
+  before_action :only_current_user, except: [:new, :create, :index, :show]
+
   def new
   end
 
@@ -25,7 +28,6 @@ class IssuesController < ApplicationController
     if @team.present? && @user.present?
       issues = @team.issues.where(user_id: @user).order(created_at: :desc)
       @tags = @team.tags
-      binding.pry
     elsif @team.present?
       issues = @team.issues.order(created_at: :desc)
       @tags = @team.tags
@@ -69,6 +71,28 @@ class IssuesController < ApplicationController
     @issue.update(has_settled: true)
     @comment.update(has_best_answer: true)
     evaluated_comments = @issue.comments.where(is_first: true)
+    create_required_time_evaluation(evaluated_comments)
+    redirect_to team_issue_path(@team)
+  end
+
+  private
+  def only_team_user
+    unless TeamMember.where(team_id: @team).any? {|team| team.user_id == current_user.id}
+      redirect_to mypage_path(current_user)
+    end
+  end
+
+  def only_current_user
+    unless @issue.user == current_user
+      redirect_to team_path(@team)
+    end
+  end
+
+  def issue_params
+    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at, {tag_ids: []} )
+  end
+
+  def create_required_time_evaluation(evaluated_comments)
     evaluated_comments.each do |comment|
       required_time = RequiredTimeEvaluation.new
       required_time.user = comment.user
@@ -76,15 +100,9 @@ class IssuesController < ApplicationController
       required_time.first_comment_created_at = comment.created_at
       required_time.issue_settled_at = @issue.updated_at
       semi_difference = required_time.issue_settled_at - required_time.first_comment_created_at
-      required_time.difference = semi_difference / 3600
+      required_time.difference = (semi_difference / 60).ceil
       required_time.save
     end
-    redirect_to team_issue_path(@team)
-  end
-
-  private
-  def issue_params
-    params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at, {tag_ids: []} )
   end
 
 end
