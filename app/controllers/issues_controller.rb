@@ -2,6 +2,8 @@ class IssuesController < ApplicationController
   before_action :only_team_user
   before_action :only_current_user, except: [:new, :create, :index, :show]
 
+  helper_method :display_true
+
   def new
   end
 
@@ -19,9 +21,11 @@ class IssuesController < ApplicationController
         end
       end
     else
-      flash[:error] = "we couldn't save your issue :("
+      flash.now[:error] = "タイトルか本文が空欄のようです。もう一度お試しください。"
+      render :new
+      # 表示されない何で
     end
-      redirect_to team_issue_path(params[:team_id], issue.id)
+      redirect_to team_issue_path(@team, issue)
   end
 
   def index
@@ -50,17 +54,24 @@ class IssuesController < ApplicationController
     if @issue.update(issue_params)
       redirect_to team_issue_path(@team, @issue)
     else
-      flash[:error] = "sorry... it was not saved successfully :( please try again."
+      flash[:error] = "タイトルか本文が空欄のようです。もう一度お試しください。"
       redirect_back(fallback_location: root_path)
     end
   end
 
   def destroy
-    @issue.destroy 
+    unless @issue.destroy
+      flash[:error] = "イシューが削除されませんでした。もう一度お試しください。"
+      redirect_back(fallback_location: root_path)
+    end
     redirect_to team_issues_path(@team)
   end
 
   def choice
+    if @issue.comments == []
+      flash[:error] = "迅速に問題を解決する姿勢がステキ！ですがこの問題にはコメントがされていません。もう少し待ちましょう。"
+      redirect_back(fallback_location: root_path)
+    end
     @comments = @issue.comments
   end
 
@@ -90,6 +101,10 @@ class IssuesController < ApplicationController
 
   def issue_params
     params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at, {tag_ids: []} )
+  end
+
+  def display_true
+    @issue.has_settled == false && @issue.user == current_user && action_name == 'show'
   end
 
   def create_required_time_evaluation(evaluated_comments)
