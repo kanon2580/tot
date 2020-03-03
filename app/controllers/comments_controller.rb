@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    if comment.update(comment_params)
+    if @comment.update(comment_params)
       redirect_to team_issue_path(params[:team_id], params[:issue_id])
     else
       flash[:error] = "your comment had not save :("
