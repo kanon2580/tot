@@ -78,6 +78,9 @@ gem 'jquery-rails'
 gem 'chart-js-rails'
 gem 'gon'
 
+# pagenate
+gem 'kaminari'
+
 # deploy setting
 gem 'dotenv-rails'
 group :production do

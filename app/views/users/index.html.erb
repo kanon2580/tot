@@ -1,8 +1,19 @@
-<h1>Members</h1>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Members</h3>
+  <h1 class="titlemark">・</h1>
+</div>
 
-<% @team_members.each do |team_member| %>
-  <%= link_to team_user_path(user_id: team_member.user.id) do %>
-    <%= attachment_image_tag team_member.user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "noimage.jpg", size: "100x100" %>
-    <%= team_member.user.name %>
-  <% end %>
-<% end %>
+<div class="row my-5">
+  <div class="offset-2 col-8">
+    <div class="card-columns">
+      <% @pagenated_users.each do |user| %>
+        <%= render 'users/member_card', team: @team, user: user  %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center my-5">
+  <%= paginate @pagenated_users %>
+</div>

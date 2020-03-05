@@ -16,23 +16,127 @@
 
 // titleデザイン
 .titlemark{
-  border-left: double 7px #ff7f50;
-  border-right: double 7px #ff7f50;
-  padding: 5px 10px;
+  color: #ff7f50;
+  font-weight: bold;
 }
 
 // semi titleデザイン
 .headline{
   border-bottom: solid 1px #ff7f50;
-  padding: 0 5px
-}
-
-// リンク文字色
-a{
-  color: black;
 }
 
 // 余白
 main{
   margin-bottom: 50px;
+}
+
+// リンク文字色
+a{
+  color: #343a40;
+}
+
+// タブデザイン
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link{
+  color: #fff;
+  background-color: #343a40;
+}
+.nav-pills .nav-link,
+.nav-pills .show > .nav-link{
+  color: #343a40;
+}
+
+// サイドバーデザイン
+.nav-link{
+  color: #fff;
+}
+
+.nav-link:hover{
+  color: rgb(163, 163, 163);
+}
+
+.dropdown-item.active, .dropdown-item:active{
+  background-color: #ff7f50;
+}
+
+// cardデザイン
+.callout-dark{
+  border-left: solid 5px #343a40;
+}
+.callout-coral{
+  border-left: solid 5px #ff7f50;
+}
+
+// pagenateデザイン
+.pagination > li > a {
+  color: #343a40;
+}
+
+.pagination > .active > a {
+  background-color: #ff7f50;
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #ff7f50;
+  border-color: #ff7f50;
+}
+
+.pagination > li > a:hover {
+  background-color: #ff7f50;
+  border-color: #ff7f50;
+  color: #fff;
+}
+
+.page-link:focus {
+  box-shadow: 0 0 0 0.2rem #ff7f50;
+}
+
+// タグデザイン
+.checkboxes > input{
+  opacity: 0;
+}
+
+.checkboxes > input:after{
+  height: 0;
+  visibility:hidden;
+}
+
+.checkboxes > label{
+  border-radius: 3px;
+  border: solid 1px #343a40;
+  padding: 0 10px 25px;
+  height: 10px;
+}
+
+.checkboxes > label:hover{
+  cursor:pointer;
+}
+
+.checkboxes > input[type="checkbox"]:checked + label {
+  background-color: #343a40;
+  color: white;
+}
+
+// ボタンデザイン
+.btn-danger,
+.btn-danger.disabled,
+.btn-danger:disabled {
+  color: #fff;
+  background-color: #ff7f50;
+  border-color: #ff7f50;
+}
+
+.btn-danger:hover {
+  color: #fff;
+  background-color: #ff6347;
+  border-color: #ff6347;
+}
+
+.btn-danger:active,
+.btn-danger.active {
+  color: #fff;
+  background-color: #ff6347;
+  border-color: #ff6347;
 }

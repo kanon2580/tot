@@ -1,21 +1,68 @@
-<div class="container">
-  <div class="row flex-column align-items-center">
-    <h1 class="titlemark mb-5">Team</h1>
-  </div>
+<div class="container sticky-top bg-dark text-white p-2"">
+  <h1><%= @team.name %></h1>
+</div>
 
-  <div class="row">
-    <div class="offset-1 col-10">
-      <%= render 'issues/issues', team: @team, issues: @issues %>
+<%# issues %>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Issues</h3>
+  <h1 class="titlemark">・</h1>
+</div>
+
+<div class="row my-5">
+  <div class="offset-1 col-10">
+    <% @team.issues.last(5).each do |issue| %>
+      <div class="row my-3">
+        <%= render 'issues/index_card', team: @team, issue: issue %>
+      </div>
+    <% end %>
+
+    <div class="row flex-column align-items-end mt-3 mr-3">
+      <%= link_to "more >>", team_issues_path, class:"btn btn-danger btn-sm" %>
     </div>
   </div>
+</div>
 
-  <div class="row">
-    <div class="offset-1 col-4">
-      <%= render 'tags/tags', tags: @tags %>
+<%# members %>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Members</h3>
+  <h1 class="titlemark">・</h1>
+</div>
+
+<div class="row my-6">
+  <div class="offset-1 col-10">
+    <div class="row">
+        <% @team.users.last(4).each do |user| %>
+          <div class="col-3">
+            <%= render 'users/member_card', team: @team, user: user %>
+          </div>
+        <% end %>
     </div>
 
-    <div class="col-6">
-      <%= render 'users/members', team_members: @team_members %>
+    <div class="row flex-column align-items-end mt-3 mr-3">
+      <%= link_to "more >>", team_users_path, class:"btn btn-danger btn-sm" %>
+    </div>
+  </div>
+</div>
+
+<%# tags %>
+<div class="row flex-column align-items-center mt-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Tags</h3>
+  <h1 class="titlemark">・</h1>
+</div>
+
+<div class="row my-5">
+  <div class="offset-1 col-10">
+    <div class="row">
+      <% @team.tags.last(20).each do |tag| %>
+        <%= link_to tag.name, team_tag_issues_path(@team, tag), class: "btn btn-sm btn-dark mt-3 mr-3" %>
+      <% end %>
+    </div>
+
+    <div class="row flex-column align-items-end mt-3 mr-3">
+      <%= link_to "more >>", team_tags_path, class:"btn btn-danger btn-sm" %>
     </div>
   </div>
 

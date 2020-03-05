@@ -1,4 +1,6 @@
 class TagsController < ApplicationController
+  before_action :only_team_user
+
   def index
     @new_tag = Tag.new
   end
@@ -13,6 +15,12 @@ class TagsController < ApplicationController
   end
 
   private
+  def only_team_user
+    unless TeamMember.where(team_id: @team).any? {|team| team.user_id == current_user.id}
+      redirect_to mypage_path(current_user)
+    end
+  end
+
   def tag_params
     params.require(:tag).permit(:team_id, :name)
   end

@@ -22,11 +22,11 @@ Rails.application.routes.draw do
   resources :teams, only: [:show], param: :team_id
   resources :teams, only: [] do
   # teams/users
-    resources :users, only: [:index, :show], param: :user_id
-    resources :users, only: [] do
+    resources :users, only: [:index] do
       resources :comments, only: [:index]
       resources :issues, only: [:index]
     end
+    get 'mypage/:user_id' => 'users#my_page', as: "mypage"
   # teams/tags
     resources :tags, only: [:index, :create] do
       resources :issues, only: [:index]

@@ -1,10 +1,29 @@
-<h1>Edit comment</h1>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Edit comment</h3>
+  <h1 class="titlemark">・</h1>
+</div>
 
-<%= flash[:error] %>
+<div class="row">
+  <div class="offset-2 col-8">
+    <%= form_with model: [@team, @issue, @comment] do |f| %>
 
-<%= form_with model: [@team, @issue, @comment] do |f| %>
-  <%= f.text_area :comment %>
-  <%= f.submit %>
-<% end %>
+      <p class="headline mt-5">Comment</p>
+      <div class="form-group">
+        <%= f.text_area :comment, class:"form-control offset-1 col-10" %>
+      </div>
 
-<%= link_to "DESTROY", team_issue_comment_path(params[:team_id], params[:issue_id], @comment), method: :delete, data: { confirm: "will you delete it?"} %> <br>
+      <div class="row flex-column align-items-center mt-5">
+        <span class="titlemark"><%= flash[:error] %></span>
+      </div>
+
+      <%= f.submit "Update comment", class:"btn btn-dark btn-block offset-1 col-10" %>
+    <% end %>
+
+    <div class="row flex-column align-items-end">
+      <%= link_to team_issue_comment_path(@team, @issue, @comment), method: :delete, data: { confirm: "will you delete it?"}, class:"btn btn-outline-danger mt-5" do %>
+        <i class="fas fa-trash-alt"></i>
+      <% end %>
+    </div>
+  </div>
+</div>

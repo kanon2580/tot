@@ -5,5 +5,6 @@ class Comment < ApplicationRecord
   belongs_to :issue
 
   has_one :response_evaluation, dependent: :destroy
-  has_one :required_time_evaluation
+  has_one :required_time_evaluation, dependent: :destroy
 end
+

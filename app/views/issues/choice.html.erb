@@ -1,13 +1,19 @@
-<h1>Issue</h1>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Choose the best answer</h3>
+  <h1 class="titlemark">・</h1>
+</div>
 
-<%= @issue.title %><br>
-<%= @issue.body %><br>
+<div class="row">
+  <div class="offset-1 col-10">
+    <%= render 'show_card', team: @team, issue: @issue %>
+  </div>
+</div>
 
-<h3>comments</h3>
-
-<% @comments.each do |comment| %>
-  <%= attachment_image_tag comment.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size: "50x50" %>
-  <%= comment.user.name %>
-  <%= comment.comment %>
-  <%= link_to "☆", team_confirm_path(@team, @issue, comment_id: comment) %><br>
-<% end %>
+<div class="row my-5">
+  <div class="offset-2 col-8">
+    <% @comments.each do |comment| %>
+      <%= render 'comments/choice_comment_card', team: @team, issue: @issue, comment: comment %>
+    <% end %>
+  </div>
+</div>

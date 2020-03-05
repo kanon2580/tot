@@ -1,38 +1,52 @@
-<div class="row flex-column align-items-center">
-  <h1 class="titlemark">Issue</h1>
+<div class="row flex-column align-items-center my-5">
+  <h1 class="titlemark">・</h1>
+  <h3>Issue</h3>
+  <h1 class="titlemark">・</h1>
 </div>
 
+<%# selled issues title %>
 <% if @issue.has_settled == true %>
   <div class="row flex-column align-items-center mt-3">
     <h3 style="color: #ff7f50;">＼ Well done！／</h3>
   </div>
 <% end %>
 
-<div class="row flex-column align-items-center mt-3">
-  <%= render 'issue_card', team: @team, issue: @issue %>
+<%# issue %>
+<div class="row">
+  <div class="offset-1 col-10">
+    <%= render 'show_card', team: @team, issue: @issue %>
+  </div>
 </div>
 
-<div class="row flex-column align-items-center mt-3">
-  <% @comments.each do |comment| %>
-    <%= render 'comments/comment_card', team: @team, issue: @issue, comment: comment %>
-  <% end %>
+<%# comments %>
+<div class="row mt-5">
+  <div class="offset-2 col-8">
+    <% @comments.each do |comment| %>
+      <%= render 'comments/comment_card', team: @team, issue: @issue, comment: comment %>
+    <% end %>
+  </div>
 </div>
 
-<%= flash[:error] %>
-
+<%# comment form %>
 <div class="row mt-3">
   <div class="offset-3 col-6">
+    <span class="titlemark"><%= flash[:error] %></span>
+
     <%= form_with model: @new_comment, url: team_issue_comments_path(params[:team_id], params[:issue_id]) do |f| %>
       <div class="form-group">
         <%= f.text_area :comment, class: "form-control" %>
-        <%= f.submit :post, class: "btn btn-outline-dark float-right mt-1" %>
+        <%= f.submit :post, class: "btn btn-dark float-right mt-1" %>
       </div>
     <% end %>
   </div>
 </div>
 
-<div class="row mt-3">
-  <div class="offset-4 col-4">
-    <%= link_to "Is the issue solved?", team_choice_path(@team, @issue), class: "btn btn-dark btn-block" %>
+<% if display_true %>
+  <div class="row flex-column align-items-center mt-5">
+    <strong>Is the issue solved?</strong>
   </div>
-</div>
+    <div class="offset-4 col-4">
+      <%= link_to "Choose the best answer.", team_choice_path(@team, @issue), class: "btn btn-danger btn-block mb-5" %>
+    </div>
+  </div>
+<% end %>
