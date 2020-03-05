@@ -78,6 +78,9 @@ gem 'jquery-rails'
 gem 'chart-js-rails'
 gem 'gon'
 
+# count PV
+gem 'impressionist'
+
 # pagenate
 gem 'kaminari'
 
