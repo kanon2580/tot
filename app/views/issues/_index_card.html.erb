@@ -1,28 +1,58 @@
 <div class="col-12">
 
-  <div class="card callout-coral">
-    <div class="card-body p-2">
+  <% if issue.has_settled == true %>
+    <div class="card callout-coral">
+  <% else %>
+    <div class="card callout-dark">
+  <% end %>
 
-      <strong class="card-title">
-        <%= link_to issue.title, team_issue_path(team, issue) %> 
-      </strong>
+    <div class="card-body px-4">
 
-        <div class="row">
-          <div class="offset-1 col-9">
-            <h6 class="card-subtitle my-2">
-              <% issue.tags.each do |tag| %>
-                <%= link_to tag.name, team_tag_issues_path(team, tag), class:"btn btn-sm btn-dark py-0" %>
-              <% end %>
-            </h6>
-          </div>
+      <div class="card-title m-0">
+        <strong>
+          <%= link_to issue.title, team_issue_path(team, issue) %>
+        </strong>
 
-          <div class="col-2">
-            <%= link_to team_mypage_path(team, issue.user) do %>
-              <%= attachment_image_tag issue.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size:"30x30", class:"rounded-circle" %>
-              <%= issue.user.name %>
+        <% if issue.has_settled == true %>
+          <p class="badge badge-primary m-0" style="background-color:#ff7f50;">
+            解決済み
+          </p>
+        <% end %>
+
+        <p class="float-right m-0">
+          <i class="fas fa-comment"></i>
+          <%= issue.comments.count %>
+
+          <% if issue.likes_by?(current_user) %>
+            <%= link_to team_issue_likes_path(team, issue), method: :delete do %>
+              <span class="text-warning">★</span>
+              <%= issue.likes.count %>
             <% end %>
-          </div>
-        </div>
+          <% else %>
+            <%= link_to team_issue_likes_path(team, issue), method: :post do %>
+              <span class="text-warning">☆</span>
+              <span class="text-dark"><%= issue.likes.count %></span>
+            <% end %>
+          <% end %>
+        </p>
+      </div>
+
+      <div class="card-subtitle my-2">
+        <% issue.tags.each do |tag| %>
+          <%= link_to tag.name, team_tag_issues_path(team, tag), class:"btn btn-sm btn-dark py-0" %>
+        <% end %>
+      </div>
+
+      <div class="card-text d-flex justify-content-between">
+        <small class="text-muted">
+          <%= issue.created_at.strftime('%Y/%m/%d %H:%M') %>
+        </small>
+
+        <%= link_to team_mypage_path(team, issue.user) do %>
+          <%= attachment_image_tag issue.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "noimage.jpg", size:"30x30", class:"rounded-circle" %>
+          <%= issue.user.name %>
+        <% end %>
+      </div>
 
     </div>
   </div>

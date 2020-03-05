@@ -80,13 +80,14 @@ class UsersController < ApplicationController
   end
 
   def like_evaluation_datas
-    # 標本不足により、いいね総数で算出
+    # 標本不足により、総数で算出
     user_issues_array = User.joins(:issues).group("users.id").map{|user| [user.id, user.issue_ids]}.to_h
     like_count_array = user_issues_array.map{|user,issues| [user, issues.map{|issue| Issue.find(issue).likes.count}.sum]}.to_h
     evaluation_datas_sort_by_min(like_count_array)
   end
 
   def best_answer_evaluation_datas
+    # 標本不足により、総数で算出
     best_answer_count_array = Comment.group(:user_id).where(has_best_answer: true).count
     evaluation_datas_sort_by_min(best_answer_count_array)
   end
@@ -197,40 +198,40 @@ class UsersController < ApplicationController
     user_issue_tags_array = user.issues.map{|issue| issue.tags.map{|tag| tag.name}}.flatten
     if user_issue_tags_array == []
       tags_name = ["nothing issues tags"]
-    else
-      tags_name = user_issue_tags_array.group_by(&:itself).keys
+      return
     end
+    tags_name = user_issue_tags_array.group_by(&:itself).keys
   end
 
   def issue_tags_evaluation_datas(user)
     user_issue_tags_array = user.issues.map{|issue| issue.tags.map{|tag| tag.id}}.flatten
     if user_issue_tags_array == []
       evaluation_datas = [100]
-    else
-      tags_count_array = user_issue_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
-      base = tags_count_array.values.sum.to_f
-      evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
+      return
     end
+    tags_count_array = user_issue_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
+    base = tags_count_array.values.sum.to_f
+    evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
   end
 
   def comment_tags_labels(user)
     user_comment_tags_array = user.comments.map{|comment| comment.issue.tags.map{|tag| tag.name}}.flatten
     if user_comment_tags_array == []
       tags_name = ["nothing comments tags"]
-    else
-      tags_name = user_comment_tags_array.group_by(&:itself).keys
+      return
     end
+    tags_name = user_comment_tags_array.group_by(&:itself).keys
   end
 
   def comment_tags_evaluation_datas(user)
     user_comment_tags_array = user.comments.map{|comment| comment.issue.tags.map{|tag| tag.id}}.flatten
     if user_comment_tags_array == []
       evaluation_datas = [100]
-    else
-      tags_count_array = user_comment_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
-      base = tags_count_array.values.sum.to_f
-      evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
+      return
     end
+    tags_count_array = user_comment_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
+    base = tags_count_array.values.sum.to_f
+    evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
   end
 
 end
