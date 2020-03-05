@@ -4,6 +4,8 @@ class IssuesController < ApplicationController
 
   helper_method :display_true
 
+  impressionist :actions => [:show]
+
   def new
   end
 
@@ -45,6 +47,7 @@ class IssuesController < ApplicationController
   def show
     @new_comment = Comment.new
     @comments = @issue.comments
+    impressionist(@issue, nil, unique: [:user_id])
   end
 
   def edit
