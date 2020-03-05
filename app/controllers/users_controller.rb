@@ -8,19 +8,36 @@ class UsersController < ApplicationController
     else
       only_current_user
     end
-# chart.jsに渡す値
+# chart.js
+    @user_scores = []
     gon.user_name = @user.name
 
+# response
     gon.response_evaluation_datas = time_related_evaluation(ResponseEvaluation)
+    @user_scores << @user_score
+
+# required time
     gon.required_time_evaluation_datas = time_related_evaluation(RequiredTimeEvaluation)
+    @user_scores << @user_score
 
+# like
     gon.like_evaluation_datas = like_evaluation_datas
-    gon.best_answer_evaluation_datas = best_answer_evaluation_datas
+    @user_scores << @user_score
 
+# best answer
+    gon.best_answer_evaluation_datas = best_answer_evaluation_datas
+    @user_scores << @user_score
+
+# issue tags
     gon.issue_tags_labels = issue_tags_labels(@user)
     gon.issue_tags_evaluation_datas = issue_tags_evaluation_datas(@user)
+
+# comment tags
     gon.comment_tags_labels = comment_tags_labels(@user)
     gon.comment_tags_evaluation_datas = comment_tags_evaluation_datas(@user)
+
+# total
+    gon.user_scores = @user_scores
   end
 
   def edit
@@ -30,7 +47,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to mypage_path
     else
-      flash[:error] = "ユーザー情報が正常に保存されませんでした"
+      flash.now[:error] = "名前が空欄のようです。もう一度お試しください。"
       render 'edit'
     end
   end
@@ -58,98 +75,122 @@ class UsersController < ApplicationController
   end
 
   def time_related_evaluation(evaluation_type)
-    evaluation_base = evaluation_type.group(:user_id).average(:difference).map{|k,v| v.to_i}
-    evaluation_datas_sort_by_max(evaluation_base)
+    user_averages = evaluation_type.group(:user_id).average(:difference).map{|k,v| [k, v.to_i]}.to_h
+    evaluation_datas_sort_by_max(user_averages)
   end
 
   def like_evaluation_datas
     # 標本不足により、いいね総数で算出
     user_issues_array = User.joins(:issues).group("users.id").map{|user| [user.id, user.issue_ids]}.to_h
-    like_count_array = user_issues_array.map{|user,issues| issues.map{|o| Issue.find(o).likes.count}.sum}
+    like_count_array = user_issues_array.map{|user,issues| [user, issues.map{|issue| Issue.find(issue).likes.count}.sum]}.to_h
     evaluation_datas_sort_by_min(like_count_array)
   end
 
   def best_answer_evaluation_datas
-    best_answer_count_array = User.joins(:comments).group("users.id").map{|o| User.find(o.id).comments.where(has_best_answer: true).count}
+    best_answer_count_array = Comment.group(:user_id).where(has_best_answer: true).count
     evaluation_datas_sort_by_min(best_answer_count_array)
   end
 
-  def evaluation_datas_sort_by_min(evaluation_base)
+  def evaluation_datas_sort_by_min(user_averages)
+    @user_score = 0
     # 平均値が高いと高得点
-    if evaluation_base.all? {|v| v == 0}
-      evaluation_base = [0]
-    else
-      # 階級幅の計算
-      min = evaluation_base.min
-      max = evaluation_base.max
-      evaluation_class = (max - min)/10
-
-      # 階級が切り替わる値を計算、配列に渡す
-      evaluation_classes = []
-      i = min
-
-      9.times{|n|
-        i += evaluation_class
-        evaluation_classes << i
-      }
-
-      # 度数計算、配列に渡す
-      evaluation_datas = []
-      n = 0
-      i = evaluation_classes[n]
-
-      count_evaluations = evaluation_base.select{|o| (min...i) === o}.count
-      evaluation_datas << count_evaluations
-
-      8.times{|m|
-      n += 1
-      count_evaluations = evaluation_base.select{|o| (evaluation_classes[n]...i) === o}.count
-      evaluation_datas << count_evaluations
-      i = evaluation_classes[n]
-      }
-
-      count_evaluations = evaluation_base.select{|o| (i..max) === o}.count
-      evaluation_datas << count_evaluations
+    if user_averages.all? {|k,v| v == 0}
+      user_averages = [0]
+      return
     end
+    # 階級幅の計算
+    min = user_averages.values.min
+    max = user_averages.values.max
+    diff = max - min
+    evaluation_class = (diff / 10.0).round
+
+    # 階級が切り替わる値を計算、配列に渡す
+    evaluation_classes = []
+    i = max
+
+    9.times{|n|
+      i -= evaluation_class
+      evaluation_classes << i
+      }
+      evaluation_classes.reverse!
+
+    # 度数計算、配列に渡す
+    evaluation_datas = []
+    n = 0
+    i = evaluation_classes[n]
+
+    validation_included_user = user_averages.select{|k,v| (min...i) === v}
+    count_included_user = validation_included_user.count
+    evaluation_datas << count_included_user
+    @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
+    n += 1
+
+    8.times{|m|
+      validation_included_user = user_averages.select{|k,v| (i...evaluation_classes[n]) === v}
+      count_included_user = validation_included_user.count
+      evaluation_datas << count_included_user
+      @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
+      i = evaluation_classes[n]
+      n += 1
+    }
+
+    validation_included_user = user_averages.select{|k,v| (i..max) === v}
+    count_included_user = validation_included_user.count
+    evaluation_datas << count_included_user
+    @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
+
+    return(evaluation_datas)
   end
 
-  def evaluation_datas_sort_by_max(evaluation_base)
+  def evaluation_datas_sort_by_max(user_averages)
+    @user_score = 0
     # 平均値が低いと高得点
-    if evaluation_base.all? {|v| v == 0}
-      evaluation_base = [0]
-    else
-      # 階級幅の計算
-      min = evaluation_base.min
-      max = evaluation_base.max
-      evaluation_class = (max - min)/10
-
-      # 階級が切り替わる値を計算、配列に渡す
-      evaluation_classes = []
-      i = max
-
-      9.times{|n|
-        i -= evaluation_class
-        evaluation_classes << i
-      }
-
-      # 度数計算、配列に渡す
-      evaluation_datas = []
-      n = 0
-      i = evaluation_classes[n]
-
-      count_evaluations = evaluation_base.select{|o| (i..max) === o}.count
-      evaluation_datas << count_evaluations
-
-      8.times{|m|
-      n += 1
-      count_evaluations = evaluation_base.select{|o| (evaluation_classes[n]...i) === o}.count
-      evaluation_datas << count_evaluations
-      i = evaluation_classes[n]
-      }
-
-      count_evaluations = evaluation_base.select{|o| (min...i) === o}.count
-      evaluation_datas << count_evaluations
+    if user_averages.all? {|k,v| v == 0}
+      evaluation_datas = [0]
+      return
     end
+    # 階級幅の計算
+    min = user_averages.values.min
+    max = user_averages.values.max
+    diff = max - min
+    evaluation_class = (diff / 10.0).round
+
+    # 階級が切り替わる値を計算、配列に渡す
+    evaluation_classes = []
+    i = min
+
+    9.times{|n|
+      i += evaluation_class
+      evaluation_classes << i
+    }
+    evaluation_classes.reverse!
+
+    # 度数計算、配列に渡す
+    evaluation_datas = []
+    n = 0
+    i = evaluation_classes[n]
+
+    validation_included_user = user_averages.select{|k,v| (i..max) === v}
+    count_included_user = validation_included_user.count
+    evaluation_datas << count_included_user
+    @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
+    n += 1
+
+    8.times{|m|
+    validation_included_user = user_averages.select{|k,v| (evaluation_classes[n]...i) === v}
+    count_included_user = validation_included_user.count
+    evaluation_datas << count_included_user
+    @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
+    i = evaluation_classes[n]
+    n += 1
+    }
+
+    validation_included_user = user_averages.select{|k,v| (min...i) === v}
+    count_included_user = validation_included_user.count
+    evaluation_datas << count_included_user
+    @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
+
+    return(evaluation_datas)
   end
 
   def issue_tags_labels(user)
@@ -193,4 +234,3 @@ class UsersController < ApplicationController
   end
 
 end
-
