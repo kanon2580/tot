@@ -1,4 +1,9 @@
-<div class="card callout-dark mt-3">
+<% if comment.has_best_answer == true %>
+  <div class="card callout-coral mt-3">
+<% else %>
+  <div class="card callout-dark mt-3">
+<% end %>
+
   <div class="row no-gutters">
 
     <div class="my-auto ml-3">
@@ -16,6 +21,11 @@
             <i class="fas fa-trash-alt"></i>
           <% end %>
         </div>
+      <% end %>
+      <% if comment.has_best_answer == true %>
+        <p class="badge badge-primary my-auto float-right" style="background-color:#ff7f50;">
+          ベストアンサー
+        </p>
       <% end %>
     </div>
 
