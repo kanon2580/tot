@@ -13,4 +13,7 @@ class Issue < ApplicationRecord
 	def likes_by?(user)
 		likes.find_by(user_id: user.id).present?
 	end
+
+	# PV count
+	is_impressionable
 end
