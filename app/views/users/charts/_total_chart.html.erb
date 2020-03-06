@@ -3,7 +3,7 @@ var ctx = document.getElementById("totalChart");
 var totalChart = new Chart(ctx, {
   type: 'radar',
   data: {
-    labels: ["Response", "Required time", "Likes", "Best answer", "viewed"],
+    labels: ["返信速度", "所要時間", "いいね", "ベストアンサー", "閲覧数"],
     
     datasets: [{
       label: gon.user_name,
