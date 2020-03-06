@@ -23,14 +23,16 @@
   <div class="row m-5">
     <div class="ml-3 my-auto col-3">
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <a class="nav-link active" id="response-tab" data-toggle="pill" href="#response" role="tab" aria-controls="response" aria-selected="true">response</a>
-        <a class="nav-link" id="required-time-tab" data-toggle="pill" href="#required-time" role="tab" aria-controls="required-time" aria-selected="false">required time</a>
-        <a class="nav-link" id="likes-tab" data-toggle="pill" href="#likes" role="tab" aria-controls="likes" aria-selected="false">likes</a>
-        <a class="nav-link" id="best-answer-tab" data-toggle="pill" href="#best-answer" role="tab" aria-controls="best-answer" aria-selected="false">best answer</a>
-        <a class="nav-link" id="issue-tags-tab" data-toggle="pill" href="#issue-tags" role="tab" aria-controls="issue-tags" aria-selected="false">issue tags</a>
-        <a class="nav-link" id="comment-tags-tab" data-toggle="pill" href="#comment-tags" role="tab" aria-controls="comment-tags" aria-selected="false">comment tags</a>
+        <a class="nav-link active" id="response-tab" data-toggle="pill" href="#response" role="tab" aria-controls="response" aria-selected="true">コメントする速さ</a>
+        <a class="nav-link" id="required-time-tab" data-toggle="pill" href="#required-time" role="tab" aria-controls="required-time" aria-selected="false">解決にかかった時間</a>
+        <a class="nav-link" id="likes-tab" data-toggle="pill" href="#likes" role="tab" aria-controls="likes" aria-selected="false">いいね</a>
+        <a class="nav-link" id="best-answer-tab" data-toggle="pill" href="#best-answer" role="tab" aria-controls="best-answer" aria-selected="false">ベストアンサー</a>
+        <a class="nav-link" id="issue_viewed-tab" data-toggle="pill" href="#issue_viewed" role="tab" aria-controls="issue_viewed" aria-selected="false">閲覧数</a>
+        <a class="nav-link" id="issue-tags-tab" data-toggle="pill" href="#issue-tags" role="tab" aria-controls="issue-tags" aria-selected="false">イシューのタグ</a>
+        <a class="nav-link" id="comment-tags-tab" data-toggle="pill" href="#comment-tags" role="tab" aria-controls="comment-tags" aria-selected="false">コメントしたイシューのタグ</a>
       </div>
     </div>
+
     <div class="col-8">
       <div class="tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="response" role="tabpanel" aria-labelledby="response-tab">
@@ -53,6 +55,11 @@
           <%= render 'users/charts/best_answer_chart' %>
         </div>
 
+        <div class="tab-pane fade" id="issue_viewed" role="tabpanel" aria-labelledby="issue_viewed-tab">
+          <canvas id="issueViewedChart"></canvas>
+          <%= render 'users/charts/issue_viewed_chart' %>
+        </div>
+
         <div class="tab-pane fade" id="issue-tags" role="tabpanel" aria-labelledby="issue-tags-tab">
           <canvas id="issueTagsChart"></canvas>
           <%= render 'users/charts/issue_tags_chart' %>
@@ -64,4 +71,5 @@
         </div>
       </div>
     </div>
+          
   </div>

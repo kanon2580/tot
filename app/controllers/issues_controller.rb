@@ -2,6 +2,8 @@ class IssuesController < ApplicationController
   before_action :only_team_user
   before_action :only_current_user, except: [:new, :create, :index, :show]
 
+  impressionist :actions => [:show]
+
   def new
   end
 
@@ -43,6 +45,7 @@ class IssuesController < ApplicationController
   def show
     @new_comment = Comment.new
     @comments = @issue.comments
+    impressionist(@issue, nil, unique: [:user_id])
   end
 
   def edit
