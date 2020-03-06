@@ -19,33 +19,23 @@ class ApplicationController < ActionController::Base
   end
 
   def set_team
-    if params[:team_id].present?
-      @team = Team.find(params[:team_id])
-    end
+    @team = Team.find(params[:team_id]) if params[:team_id].present?
   end
 
   def set_issue
-    if params[:issue_id].present?
-      @issue = Issue.find(params[:issue_id])
-    end
+    @issue = Issue.find(params[:issue_id]) if params[:issue_id].present?
   end
 
   def set_user
-    if params[:user_id].present?
-      @user = User.find(params[:user_id])
-    end
+    @user = User.find(params[:user_id]) if params[:user_id].present?
   end
 
   def set_comment
-    if params[:comment_id].present?
-      @comment = Comment.find(params[:comment_id])
-    end
+    @comment = Comment.find(params[:comment_id]) if params[:comment_id].present?
   end
 
   def set_tag
-    if params[:tag_id].present?
-      @tag = Tag.find(params[:tag_id])
-    end
+    @tag = Tag.find(params[:tag_id])  if params[:tag_id].present?
   end
  
 end
