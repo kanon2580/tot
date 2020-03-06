@@ -57,7 +57,7 @@
         <%= issue.user.name %>
       <% end %>
 
-      <% if @issue.has_settled == false && @issue.user == current_user && action_name == 'show' %>
+      <% if issue.has_settled == false && issue.user == current_user && action_name == 'show' %>
         <%= link_to edit_team_issue_path(team, issue), class: "btn btn-outline-success btn-sm mx-1" do %>
           <i class="fas fa-edit"></i>
         <% end %>
