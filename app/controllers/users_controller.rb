@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     @user_scores << @user_score
 
 # total
-    gon.user_scores = @user_scores
+    gon.user_scores = @user_scores 
 
 # issue tags
     gon.issue_tags_labels = issue_tags_labels(@user)
@@ -209,7 +209,7 @@ class UsersController < ApplicationController
     user_issue_tags_array = user.issues.map{|issue| issue.tags.map{|tag| tag.name}}.flatten
     if user_issue_tags_array == []
       tags_name = ["nothing issues tags"]
-      return
+      return(tags_name)
     end
     tags_name = user_issue_tags_array.group_by(&:itself).keys
   end
@@ -218,7 +218,7 @@ class UsersController < ApplicationController
     user_issue_tags_array = user.issues.map{|issue| issue.tags.map{|tag| tag.id}}.flatten
     if user_issue_tags_array == []
       evaluation_datas = [100]
-      return
+      return(evaluation_datas)
     end
     tags_count_array = user_issue_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
     base = tags_count_array.values.sum.to_f
@@ -229,7 +229,7 @@ class UsersController < ApplicationController
     user_comment_tags_array = user.comments.map{|comment| comment.issue.tags.map{|tag| tag.name}}.flatten
     if user_comment_tags_array == []
       tags_name = ["nothing comments tags"]
-      return
+      return(tags_name)
     end
     tags_name = user_comment_tags_array.group_by(&:itself).keys
   end
@@ -238,7 +238,7 @@ class UsersController < ApplicationController
     user_comment_tags_array = user.comments.map{|comment| comment.issue.tags.map{|tag| tag.id}}.flatten
     if user_comment_tags_array == []
       evaluation_datas = [100]
-      return
+      return(evaluation_datas)
     end
     tags_count_array = user_comment_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
     base = tags_count_array.values.sum.to_f
