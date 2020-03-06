@@ -28,6 +28,13 @@ class UsersController < ApplicationController
     gon.best_answer_evaluation_datas = best_answer_evaluation_datas
     @user_scores << @user_score
 
+# issue viewed count
+    gon.issue_viewed_count_evaluation = issue_viewed_count_evaluation
+    @user_scores << @user_score
+
+# total
+    gon.user_scores = @user_scores
+
 # issue tags
     gon.issue_tags_labels = issue_tags_labels(@user)
     gon.issue_tags_evaluation_datas = issue_tags_evaluation_datas(@user)
@@ -36,8 +43,6 @@ class UsersController < ApplicationController
     gon.comment_tags_labels = comment_tags_labels(@user)
     gon.comment_tags_evaluation_datas = comment_tags_evaluation_datas(@user)
 
-# total
-    gon.user_scores = @user_scores
   end
 
   def edit
@@ -92,25 +97,31 @@ class UsersController < ApplicationController
     evaluation_datas_sort_by_min(best_answer_count_array)
   end
 
-  def evaluation_datas_sort_by_min(user_averages)
+  def issue_viewed_count_evaluation
+    # 標本不足により、総数で算出
+    user_issue_viewed_count = Issue.group(:user_id).map{|issue| [issue.user_id, issue.impressionist_count]}.to_h
+    evaluation_datas_sort_by_min(user_issue_viewed_count)
+  end
+
+  def evaluation_datas_sort_by_min(user_evaluations)
     @user_score = 0
     # 平均値が高いと高得点
-    if user_averages.all? {|k,v| v == 0}
-      user_averages = [0]
+    if user_evaluations.all? {|k,v| v == 0}
+      user_evaluations = [0]
       return
     end
     # 階級幅の計算
-    min = user_averages.values.min
-    max = user_averages.values.max
+    min = user_evaluations.values.min
+    max = user_evaluations.values.max
     diff = max - min
-    evaluation_class = (diff / 10.0).round
+    interval = (diff / 10.0).round
 
     # 階級が切り替わる値を計算、配列に渡す
     evaluation_classes = []
     i = max
 
     9.times{|n|
-      i -= evaluation_class
+      i -= interval
       evaluation_classes << i
       }
       evaluation_classes.reverse!
@@ -120,14 +131,14 @@ class UsersController < ApplicationController
     n = 0
     i = evaluation_classes[n]
 
-    validation_included_user = user_averages.select{|k,v| (min...i) === v}
+    validation_included_user = user_evaluations.select{|k,v| (min...i) === v}
     count_included_user = validation_included_user.count
     evaluation_datas << count_included_user
     @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
     n += 1
 
     8.times{|m|
-      validation_included_user = user_averages.select{|k,v| (i...evaluation_classes[n]) === v}
+      validation_included_user = user_evaluations.select{|k,v| (i...evaluation_classes[n]) === v}
       count_included_user = validation_included_user.count
       evaluation_datas << count_included_user
       @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
@@ -135,7 +146,7 @@ class UsersController < ApplicationController
       n += 1
     }
 
-    validation_included_user = user_averages.select{|k,v| (i..max) === v}
+    validation_included_user = user_evaluations.select{|k,v| (i..max) === v}
     count_included_user = validation_included_user.count
     evaluation_datas << count_included_user
     @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
@@ -143,25 +154,25 @@ class UsersController < ApplicationController
     return(evaluation_datas)
   end
 
-  def evaluation_datas_sort_by_max(user_averages)
+  def evaluation_datas_sort_by_max(user_evaluations)
     @user_score = 0
     # 平均値が低いと高得点
-    if user_averages.all? {|k,v| v == 0}
+    if user_evaluations.all? {|k,v| v == 0}
       evaluation_datas = [0]
       return
     end
     # 階級幅の計算
-    min = user_averages.values.min
-    max = user_averages.values.max
+    min = user_evaluations.values.min
+    max = user_evaluations.values.max
     diff = max - min
-    evaluation_class = (diff / 10.0).round
+    interval = (diff / 10.0).round
 
     # 階級が切り替わる値を計算、配列に渡す
     evaluation_classes = []
     i = min
 
     9.times{|n|
-      i += evaluation_class
+      i += interval
       evaluation_classes << i
     }
     evaluation_classes.reverse!
@@ -171,14 +182,14 @@ class UsersController < ApplicationController
     n = 0
     i = evaluation_classes[n]
 
-    validation_included_user = user_averages.select{|k,v| (i..max) === v}
+    validation_included_user = user_evaluations.select{|k,v| (i..max) === v}
     count_included_user = validation_included_user.count
     evaluation_datas << count_included_user
     @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
     n += 1
 
     8.times{|m|
-    validation_included_user = user_averages.select{|k,v| (evaluation_classes[n]...i) === v}
+    validation_included_user = user_evaluations.select{|k,v| (evaluation_classes[n]...i) === v}
     count_included_user = validation_included_user.count
     evaluation_datas << count_included_user
     @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
@@ -186,7 +197,7 @@ class UsersController < ApplicationController
     n += 1
     }
 
-    validation_included_user = user_averages.select{|k,v| (min...i) === v}
+    validation_included_user = user_evaluations.select{|k,v| (min...i) === v}
     count_included_user = validation_included_user.count
     evaluation_datas << count_included_user
     @user_score = n+1 if validation_included_user.any? {|k,v| k == @user.id}
