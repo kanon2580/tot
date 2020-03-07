@@ -12,7 +12,7 @@ class TagsController < ApplicationController
     unless new_tag.save
       flash[:error] = "the tag had not save :("
     end
-    redirect_back(fallback_location: root_path)
+    redirect_to team_tags_path(@team)
   end
 
   private
