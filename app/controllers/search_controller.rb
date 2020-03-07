@@ -2,28 +2,64 @@ class SearchController < ApplicationController
 
   def issues
     if params[:target] == "title"
-      issues = @team.issues.where('title LIKE ?', "%#{params[:q]}%").order(created_at: :desc)
-      issues = issues.where(has_settled: true) if params[:status] == "settled"
-      issues = issues.where(has_settled: false) if params[:status] == "unsettled"
+      splited_q = params[:q].split(/[[:blank:]]+/)
+      issues = []
+      splited_q.each do |q|
+        next if q == ""
+        issues += @team.issues.where('title LIKE ?', "%#{q}%")
+      end
+      # order、reveseで新しい順にしたいけどできなかったTT
+      # orderかpageにnomethod error
+      issues.uniq!
+      issues = issues.select{|issue| issue.has_settled == true} if params[:status] == "settled"
+      issues = issues.select{|issue| issue.has_settled == false} if params[:status] == "unsettled"
     elsif params[:target] == "body"
-      issues = @team.issues.where('body LIKE ?', "%#{params[:q]}%").order(created_at: :desc)
-      issues = issues.where(has_settled: true) if params[:status] == "settled"
-      issues = issues.where(has_settled: false) if params[:status] == "unsettled"
+      splited_q = params[:q].split(/[[:blank:]]+/)
+      issues = []
+      splited_q.each do |q|
+        next if q == ""
+        issues += @team.issues.where('body LIKE ?', "%#{q}%")
+      end
+      issues.uniq!
+      issues = issues.select{|issue| issue.has_settled == true} if params[:status] == "settled"
+      issues = issues.select{|issue| issue.has_settled == false} if params[:status] == "unsettled"
     elsif params[:target] == "tag"
-      issues = @team.issues.joins(:tags).where('tags.name LIKE ?', "%#{params[:q]}%").order(created_at: :desc)
-      issues = issues.where(has_settled: true) if params[:status] == "settled"
-      issues = issues.where(has_settled: false) if params[:status] == "unsettled"
+      splited_q = params[:q].split(/[[:blank:]]+/)
+      issues = []
+      splited_q.each do |q|
+        next if q == ""
+        issues += @team.issues.joins(:tags).where('tags.name LIKE ?', "%#{q}%")
+      end
+      issues.uniq!
+      issues = issues.select{|issue| issue.has_settled == true} if params[:status] == "settled"
+      issues = issues.select{|issue| issue.has_settled == false} if params[:status] == "unsettled"
     elsif params[:target] == "user"
-      issues = @team.issues.joins(:user).where('users.name LIKE ?', "%#{params[:q]}%").order(created_at: :desc)
+      splited_q = params[:q].split(/[[:blank:]]+/)
+      issues = []
+      splited_q.each do |q|
+        next if q == ""
+        issues += @team.issues.joins(:user).where('users.name LIKE ?', "%#{q}%")
+      end
+      issues.uniq!
+      issues = issues.select{|issue| issue.has_settled == true} if params[:status] == "settled"
+      issues = issues.select{|issue| issue.has_settled == false} if params[:status] == "unsettled"
+    else
+      issues = @team.issues
       issues = issues.where(has_settled: true) if params[:status] == "settled"
       issues = issues.where(has_settled: false) if params[:status] == "unsettled"
     end
-    @pagenated_issues = issues.page(params[:page]).per(10)
+    @pagenated_issues = Kaminari.paginate_array(issues).page(params[:page]).per(10)
     render template: "issues/index"
   end
 
   def users
-    users = @team.users.where('name LIKE ?', "%#{params[:q]}%")
+    splited_q = params[:q].split(/[[:blank:]]+/)
+    users = []
+    splited_q.each do |q|
+      next if q == ""
+      issues += @team.users.where('name LIKE ?', "%#{q}%").order(created_at: :desc)
+    end
+    issues.uniq!
     @pagenated_users = users.page(params[:page]).per(12)
     render template: "users/index"
   end
