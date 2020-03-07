@@ -4,7 +4,20 @@
   <h1 class="titlemark">・</h1>
 </div>
 
-<%= form_with url: 
+<%= form_with url: team_issues_search_path(@team), method: :get, local: true do |f| %>
+  <%= f.select :target, [["タイトル", "title"], ["本文", "body"], ["タグ", "tag"], ["ユーザー", "user"]] %>
+  <%= f.text_field :q, placeholder: "検索ワードを入力" %>
+
+  <%= f.radio_button :status,  "" %>
+  <%= f.label :has_settled, "指定なし" %>
+  <%= f.radio_button :status,  "settled" %>
+  <%= f.label :has_settled, "解決済み" %>
+  <%= f.radio_button :status,  "unsettled" %>
+  <%= f.label :has_settled, "未解決" %>
+
+  <%= f.submit "検索" %>
+<% end %>
+<%= link_to "検索条件を削除", team_issues_path(@team), class:"btn btn-sm btn-dark" %>
 
 <div class="offset-1 col-10">
   <% @pagenated_issues.each do |issue| %>
