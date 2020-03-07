@@ -19,8 +19,9 @@ Rails.application.routes.draw do
   get 'mypage/team_members/new' => 'team_members#new', as: "new_team_member"
 
   # search
-  get 'teams/:team_id/issues/search' => 'search#issue', as: "team_issues_search"
-  get 'teams/:team_id/users/search' => 'search#user', as: "team_users_search"
+  get 'teams/:team_id/issues/search' => 'search#issues', as: "team_issues_search"
+  get 'teams/:team_id/users/search' => 'search#users', as: "team_users_search"
+  get 'teams/:team_id/tags/search' => 'search#tags', as: "team_tags_search"
 
   # teams
   resources :teams, only: [:show], param: :team_id

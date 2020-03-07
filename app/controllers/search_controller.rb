@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
 
-  def issue
+  def issues
     if params[:target] == "title"
       issues = @team.issues.where('title LIKE ?', "%#{params[:q]}%").order(created_at: :desc)
       issues = issues.where(has_settled: true) if params[:status] == "settled"
@@ -22,9 +22,15 @@ class SearchController < ApplicationController
     render template: "issues/index"
   end
 
-  def user
+  def users
     users = @team.users.where('name LIKE ?', "%#{params[:q]}%")
     @pagenated_users = users.page(params[:page]).per(12)
     render template: "users/index"
+  end
+
+  def tags
+    @tags = @team.tags.where('name LIKE ?', "%#{params[:q]}%")
+    value = params[:q]
+    render template: "tags/index"
   end
 end

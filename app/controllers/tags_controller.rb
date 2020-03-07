@@ -2,6 +2,7 @@ class TagsController < ApplicationController
   before_action :only_team_user
 
   def index
+    @tags = @team.tags
     @new_tag = Tag.new
   end
 
