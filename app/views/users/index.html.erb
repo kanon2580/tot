@@ -4,6 +4,11 @@
   <h1 class="titlemark">・</h1>
 </div>
 
+<%= form_with url: team_users_search_path(@team), method: :get, local: true do |f| %>
+  <%= f.text_field :q, placeholder: "検索ワードを入力" %>
+  <%= f.submit "検索" %>
+<% end %>
+
 <div class="row my-5">
   <div class="offset-2 col-8">
     <div class="card-columns">

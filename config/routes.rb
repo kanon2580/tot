@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   resources :team_members, only: [:create]
   get 'mypage/team_members/new' => 'team_members#new', as: "new_team_member"
 
+  # search
+  get 'teams/:team_id/issues/search' => 'search#issues', as: "team_issues_search"
+  get 'teams/:team_id/users/search' => 'search#users', as: "team_users_search"
+  get 'teams/:team_id/tags/search' => 'search#tags', as: "team_tags_search"
+
   # teams
   resources :teams, only: [:show], param: :team_id
   resources :teams, only: [] do
@@ -40,7 +45,6 @@ Rails.application.routes.draw do
     get '/issues/:issue_id/choice' => 'issues#choice', as: "choice"
     get '/issues/:issue_id/confirm' => 'issues#confirm', as: "confirm"
     put '/issues/:issue_id/settled' => 'issues#settled', as: "settled"
-
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
