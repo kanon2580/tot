@@ -57,10 +57,10 @@ class SearchController < ApplicationController
     users = []
     splited_q.each do |q|
       next if q == ""
-      issues += @team.users.where('name LIKE ?', "%#{q}%").order(created_at: :desc)
+      users += @team.users.where('name LIKE ?', "%#{q}%").order(created_at: :desc)
     end
-    issues.uniq!
-    @pagenated_users = users.page(params[:page]).per(12)
+    users.uniq!
+    @pagenated_users = Kaminari.paginate_array(users).page(params[:page]).per(12)
     render template: "users/index"
   end
 
