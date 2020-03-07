@@ -29,8 +29,15 @@ class SearchController < ApplicationController
   end
 
   def tags
-    @tags = @team.tags.where('name LIKE ?', "%#{params[:q]}%")
-    value = params[:q]
+    binding.pry
+    splited_q = params[:q].split(/[[:blank:]]+/)
+
+    @tags = []
+    splited_q.each do |q|
+      next if q == ""
+      @tags += @team.tags.where('name LIKE ?', "%#{q}%")
+    end
+    @tags.uniq!
     render template: "tags/index"
   end
 end
