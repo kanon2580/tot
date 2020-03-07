@@ -21,4 +21,10 @@ class SearchController < ApplicationController
     @pagenated_issues = issues.page(params[:page]).per(10)
     render template: "issues/index"
   end
+
+  def user
+    users = @team.users.where('name LIKE ?', "%#{params[:q]}%")
+    @pagenated_users = users.page(params[:page]).per(12)
+    render template: "users/index"
+  end
 end

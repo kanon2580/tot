@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   # search
   get 'teams/:team_id/issues/search' => 'search#issue', as: "team_issues_search"
+  get 'teams/:team_id/users/search' => 'search#user', as: "team_users_search"
 
   # teams
   resources :teams, only: [:show], param: :team_id
