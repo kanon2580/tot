@@ -31,14 +31,11 @@ class IssuesController < ApplicationController
   def index
     if @team.present? && @user.present?
       issues = @team.issues.where(user_id: @user).order(created_at: :desc)
-      @tags = @team.tags
     elsif @team.present?
       issues = @team.issues.order(created_at: :desc)
-      @tags = @team.tags
     else
       issues = @user.issues.order(created_at: :desc)
     end
-
     @pagenated_issues = issues.page(params[:page]).per(10)
   end
 
