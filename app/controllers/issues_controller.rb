@@ -31,6 +31,8 @@ class IssuesController < ApplicationController
   def index
     if @team.present? && @user.present?
       issues = @team.issues.where(user_id: @user).order(created_at: :desc)
+    elsif @team.present? && @tag.present?
+      issues = @tag.issues.order(created_at: :desc)
     elsif @team.present?
       issues = @team.issues.order(created_at: :desc)
     else
