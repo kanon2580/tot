@@ -5,17 +5,18 @@
     <p class="card-text"><%= user.introduction %></p>
 
     <div class="d-flex justify-content-end">
-      <% if team.present? %>
-        <%= link_to team_user_issues_path(team, user), class:"text-dark" do %>
-          <i class="fas fa-pen-fancy"></i><%= team.issues.where(user_id: user).count %>
-        <% end %>
-        <div class="ml-2">
-          <i class="fas fa-comment"></i><%= team.issues.map{|issue| issue.comments.where(user_id: user).count}.sum %>
-        </div>
-      <% end %>
+      <div class="ml-2">
+        <i class="fas fa-pen-fancy"></i><%= user.issues.count %>
+      </div>
 
-      <%= link_to edit_user_path(user), class:"btn btn-outline-success btn-sm ml-2" do %>
-        <i class="fas fa-cog"></i>
+      <div class="ml-2">
+        <i class="fas fa-comment"></i><%= user.issues.map{|issue| issue.comments.count}.sum %>
+      </div>
+
+      <% if @user == current_user %>
+        <%= link_to edit_user_path(user), class:"btn btn-outline-success btn-sm ml-2" do %>
+          <i class="fas fa-cog"></i>
+        <% end %>
       <% end %>
     </div>
 
