@@ -13,6 +13,7 @@
     <%= render 'users/profile_card', team: @team, user: @user %>
   </div>
   
+  <%= Gon::Base.render_data %>
   <div class="col-7">
     <canvas id="totalChart" style="height:100%;"></canvas>
     <%= render 'users/charts/total_chart' %>
