@@ -4,19 +4,41 @@
   <h1 class="titlemark">・</h1>
 </div>
 
-<div class="row mt-5">
-  <div class="offset-3 col-6">
+<div class="row p-5">
+  <div class="col-7">
 
-    <%= flash[:error] %>
+    <div class="row">
+      <div class="offset-1 col-8">
+        <% current_user.teams.each do |team| %>
+          <div class="row headline my-3">
+            <div class="mr-auto">
+              <%= link_to team.name, team_path(team), class:"h4" %>
+            </div>
+
+            <div class="mr-3">
+              <i class="fas fa-user"></i>
+              <%= team.users.count %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <p class="headline">New team</p>
+
+    <span class="titlemark">
+      <%= flash[:error] %>
+    </span>
 
     <%= form_with model: TeamMember.new do |f| %>
       <div class="form-group">
-        <%= f.text_field :team_name, placeholder: "Team name", class: "form-control" %>
+        <%= f.text_field :team_name, placeholder: "Team name", class: "form-control offset-1 col-10" %>
         <div class="row flex-column align-items-center mt-3">
-          <%= f.submit "Join team !", class: "btn btn-dark" %>
+          <%= f.submit "Join team !", class: "btn btn-sm btn-dark" %>
         </div>
       </div>
     <% end %>
-
   </div>
 </div>

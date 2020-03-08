@@ -13,6 +13,7 @@
     <%= render 'users/profile_card', team: @team, user: @user %>
   </div>
   
+  <%= Gon::Base.render_data %>
   <div class="col-7">
     <canvas id="totalChart" style="height:100%;"></canvas>
     <%= render 'users/charts/total_chart' %>
@@ -25,10 +26,14 @@
 
     <ul id="chartTab" class="nav nav-tabs" role="tablist">
       <li class="nav-item">
-        <a href="#questioner" id="questioner-tab" class="nav-link active" role="tab" data-toggle="tab" aria-controls="questioner" aria-selected="true">質問者</a>
+        <a href="#questioner" id="questioner-tab" class="nav-link active" role="tab" data-toggle="tab" aria-controls="questioner" aria-selected="true">
+          Questioner
+        </a>
       </li>
       <li class="nav-item">
-        <a href="#answer" id="answer-tab" class="nav-link" role="tab" data-toggle="tab" aria-controls="answer" aria-selected="false">解答者</a>
+        <a href="#answer" id="answer-tab" class="nav-link" role="tab" data-toggle="tab" aria-controls="answer" aria-selected="false">
+          Answer
+        </a>
       </li>
     </ul>
 

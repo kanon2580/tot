@@ -14,7 +14,7 @@
 
         <% if issue.has_settled == true %>
           <p class="badge badge-primary m-0" style="background-color:#ff7f50;">
-            解決済み
+            Solved
           </p>
         <% end %>
 
@@ -24,14 +24,14 @@
 
           <% if issue.likes_by?(current_user) %>
             <%= link_to team_issue_likes_path(team, issue), method: :delete do %>
-              <span class="text-warning">★</span>
-              <%= issue.likes.count %>
+              <span style="color:#ff7f50;"><i class="fas fa-thumbs-up"></i></span>
             <% end %>
+            <%= issue.likes.count %>
           <% else %>
             <%= link_to team_issue_likes_path(team, issue), method: :post do %>
-              <span class="text-warning">☆</span>
-              <span class="text-dark"><%= issue.likes.count %></span>
+              <span class="text-dark"><i class="far fa-thumbs-up"></i></span>
             <% end %>
+            <%= issue.likes.count %>
           <% end %>
         </p>
       </div>
