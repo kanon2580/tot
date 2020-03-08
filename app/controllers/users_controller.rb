@@ -106,9 +106,10 @@ class UsersController < ApplicationController
   def evaluation_datas_sort_by_min(user_evaluations)
     @user_score = 0
     # 平均値が高いと高得点
+    binding.pry
     if user_evaluations.all? {|k,v| v == 0}
       user_evaluations = [0]
-      return(evaluation_datas)
+      return
     end
     # 階級幅の計算
     min = user_evaluations.values.min
@@ -159,7 +160,7 @@ class UsersController < ApplicationController
     # 平均値が低いと高得点
     if user_evaluations.all? {|k,v| v == 0}
       evaluation_datas = [0]
-      return(evaluation_datas)
+      return
     end
     # 階級幅の計算
     min = user_evaluations.values.min
