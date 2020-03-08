@@ -32,7 +32,6 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    response = @comment.response_evaluation
     if @comment.destroy
       if @issue.comments.where(user_id: current_user).present?
         oldest_comment = @issue.comments.where(user_id: current_user).order("created_at").min

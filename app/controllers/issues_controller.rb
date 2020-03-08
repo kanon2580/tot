@@ -2,7 +2,7 @@ class IssuesController < ApplicationController
   before_action :only_team_user
   before_action :only_current_user, except: [:new, :create, :index, :show]
 
-  helper_method :display_true
+  impressionist :actions => [:show]
 
   def new
   end
@@ -31,20 +31,20 @@ class IssuesController < ApplicationController
   def index
     if @team.present? && @user.present?
       issues = @team.issues.where(user_id: @user).order(created_at: :desc)
-      @tags = @team.tags
+    elsif @team.present? && @tag.present?
+      issues = @tag.issues.order(created_at: :desc)
     elsif @team.present?
       issues = @team.issues.order(created_at: :desc)
-      @tags = @team.tags
     else
       issues = @user.issues.order(created_at: :desc)
     end
-
     @pagenated_issues = issues.page(params[:page]).per(10)
   end
 
   def show
     @new_comment = Comment.new
     @comments = @issue.comments
+    impressionist(@issue, nil, unique: [:user_id])
   end
 
   def edit
@@ -69,7 +69,7 @@ class IssuesController < ApplicationController
 
   def choice
     if @issue.comments == []
-      flash[:error] = "迅速に問題を解決する姿勢がステキ！ですがこの問題にはコメントがされていません。もう少し待ちましょう。"
+      flash[:error] = "この問題にはまだコメントがされていません。もう少し待ちましょう。"
       redirect_back(fallback_location: root_path)
     end
     @comments = @issue.comments
@@ -101,10 +101,6 @@ class IssuesController < ApplicationController
 
   def issue_params
     params.require(:issue).permit(:user_id, :team_id, :title, :body, :has_settled, :settled_at, {tag_ids: []} )
-  end
-
-  def display_true
-    @issue.has_settled == false && @issue.user == current_user && action_name == 'show'
   end
 
   def create_required_time_evaluation(evaluated_comments)

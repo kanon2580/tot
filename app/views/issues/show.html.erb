@@ -36,7 +36,7 @@
   </div>
 </div>
 
-<% if display_true %>
+<% if @issue.has_settled == false && @issue.user == current_user && action_name == 'show' %>
   <div class="row flex-column align-items-center mt-5">
     <strong>Is the issue solved?</strong>
   </div>
