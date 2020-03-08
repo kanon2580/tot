@@ -47,7 +47,7 @@ a{
 }
 
 // サイドバーデザイン
-.nav-link{
+.sidebar > .nav > .nav-items > .nav-link{
   color: #fff;
 }
 
@@ -93,14 +93,14 @@ a{
   box-shadow: 0 0 0 0.2rem #ff7f50;
 }
 
-// タグデザイン
+// issue form タグデザイン
 .checkboxes > input{
   opacity: 0;
 }
 
 .checkboxes > input:after{
   height: 0;
-  visibility:hidden;
+  visibility: hidden;
 }
 
 .checkboxes > label{
@@ -111,10 +111,10 @@ a{
 }
 
 .checkboxes > label:hover{
-  cursor:pointer;
+  cursor: pointer;
 }
 
-.checkboxes > input[type="checkbox"]:checked + label {
+.checkboxes > input[type="checkbox"]:checked + label{
   background-color: #343a40;
   color: white;
 }
@@ -139,4 +139,30 @@ a{
   color: #fff;
   background-color: #ff6347;
   border-color: #ff6347;
+}
+
+// 検索ラジオボタン デザイン
+.radiobuttons > input{
+  opacity: 0;
+}
+
+.radiobuttons > input:after{
+  height: 0;
+  visibility: hidden;
+}
+
+.radiobuttons > label{
+  border-radius: 3px;
+  border: solid 1px #343a40;
+  padding: 0 10px 25px;
+  height: 10px;
+}
+
+.radiobuttons > label:hover{
+  cursor: pointer;
+}
+
+.radiobuttons > input[type="radio"]:checked + label{
+  background-color: #343a40;
+  color: white;
 }

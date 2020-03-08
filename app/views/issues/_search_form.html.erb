@@ -1,0 +1,27 @@
+<div class="search offset-1 col-10 mb-5">
+  <%= form_with url: team_issues_search_path(team), method: :get, local: true do |f| %>
+    <div class="row form-group mb-0">
+      <%= f.select :target, [["タイトル", "title"], ["本文", "body"], ["タグ", "tag"], ["ユーザー", "user"]], {prompt: "検索ジャンル"}, {class:'custom-select col-5'} %>
+
+      <div class="form-group radiobuttons mt-1">
+        <%= f.radio_button :status,  "", id: "default" %>
+        <%= f.label :has_settled, "選択なし", for: "default" %>
+        <%= f.radio_button :status,  "settled", id: "settled" %>
+        <%= f.label :has_settled, "解決済み", for: "settled" %>
+        <%= f.radio_button :status,  "unsettled", id: "unsettled" %>
+        <%= f.label :has_settled, "未解決", for: "unsettled" %>
+      </div>
+    </div>
+
+    <div class="row input-group">
+      <%= f.text_field :q, placeholder: "検索ワードを入力", class:"form-control" %>
+      <div class="input-group-append">
+        <%= f.submit "検索", class:"btn btn-danger" %>
+      </div>
+    </div>
+
+    <div class="row justify-content-end">
+      <%= link_to "検索条件を削除", team_issues_path(@team) %>
+    </div>
+  <% end %>
+</div>

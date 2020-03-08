@@ -1,13 +1,19 @@
 <div class="row flex-column align-items-center my-5">
   <h1 class="titlemark">・</h1>
-  <h3>Tags</h3>
+  <h3>タグ</h3>
   <h1 class="titlemark">・</h1>
 </div>
 
 <div class="row">
+  <div class="offset-2 col-8">
+    <%= render 'tags/search_form', team: @team %>
+  </div>
+</div>
+
+<div class="row mt-5">
   <div class="offset-1 col-6">
     <p class="headline">一覧</p>
-    <% @team.tags.each do |tag| %>
+    <% @tags.each do |tag| %>
       <%= link_to tag.name, team_tag_issues_path(@team, tag), class:"btn btn-sm btn-dark m-2 py-0" %>
     <% end %>
   </div>
@@ -17,7 +23,7 @@
 
       <p class="headline">新しいタグ</p>
       <div class="input-group offset-1 col-10">
-        <%= f.text_field :name, placeholder: "Tag name", autofocus: true, class:"form-control", aria_describedby:"button-addon2" %>
+        <%= f.text_field :name, placeholder: "Tag name", class:"form-control", aria_describedby: "button-addon2" %>
         <div class="input-group-append">
         <%= f.submit "作成", class:"btn btn-dark", id:"button-addon2" %>
         </div>
