@@ -108,7 +108,7 @@ class UsersController < ApplicationController
     # 平均値が高いと高得点
     if user_evaluations.all? {|k,v| v == 0}
       user_evaluations = [0]
-      return
+      return(evaluation_datas)
     end
     # 階級幅の計算
     min = user_evaluations.values.min
