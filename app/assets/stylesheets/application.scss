@@ -28,6 +28,7 @@
 // 余白
 main{
   margin-bottom: 50px;
+  padding: 0 50px 0;
 }
 
 // リンク文字色
@@ -47,6 +48,13 @@ a{
 }
 
 // サイドバーデザイン
+.sidebar{
+  position: -webkit-sticky;
+  position: fixed;
+  left: 0;
+  min-height: 100vh;
+  width: 25%;
+}
 .sidebar > .nav > .nav-items > .nav-link{
   color: #fff;
 }

@@ -1,6 +1,6 @@
 <div class="row flex-column align-items-center my-5">
   <h1 class="titlemark">・</h1>
-  <h3>タグ</h3>
+  <h3>Tags</h3>
   <h1 class="titlemark">・</h1>
 </div>
 
@@ -12,7 +12,7 @@
 
 <div class="row mt-5">
   <div class="offset-1 col-6">
-    <p class="headline">一覧</p>
+    <p class="headline">Index</p>
     <% @tags.each do |tag| %>
       <%= link_to tag.name, team_tag_issues_path(@team, tag), class:"btn btn-sm btn-dark m-2 py-0" %>
     <% end %>
@@ -21,11 +21,11 @@
   <div class="col-4">
     <%= form_with model: @new_tag, url: team_tags_path do |f| %>
 
-      <p class="headline">新しいタグ</p>
+      <p class="headline">New tag</p>
       <div class="input-group offset-1 col-10">
         <%= f.text_field :name, placeholder: "Tag name", class:"form-control", aria_describedby: "button-addon2" %>
         <div class="input-group-append">
-        <%= f.submit "作成", class:"btn btn-dark", id:"button-addon2" %>
+        <%= f.submit "Create", class:"btn btn-dark", id:"button-addon2" %>
         </div>
       </div>
     <% end %>

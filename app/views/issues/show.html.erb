@@ -26,10 +26,10 @@
     <span class="titlemark"><%= flash[:error] %></span>
 
     <% unless @issue.has_settled == true %>
-      <%= form_with model: @new_comment, url: team_issue_comments_path(params[:team_id], params[:issue_id]) do |f| %>
+      <%= form_with model: @new_comment, url: team_issue_comments_path(@team, @issue) do |f| %>
         <div class="form-group">
           <%= f.text_area :comment, class: "form-control" %>
-          <%= f.submit :post, class: "btn btn-dark float-right mt-1" %>
+          <%= f.submit :post, class: "btn btn-sm btn-dark float-right mt-1" %>
         </div>
       <% end %>
     <% end %>
