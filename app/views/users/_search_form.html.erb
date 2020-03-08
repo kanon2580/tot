@@ -1,0 +1,11 @@
+<%= form_with url: team_users_search_path(team), method: :get, local: true do |f| %>
+  <div class="row input-group">
+    <%= f.text_field :q, placeholder: "検索ワードを入力", autofocus: true, class:"form-control col-10" %>
+    <div class="input-group-append">
+      <%= f.submit "検索", class:"btn btn-danger" %>
+    </div>
+  </div>
+<% end %>
+<div class="row justify-content-end">
+  <%= link_to "検索条件を削除", team_users_path(team), class:"mr-3" %>
+</div>
