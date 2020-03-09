@@ -12,7 +12,7 @@
     <div class="tab-content" id="answer-tabContent"><%# 回答者 %>
       <div class="tab-pane fade show active" id="response" aria-labelledby="response-tab">
         <canvas id="responseChart" style="height:100%;"></canvas>
-        <%= render 'users/charts/response_chart' %>
+        <%= javascript_include_tag 'response_chart' %>
       </div>
 
       <div class="tab-pane fade" id="required-time" aria-labelledby="required-time-tab">
