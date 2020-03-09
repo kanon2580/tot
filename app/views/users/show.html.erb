@@ -14,9 +14,9 @@
   </div>
   
   <%= Gon::Base.render_data %>
+
   <div class="col-7">
-    <canvas id="totalChart" style="height:100%;"></canvas>
-    <%= render 'users/charts/total_chart' %>
+    <canvas id="totalChart"></canvas>
   </div>
 </div>
 
@@ -31,21 +31,23 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="#answer" id="answer-tab" class="nav-link" role="tab" data-toggle="tab" aria-controls="answer" aria-selected="false">
-          Answer
+        <a href="#answerer" id="answerer-tab" class="nav-link" role="tab" data-toggle="tab" aria-controls="answerer" aria-selected="false">
+          Answerer
         </a>
       </li>
     </ul>
 
     <div id="chartTabContent" class="tab-content mt-3">
       <div id="questioner" class="tab-pane active" role="tabpanel" aria-labelledby="questioner-tab">
-        <%= render 'users/charts/questioner_tab' %>
+        <%= render 'users/questioner_tab' %>
       </div>
 
-      <div id="answer" class="tab-pane" role="tabpanel" aria-labelledby="answer-tab">
-        <%= render 'users/charts/answer_tab' %>
+      <div id="answerer" class="tab-pane" role="tabpanel" aria-labelledby="answerer-tab">
+        <%= render 'users/answerer_tab' %>
       </div>
     </div>
 
   </div>
 </div>
+
+<%= javascript_include_tag 'user_charts', 'data-turbolinks-track': 'reload' %>

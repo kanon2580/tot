@@ -13,6 +13,8 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+
+//= stub user_charts.js
 //= require_tree .
 
 //= require jquery3

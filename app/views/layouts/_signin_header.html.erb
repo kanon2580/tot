@@ -21,7 +21,7 @@
 
         <%= link_to "New issue", new_team_issue_path, class: "nav-link" %>
 
-        <%= link_to "My page", team_mypage_path(@team, current_user), class:"nav-link" %>
+        <%= link_to "My page", team_user_path(@team, current_user), class:"nav-link" %>
 
         <%= link_to "Leave team", mypage_path(current_user), class:"nav-link" %>
 
