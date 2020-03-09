@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :only_team_user, only: [:index]
   before_action :only_current_user, only: [:edit, :update]
 
-  def my_page
+  def show
     if @team.present? && @user.present?
       only_team_user
     else
