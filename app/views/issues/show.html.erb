@@ -4,14 +4,14 @@
   <h1 class="titlemark">・</h1>
 </div>
 
-<%# issue %>
+<!-- issue -->
 <div class="row">
   <div class="offset-1 col-10">
     <%= render 'show_card', team: @team, issue: @issue %>
   </div>
 </div>
 
-<%# comments %>
+<!-- comments -->
 <div class="row mt-5">
   <div class="offset-2 col-8">
     <% @comments.each do |comment| %>
@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<%# comment form %>
+<!-- comment form -->
 <div class="row mt-3">
   <div class="offset-3 col-6">
     <span class="titlemark"><%= flash[:error] %></span>
