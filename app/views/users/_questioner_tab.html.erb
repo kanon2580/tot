@@ -11,7 +11,7 @@
     <div class="tab-content" id="questioner-tabContent"><%# 質問者 %>
       <div class="tab-pane fade show active" id="likes" aria-labelledby="likes-tab">
         <canvas id="likeChart"></canvas>
-        <%= render 'users/charts/like_chart' %>
+        <%= javascript_include_tag 'like_chart' %>
       </div>
 
       <div class="tab-pane fade" id="issue_viewed" aria-labelledby="issue_viewed-tab">
