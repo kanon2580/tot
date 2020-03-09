@@ -14,13 +14,14 @@
 //= require activestorage
 //= require turbolinks
 
-//= stub total_chart.js
-//= stub like_chart.js
-//= stub issue_viewed_chart.js
-//= stub issue_tags_chart.js
-//= stub response_chart.js
-//= stub required_time_chart.js
-//= stub best_answer_chart.js
+//= stub charts/total_chart.js
+//= stub charts/like_chart.js
+//= stub charts/issue_viewed_chart.js
+//= stub charts/issue_tags_chart.js
+//= stub charts/response_chart.js
+//= stub charts/required_time_chart.js
+//= stub charts/best_answer_chart.js
+//= stub charts/comment_tags_chart.js
 //= require_tree .
 
 //= require jquery3
