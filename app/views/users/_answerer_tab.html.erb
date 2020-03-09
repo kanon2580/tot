@@ -12,22 +12,18 @@
     <div class="tab-content" id="answer-tabContent"><%# 回答者 %>
       <div class="tab-pane fade show active" id="response" aria-labelledby="response-tab">
         <canvas id="responseChart" style="height:100%;"></canvas>
-        <%= javascript_include_tag 'charts/response_chart' %>
       </div>
 
       <div class="tab-pane fade" id="required-time" aria-labelledby="required-time-tab">
         <canvas id="requiredTimeChart"></canvas>
-        <%= javascript_include_tag 'charts/required_time_chart' %>
       </div>
 
       <div class="tab-pane fade" id="best-answer" aria-labelledby="best-answer-tab">
         <canvas id="bestAnswerChart"></canvas>
-        <%= javascript_include_tag 'charts/best_answer_chart' %>
       </div>
 
       <div class="tab-pane fade" id="comment-tags" aria-labelledby="comment-tags-tab">
         <canvas id="commentTagsChart"></canvas>
-        <%= javascript_include_tag 'charts/comment_tags_chart' %>
       </div>
     </div>
   </div>

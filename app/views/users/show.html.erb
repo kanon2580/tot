@@ -14,9 +14,9 @@
   </div>
   
   <%= Gon::Base.render_data %>
+
   <div class="col-7">
-    <canvas id="totalChart" style="height:100%;"></canvas>
-    <%= javascript_include_tag 'charts/total_chart' %>
+    <canvas id="totalChart"></canvas>
   </div>
 </div>
 
@@ -49,3 +49,5 @@
 
   </div>
 </div>
+
+<%= javascript_include_tag 'user_charts', 'data-turbolinks-track': 'reload' %>

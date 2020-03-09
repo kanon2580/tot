@@ -14,14 +14,7 @@
 //= require activestorage
 //= require turbolinks
 
-//= stub charts/total_chart.js
-//= stub charts/like_chart.js
-//= stub charts/issue_viewed_chart.js
-//= stub charts/issue_tags_chart.js
-//= stub charts/response_chart.js
-//= stub charts/required_time_chart.js
-//= stub charts/best_answer_chart.js
-//= stub charts/comment_tags_chart.js
+//= stub user_charts.js
 //= require_tree .
 
 //= require jquery3
