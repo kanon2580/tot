@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     @user_scores << @user_score
 
 # issue viewed count
-    gon.issue_viewed_count_evaluation = issue_viewed_count_evaluation
+    gon.issue_viewed_evaluation_datas = issue_viewed_evaluation_datas
     @user_scores << @user_score
 
 # total
@@ -97,7 +97,7 @@ class UsersController < ApplicationController
     evaluation_datas_sort_by_min(best_answer_count_array)
   end
 
-  def issue_viewed_count_evaluation
+  def issue_viewed_evaluation_datas
     # 標本不足により、総数で算出
     user_issue_viewed_count = Issue.group(:user_id).map{|issue| [issue.user_id, issue.impressionist_count]}.to_h
     evaluation_datas_sort_by_min(user_issue_viewed_count)
