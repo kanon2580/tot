@@ -20,6 +20,7 @@
 //= stub issue_tags_chart.js
 //= stub response_chart.js
 //= stub required_time_chart.js
+//= stub best_answer_chart.js
 //= require_tree .
 
 //= require jquery3
