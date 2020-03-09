@@ -16,3 +16,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # chart.js
 Rails.application.config.assets.precompile += %w( total_chart.js )
 Rails.application.config.assets.precompile += %w( like_chart.js )
+Rails.application.config.assets.precompile += %w( issue_viewed_chart.js )

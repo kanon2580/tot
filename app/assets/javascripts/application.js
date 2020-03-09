@@ -16,6 +16,7 @@
 
 //= stub total_chart.js
 //= stub like_chart.js
+//= stub issue_viewed_chart.js
 //= require_tree .
 
 //= require jquery3
