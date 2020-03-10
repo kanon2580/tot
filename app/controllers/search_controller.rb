@@ -6,7 +6,7 @@ class SearchController < ApplicationController
       issues = []
       splited_q.each do |q|
         next if q == ""
-        issues += @team.issues.where('title LIKE ?', "%#{q}%")
+        issues += @team.issues.where('title = ?', "%#{q}%")
       end
       # order、reveseで新しい順にしたいけどできなかったTT
       # orderかpageにnomethod error
@@ -18,7 +18,7 @@ class SearchController < ApplicationController
       issues = []
       splited_q.each do |q|
         next if q == ""
-        issues += @team.issues.where('body LIKE ?', "%#{q}%")
+        issues += @team.issues.where('body = ?', "%#{q}%")
       end
       issues.uniq!
       issues = issues.select{|issue| issue.has_settled == true} if params[:status] == "settled"
@@ -28,7 +28,7 @@ class SearchController < ApplicationController
       issues = []
       splited_q.each do |q|
         next if q == ""
-        issues += @team.issues.joins(:tags).where('tags.name LIKE ?', "%#{q}%")
+        issues += @team.issues.joins(:tags).where('tags.name = ?', "%#{q}%")
       end
       issues.uniq!
       issues = issues.select{|issue| issue.has_settled == true} if params[:status] == "settled"
@@ -38,7 +38,7 @@ class SearchController < ApplicationController
       issues = []
       splited_q.each do |q|
         next if q == ""
-        issues += @team.issues.joins(:user).where('users.name LIKE ?', "%#{q}%")
+        issues += @team.issues.joins(:user).where('users.name = ?', "%#{q}%")
       end
       issues.uniq!
       issues = issues.select{|issue| issue.has_settled == true} if params[:status] == "settled"
@@ -57,7 +57,7 @@ class SearchController < ApplicationController
     users = []
     splited_q.each do |q|
       next if q == ""
-      users += @team.users.where('name LIKE ?', "%#{q}%").order(created_at: :desc)
+      users += @team.users.where('name = ?', "%#{q}%").order(created_at: :desc)
     end
     users.uniq!
     @pagenated_users = Kaminari.paginate_array(users).page(params[:page]).per(12)
@@ -70,7 +70,7 @@ class SearchController < ApplicationController
     @tags = []
     splited_q.each do |q|
       next if q == ""
-      @tags += @team.tags.where('LOWER(name) LIKE ?', "%#{q}%".downcase)
+      @tags += @team.tags.where('LOWER(name) = ?', "%#{q}%".downcase)
     end
     @tags.uniq!
     @new_tag = Tag.new

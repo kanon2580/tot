@@ -9,7 +9,7 @@
 
     <div class="row">
       <div class="offset-1 col-8">
-        <% current_user.teams.each do |team| %>
+        <% @teams.each do |team| %>
           <div class="row headline my-3">
             <div class="mr-auto">
               <%= link_to team.name, team_path(team), class:"h4" %>
@@ -32,9 +32,10 @@
       <%= flash[:error] %>
     </span>
 
-    <%= form_with model: TeamMember.new do |f| %>
+    <%= form_with model: @new_team_mamber do |f| %>
       <div class="form-group">
         <%= f.text_field :team_name, placeholder: "Team name", class: "form-control offset-1 col-10" %>
+        <%= f.text_field :team_id, placeholder: "Team id", class: "form-control offset-1 col-10 mt-3" %>
         <div class="row flex-column align-items-center mt-3">
           <%= f.submit "Join team !", class: "btn btn-sm btn-dark" %>
         </div>

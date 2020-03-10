@@ -11,7 +11,7 @@
 
 <div class="row my-5">
   <div class="offset-1 col-10">
-    <% @team.issues.last(5).each do |issue| %>
+    <% @issues.each do |issue| %>
       <div class="row my-3">
         <%= render 'issues/index_card', team: @team, issue: issue %>
       </div>
@@ -33,7 +33,7 @@
 <div class="row my-6">
   <div class="offset-1 col-10">
     <div class="row">
-        <% @team.users.last(4).each do |user| %>
+        <% @users.each do |user| %>
           <div class="col-3">
             <%= render 'users/member_card', team: @team, user: user %>
           </div>
@@ -56,7 +56,7 @@
 <div class="row my-5">
   <div class="offset-1 col-10">
     <div class="row">
-      <% @team.tags.last(20).each do |tag| %>
+      <% @tags.each do |tag| %>
         <%= link_to tag.name, team_tag_issues_path(@team, tag), class: "btn btn-sm btn-dark mt-3 mr-3" %>
       <% end %>
     </div>
