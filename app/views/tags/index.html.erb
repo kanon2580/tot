@@ -13,7 +13,7 @@
 <div class="row mt-5">
   <div class="offset-1 col-6">
     <p class="headline">Index</p>
-    <% @tags.each do |tag| %>
+    <% @pagenated_tags.each do |tag| %>
       <%= link_to tag.name, team_tag_issues_path(@team, tag), class:"btn btn-sm btn-dark m-2 py-0" %>
     <% end %>
   </div>
