@@ -16,6 +16,18 @@ class User < ApplicationRecord
 
   attachment :profile_image
 
+  def self.search(team, q)
+    splited_q = q.split(/[[:blank:]]+/)
+
+    users = []
+    splited_q.each do |q|
+      next if q == ""
+      users += team.users.where('LOWER(name) LIKE ?', "%#{q}%".downcase).order(created_at: :desc)
+    end
+    users.uniq!
+    return users
+  end
+
   def time_related_evaluation(evaluation_type)
     user_averages = evaluation_type.group(:user_id).average(:difference).map{|k,v| [k, v.to_i]}.to_h
     evaluation_datas_sort_by_max(user_averages)
