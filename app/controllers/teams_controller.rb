@@ -3,7 +3,9 @@ class TeamsController < ApplicationController
 
   def show
     @tags = @team.tags
-    @issues = @team.issues
+    @issues = @team.issues.last(5).reverse
+    @users = @team.users.last(4).reverse
+    @tags = @team.tags.last(20).reverse
   end
 
   private
