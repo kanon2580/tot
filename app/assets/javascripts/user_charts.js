@@ -16,8 +16,13 @@ $("#totalChart").ready(function (){
         pointRadius: 2,
         data: gon.user_scores
       }]
+    },
+    options: {
+     legend: {
+        display: false
+     }
     }
-  });
+  })
   return radarChart;
 });
 
@@ -81,6 +86,9 @@ function bar_chart(chart_id, datas){
             beginAtZero: true
           }
         }]
+      },
+      legend: {
+        display: false
       }
     }
   });
@@ -98,6 +106,11 @@ function doughnut_chart(chart_id,labels,datas){
         backgroundColor: ['rgba(52,58,64,0.4)', 'rgba(255,127,80,0.4)'],
         borderColor: ['rgba(52,58,64,1)', 'rgba(255,127,80,1)']
       }]
+    },
+    options: {
+      legend: {
+        display: false
+      }
     }
   });
 return doughnutChart;
