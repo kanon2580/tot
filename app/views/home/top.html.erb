@@ -1,4 +1,4 @@
-<div class="container sticky-top bg-dark text-white py-2">
+<div class="container sticky-top bg-dark text-white py-2 d-none d-md-block d-lg-block d-xl-block">
   <span class="h1 align-middle">Welcome to</span><%= image_tag 'logo-white.png', width: "70px", class:"mx-3" %>
 </div>
 
@@ -8,17 +8,23 @@
   <h1 class="titlemark">・</h1>
 </div>
 
-<div class="row">
+<div class="row d-xs-flex justify-content-center">
   <%= render 'howto1' %>
 </div>
+
+<p class="headline mt-5"></p>
 
 <div class="row mt-5">
   <%= render 'howto2' %>
 </div>
 
+<p class="headline mt-5"></p>
+
 <div class="row mt-5">
   <%= render 'howto3' %>
 </div>
+
+<p class="headline mt-5"></p>
 
 <div class="row mt-5">
   <%= render 'howto4' %>
