@@ -1,4 +1,4 @@
-<div class="container sticky-top bg-dark text-white py-2">
+<div class="container sticky-top bg-dark text-white py-2 d-none d-md-block d-lg-block d-xl-block">
   <span class="h1 align-middle">Welcome to</span><%= image_tag 'logo-white.png', width: "70px", class:"mx-3" %>
 </div>
 
@@ -12,13 +12,19 @@
   <%= render 'howto1' %>
 </div>
 
+<p class="headline mt-5"></p>
+
 <div class="row mt-5">
   <%= render 'howto2' %>
 </div>
 
+<p class="headline mt-5"></p>
+
 <div class="row mt-5">
   <%= render 'howto3' %>
 </div>
+
+<p class="headline mt-5"></p>
 
 <div class="row mt-5">
   <%= render 'howto4' %>
@@ -30,8 +36,88 @@
   </div>
 </div>
 
-<!-- <div class="row flex-column align-items-center my-5">
+<div class="row flex-column align-items-center" id="about">
   <h1 class="titlemark">・</h1>
-  <h3>評価基準</h3>
+  <h3>このサイトについて</h3>
   <h1 class="titlemark">・</h1>
-</div> -->
+</div>
+
+<div class="row">
+  <div class="offset-2 col-8">
+    <p class="headline mt-5">はじめに</p>
+    <p class="mx-5">
+      このサイトは、就職活動にあたって制作されたポートフォリオサイトです。サインアップ後、サイドバーの"Join team"より下記チームをフォームに入力してご参加ください。
+    </p>
+
+    <p class="my-3 ml-5">
+      Team name : test<br>
+      Team id : 1<br>
+    </p>
+
+    <p class="mx-5" id="criteria">
+      また、サインアップ時のメールアドレスは存在しないアドレスでも登録できる仕様です。ユーザー認証以外で使用することはありません。
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="offset-2 col-8">
+    <p class="headline mt-5">評価基準について</p>
+      <p class="mx-5">
+        マイページ、及びユーザーの個人ページに表示されているグラフは、ユーザーの動作に基づいてスコアが算出されています。
+      </p>
+
+    <p class="headline mt-5">Questioner</p>
+    <p class="ml-5">
+      <span class="bg-dark text-white rounded px-2">Likes</span><br>
+      立ち上げたissueに対するいいねの総数です。<br>
+      提起した問題の共感度が分かります。
+    </p>
+    <p class="ml-5">
+      <span class="bg-dark text-white rounded px-2">Issue viewed</span><br>
+      立ち上げたissueに対する閲覧数の総数です。<br>
+      提起した問題の注目度が分かります。
+    </p>
+    <p class="ml-5">
+      <span class="bg-dark text-white rounded px-2">Tags</span><br>
+      立ち上げたissueについているタグの割合です。<br>
+      どの分野によく疑問を感じるのかが分かります。
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="offset-2 col-8">
+    <p class="headline mt-5">Answerer</p>
+    <p class="ml-5">
+      <span class="bg-dark text-white rounded px-2">Time to response</span><br>
+      issueに対して最初にコメントする早さの平均値です。<br>
+      問題提起に反応している早さが分かります。
+    </p>
+    <p class="ml-5">
+      <span class="bg-dark text-white rounded px-2">Time to solved</span><br>
+      issueに対してコメントしてから解決する速さの平均値です。<br>
+      問題を解決する早さが分かります。
+    </p>
+    <p class="ml-5">
+      <span class="bg-dark text-white rounded px-2">Best answer</span><br>
+      ベストアンサーに選ばれたコメントの総数です。<br>
+      どれだけ問題解決に貢献しているかが分かります。
+    </p>
+    <p class="ml-5">
+      <span class="bg-dark text-white rounded px-2">Tags</span><br>
+      コメントしたissueについているタグの割合です。<br>
+      どの分野の問題解決に強いかが分かります。
+    </p>
+  </div>
+</div>
+
+<div class="row flex-column align-items-end">
+  <small>※あくまでも、このサイトにおいての判断基準です。</small>
+</div>
+
+<div class="row my-5">
+  <div class="offset-2 col-8">
+    <%= link_to "ToTをはじめる", new_user_registration_path, class:"btn btn-danger btn-block" %>
+  </div>
+</div>
