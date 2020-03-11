@@ -3,6 +3,7 @@
   <head>
     <title>ToT</title>
     <link rel="icon" href="<%= asset_path "favicon.ico" %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -13,10 +14,13 @@
   </head>
 
   <body>
+<!-- responsive header -->
+    <header class="d-md-none">
+      <%= render 'layouts/responsive_header' %>
+    </header><!-- /header -->
     <div class="row">
-
 <!-- sidebar -->
-      <div class="col-3">
+      <div class="col-md-3 d-none d-md-block">
         <% if user_signed_in? %>
           <%= render 'layouts/signin_header' %>
         <% else %>
@@ -25,13 +29,11 @@
       </div>
 
 <!-- body -->
-      <div class="col-9">
-        <main>
+      <main class="col-xs-12 col-md-9">
         <p class="notice"><%= notice %></p>
         <p class="alert"><%= alert %></p>
         <%= yield %>
-        </main>
-      </div>
+      </main>
     </div>
 
   </body>
