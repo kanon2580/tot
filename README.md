@@ -1,24 +1,88 @@
-# README
+![ToT](http://tot.monster/assets/logo-white-2cb3a3a3549a9b88f45a8e94b4a7f85187229441a37952eb519798352236935c.png)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[ToTは、開発コミュニティ向けのQAサイトを想定して制作しました。](http://tot.monster/)
 
-Things you may want to cover:
 
-* Ruby version
+問題解決のプロセスをドキュメントとして残す事が出来ます。
 
-* System dependencies
+また、問題を解決するとユーザーに評価が付与、分析され、グラフに描画されます。
 
-* Configuration
 
-* Database creation
+### 機能
 
-* Database initialization
+1. チーム、ユーザー登録
 
-* How to run the test suite
+ * 開発コミュニティ向けのサービスとして、ライセンス認証を行いEC2のイメージを顧客に譲渡する運用方法を想定して制作したため、ユーザーはチームを登録することができません。
 
-* Services (job queues, cache servers, search engines, etc.)
+ * ユーザーは複数のチームに所属できます。
 
-* Deployment instructions
+ * 以下全ての機能はチームごとに紐付けられていて、各チームに所属するユーザーのみ閲覧、利用が可能です。
 
-* ...
+2. スレッド(Issue)の投稿、コメント機能
+
+ * 使用の流れは以下の通りです
+
+  a. Issueを立ち上げる  
+  b. コメントする  
+  c. コメントの中からベストアンサーを選ぶ  
+  d. Issueを解決済みにする  
+他：いいね、タグ付け
+
+3. ユーザーへの評価付与、分析
+
+ * ユーザーは質問者と解答者の2面性があり、それそれ評価を付与しています。この評価は、サイト内のユーザーの動作に依存します。
+
+  質問者  
+  a. Issueに対するいいね数  
+  b, Issueに対する閲覧数  
+  c. Issueに付けられたタグの割合
+
+  回答者  
+  a. Issueに反応するまでの早さ  
+  b. Issueを解決までの早さ  
+  c. コメントに対するベストアンサー数  
+  d. コメントしたIssueに付けられたタグの割合
+
+4. 検索機能
+  * Issues  
+  タイトル、本文、作成したユーザー、紐づくタグに対し、それぞれ入力された文字列を参照して検索します。
+
+  * Tags、Users  
+  入力された文字列を参照して検索します。
+
+### 使用ツール
+
+1. 開発環境
+
+ * git  2.24.0.windows.2
+
+ * ruby 2.6.5p114
+
+ * Rails 6.0.2.1
+
+2. gem
+
+ * devise(ユーザー認証)
+
+ * refile、refile-mini_magick(画像アップロード)
+
+ * bootstrap、kaminari(デザイン)
+
+ * chart-js-rails、gon(グラフ描画)
+
+ * impressionist(閲覧数集計)
+
+ * jquery-rails(jquery呼び出し)
+
+### レビューについて
+
+技術向上のため、レビューを頂けると幸いです！  
+[Twitter](https://twitter.com/kanon25807)  
+ささやかなご指摘、ご感想でも是非！
+
+### 開発経緯
+就職活動にあたってのポートフォリオとして制作しました。  
+いま扱えるRailsを通して、どのような動作を経てどのようなデータが取れるのか、どのようなロジックで何を算出できるのかを学習したかったのがきっかけです。  
+DMMwebcampで学習する過程で、少しAIに興味を持ったのもまた、きっかけのひとつです。
+
+#### © 2020 Kanon inc.
