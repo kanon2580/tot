@@ -1,9 +1,9 @@
 <div class="search offset-1 col-10 mb-5">
   <%= form_with url: team_issues_search_path(team), method: :get, local: true do |f| %>
     <div class="row form-group mb-0">
-      <%= f.select :target, [["Title", "title"], ["Text", "body"], ["Tag", "tag"], ["User", "user"]], {}, {class:'custom-select col-4'} %>
+      <%= f.select :target, [["Title", "title"], ["Text", "body"], ["Tag", "tag"], ["User", "user"]], {}, {class:'custom-select col-12 col-md-4'} %>
 
-      <div class="form-group radiobuttons mt-1 ml-3">
+      <div class="form-group radiobuttons mt-1 ml-1 ml-md-3">
         <%= f.radio_button :status,  "", id: "status" %>
         <%= f.label :has_settled, "Status", for: "status" %>
         <%= f.radio_button :status,  "settled", id: "settled" %>
