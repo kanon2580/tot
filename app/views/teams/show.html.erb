@@ -1,16 +1,12 @@
-<div class="container sticky-top bg-dark text-white p-2"">
-  <h1><%= @team.name %></h1>
-</div>
-
-<!--issues -->
 <div class="row flex-column align-items-center my-5">
   <h1 class="titlemark">・</h1>
-  <h3>Issues</h3>
+  <h3><%= @team.name %></h3>
   <h1 class="titlemark">・</h1>
 </div>
 
 <div class="row my-5">
   <div class="offset-1 col-10">
+    <p class="headline">Issues</p>
     <% @issues.each do |issue| %>
       <div class="row my-3">
         <%= render 'issues/index_card', team: @team, issue: issue %>
@@ -23,18 +19,12 @@
   </div>
 </div>
 
-<!-- members -->
-<div class="row flex-column align-items-center my-5">
-  <h1 class="titlemark">・</h1>
-  <h3>Members</h3>
-  <h1 class="titlemark">・</h1>
-</div>
-
 <div class="row my-6">
   <div class="offset-1 col-10">
+    <p class="headline mt-5">Members</p>
     <div class="row">
         <% @users.each do |user| %>
-          <div class="col-3">
+          <div class="col">
             <%= render 'users/member_card', team: @team, user: user %>
           </div>
         <% end %>
@@ -46,16 +36,11 @@
   </div>
 </div>
 
-<!-- tags -->
-<div class="row flex-column align-items-center mt-5">
-  <h1 class="titlemark">・</h1>
-  <h3>Tags</h3>
-  <h1 class="titlemark">・</h1>
-</div>
 
 <div class="row my-5">
   <div class="offset-1 col-10">
-    <div class="row">
+    <p class="headline mt-5">Tags</p>
+    <div class="row px-5">
       <% @tags.each do |tag| %>
         <%= link_to tag.name, team_tag_issues_path(@team, tag), class: "btn btn-sm btn-dark mt-3 mr-3" %>
       <% end %>

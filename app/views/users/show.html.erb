@@ -8,20 +8,19 @@
   <h1 class="titlemark">・</h1>
 </div>
 
-<div class="row mt-5">
-  <div class="offset-1 col-4">
+<div class="row mt-5 px-5">
+  <div class="col-xs-12 offset-md-1 col-md-4">
     <%= render 'users/profile_card', team: @team, user: @user %>
   </div>
-  
-  <%= Gon::Base.render_data %>
-  <div class="col-7">
-    <canvas id="totalChart"></canvas>
+
+  <div class="col-12 col-md-7 mt-5">
+    <canvas id="totalChart" width="100%"></canvas>
   </div>
 </div>
 
 <!-- chart tabs -->
-<div class="row mt-5">
-  <div class="offset-1 col-10">
+<div class="row mt-5 px-5">
+  <div class="col-12 offset-md-1 col-md-10">
 
     <ul id="chartTab" class="nav nav-tabs" role="tablist">
       <li class="nav-item">
@@ -46,7 +45,12 @@
       </div>
     </div>
 
+    <div class="row flex-column align-items-end">
+      <%= link_to "About evaluation criteria", root_path(anchor: "criteria") %>
+    </div>
+
   </div>
 </div>
 
+  <%= Gon::Base.render_data %>
 <%= javascript_include_tag 'user_charts', 'data-turbolinks-track': 'reload' %>
