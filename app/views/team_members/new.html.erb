@@ -34,12 +34,16 @@
 
     <%= form_with model: @new_team_mamber do |f| %>
       <div class="form-group">
-        <%= f.text_field :team_name, placeholder: "Team name", class: "form-control offset-1 col-10" %>
-        <%= f.text_field :team_id, placeholder: "Team id", class: "form-control offset-1 col-10 mt-3" %>
+        <%= f.text_field :team_name, placeholder: "Team name", class:"form-control offset-1 col-10" %>
+        <%= f.text_field :team_id, placeholder: "Team id", class:"form-control offset-1 col-10 mt-3" %>
         <div class="row flex-column align-items-center mt-3">
-          <%= f.submit "Join team !", class: "btn btn-sm btn-dark" %>
+          <%= f.submit "Join team !", class:"btn btn-sm btn-dark" %>
         </div>
       </div>
     <% end %>
+
+    <div class="row flex-column align-items-end">
+      <%= link_to "Which team can you join?", root_path(anchor: 'about') %>
+    </div>
   </div>
 </div>

@@ -12,8 +12,7 @@
   <div class="offset-1 col-4">
     <%= render 'users/profile_card', team: @team, user: @user %>
   </div>
-  
-  <%= Gon::Base.render_data %>
+
   <div class="col-7">
     <canvas id="totalChart"></canvas>
   </div>
@@ -46,7 +45,12 @@
       </div>
     </div>
 
+    <div class="row flex-column align-items-end">
+      <%= link_to "About evaluation criteria", root_path(anchor: "criteria") %>
+    </div>
+
   </div>
 </div>
 
+  <%= Gon::Base.render_data %>
 <%= javascript_include_tag 'user_charts', 'data-turbolinks-track': 'reload' %>
