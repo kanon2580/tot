@@ -1,0 +1,1 @@
+$("#like_btn_<%= @issue.id %>").html("<%= escape_javascript(render 'likes/like_btn', {team: @team, issue: @issue}) %>")
