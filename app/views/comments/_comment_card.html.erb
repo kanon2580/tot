@@ -32,11 +32,11 @@
           <%= comment.user.name %>
         <% end %>
 
-        <% if issue.has_settled == false && issue.user == current_user && action_name == 'show' %>
-          <%= link_to edit_team_issue_path(team, issue), class: "btn btn-outline-success btn-sm mx-1" do %>
+        <% if issue.has_settled == false && comment.user == current_user && action_name == 'show' %>
+          <%= link_to edit_team_issue_comment_path(team, issue, comment), class: "btn btn-outline-success btn-sm mx-1" do %>
             <i class="fas fa-edit"></i>
           <% end %>
-          <%= link_to team_issue_path(team, issue), method: :delete, data: { confirm: "will you delete it?"}, class: "btn btn-outline-danger btn-sm" do %>
+          <%= link_to team_issue_comment_path(team, issue, comment), method: :delete, data: { confirm: "will you delete it?"}, class: "btn btn-outline-danger btn-sm" do %>
             <i class="fas fa-trash-alt"></i>
           <% end %>
         <% end %>

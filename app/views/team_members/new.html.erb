@@ -10,16 +10,18 @@
     <div class="row">
       <div class="col-12 offset-md-1 col-md-8">
         <% @teams.each do |team| %>
-          <div class="row headline my-3">
-            <div class="mr-auto">
-              <%= link_to team.name, team_path(team), class:"h4" %>
-            </div>
+          <%= link_to team_path(team), class:"h4" do %>
+            <div class="row headline my-3">
+              <div class="mr-auto">
+                <%= team.name %>
+              </div>
 
-            <div class="mr-3">
-              <i class="fas fa-user"></i>
-              <%= team.users.count %>
+              <div class="mr-3 small">
+                <i class="fas fa-user"></i>
+                <%= team.users.count %>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>

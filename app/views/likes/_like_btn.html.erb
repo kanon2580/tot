@@ -1,0 +1,11 @@
+<% if issue.likes_by?(current_user) %>
+  <%= link_to team_issue_likes_path(team, issue), method: :delete, remote: true do %>
+    <span style="color:#ff7f50;"><i class="fas fa-thumbs-up"></i></span>
+  <% end %>
+  <%= issue.likes.count %>
+<% else %>
+  <%= link_to team_issue_likes_path(team, issue), method: :post, remote: true do %>
+    <span class="text-dark"><i class="far fa-thumbs-up"></i></span>
+  <% end %>
+  <%= issue.likes.count %>
+<% end %>
