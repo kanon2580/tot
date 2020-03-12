@@ -26,44 +26,37 @@ $("#totalChart").ready(function (){
   return radarChart;
 });
 
-$("#likeChart").ready(function (){
+$(function(){
   chart_id = "likeChart";
   datas = gon.like_evaluation_datas;
   bar_chart(chart_id, datas);
-});
-$("#issueViewedChart").ready(function (){
+
   chart_id = "issueViewedChart";
   datas = gon.issue_viewed_evaluation_datas;
   bar_chart(chart_id, datas);
-});
-$("#responseChart").ready(function (){
+
   chart_id = "responseChart";
   datas = gon.response_evaluation_datas;
   bar_chart(chart_id, datas);
-});
-$("#requiredTimeChart").ready(function (){
+
   chart_id = "requiredTimeChart";
   datas = gon.required_time_evaluation_datas;
   bar_chart(chart_id, datas);
-});
-$("#bestAnswerChart").ready(function (){
+
   chart_id = "bestAnswerChart";
   datas = gon.best_answer_evaluation_datas;
   bar_chart(chart_id, datas);
-});
 
-$("#issueTagsChart").ready(function (){
   chart_id = "issueTagsChart";
   labels = gon.issue_tags_labels;
   datas = gon.issue_tags_evaluation_datas;
   doughnut_chart(chart_id ,labels, datas);
-});
-$("#issueTagsChart").ready(function (){
+
   chart_id = "commentTagsChart";
   labels = gon.comment_tags_labels;
   datas = gon.comment_tags_evaluation_datas;
   doughnut_chart(chart_id ,labels, datas);
-});
+})
 
 function bar_chart(chart_id, datas){
   var ctx = document.getElementById(chart_id).getContext('2d');
@@ -103,8 +96,8 @@ function doughnut_chart(chart_id,labels,datas){
       labels: labels,
       datasets: [{
         data: datas,
-        backgroundColor: ['rgba(52,58,64,0.4)', 'rgba(255,127,80,0.4)'],
-        borderColor: ['rgba(52,58,64,1)', 'rgba(255,127,80,1)']
+        backgroundColor: 'rgba(52,58,64,0.4)',
+        borderColor: 'rgba(52,58,64,1)'
       }]
     },
     options: {
@@ -115,3 +108,42 @@ function doughnut_chart(chart_id,labels,datas){
   });
 return doughnutChart;
 }
+
+// $("#likeChart").ready(function (){
+//   chart_id = "likeChart";
+//   datas = gon.like_evaluation_datas;
+//   bar_chart(chart_id, datas);
+// });
+// $("#issueViewedChart").ready(function (){
+//   chart_id = "issueViewedChart";
+//   datas = gon.issue_viewed_evaluation_datas;
+//   bar_chart(chart_id, datas);
+// });
+// $("#responseChart").ready(function (){
+//   chart_id = "responseChart";
+//   datas = gon.response_evaluation_datas;
+//   bar_chart(chart_id, datas);
+// });
+// $("#requiredTimeChart").ready(function (){
+//   chart_id = "requiredTimeChart";
+//   datas = gon.required_time_evaluation_datas;
+//   bar_chart(chart_id, datas);
+// });
+// $("#bestAnswerChart").ready(function (){
+//   chart_id = "bestAnswerChart";
+//   datas = gon.best_answer_evaluation_datas;
+//   bar_chart(chart_id, datas);
+// });
+
+// $("#issueTagsChart").ready(function (){
+//   chart_id = "issueTagsChart";
+//   labels = gon.issue_tags_labels;
+//   datas = gon.issue_tags_evaluation_datas;
+//   doughnut_chart(chart_id ,labels, datas);
+// });
+// $("#issueTagsChart").ready(function (){
+//   chart_id = "commentTagsChart";
+//   labels = gon.comment_tags_labels;
+//   datas = gon.comment_tags_evaluation_datas;
+//   doughnut_chart(chart_id ,labels, datas);
+// });
