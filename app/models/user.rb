@@ -48,7 +48,7 @@ class User < ApplicationRecord
 
   def issue_viewed_evaluation_datas
     # 標本不足により、総数で算出
-    user_issue_viewed_count = Issue.group(:user_id).map{|issue| [issue.user_id, issue.impressionist_count]}.to_h
+    user_issue_viewed_count = User.joins(issues: :impressions).group("users.id").count
     evaluation_datas_sort_by_min(user_issue_viewed_count)
   end
 
