@@ -7,4 +7,3 @@ class Comment < ApplicationRecord
   has_one :response_evaluation, dependent: :destroy
   has_one :required_time_evaluation, dependent: :destroy
 end
-
