@@ -46,7 +46,6 @@ class CommentsController < ApplicationController
   end
 
   def index
-    # リンク貼ってない
     comments = @team.comments.order(created_at: :desc)
     @pagenated_comments = comments.page(params[:page]).per(10)
   end

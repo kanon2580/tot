@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates	:name, presence: true
+  validates :name, presence: true
 
   has_many :team_members, dependent: :destroy
   has_many :teams, through: :team_members
@@ -123,8 +123,8 @@ class User < ApplicationRecord
     9.times{|n|
       i -= interval
       evaluation_classes << i
-      }
-      evaluation_classes.reverse!
+    }
+    evaluation_classes.reverse!
 
     # 度数計算、配列に渡す
     evaluation_datas = []
@@ -194,4 +194,3 @@ class User < ApplicationRecord
     evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
   end
 end
-

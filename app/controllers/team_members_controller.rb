@@ -14,7 +14,6 @@ class TeamMembersController < ApplicationController
       team_member.team = team
       team_member.save
       redirect_to team_path(team)
-      # todo => unique引っかかった時のerror message
     else
       @join_team = TeamMember.new
       flash[:error] = "The team not found."

@@ -23,7 +23,6 @@ class IssuesController < ApplicationController
     else
       flash.now[:error] = "タイトルか本文が空欄のようです。もう一度お試しください。"
       render :new
-      # 表示されない何で
     end
       redirect_to team_issue_path(@team, issue)
   end

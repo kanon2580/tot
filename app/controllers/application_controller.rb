@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   before_action :set_user
   before_action :set_comment
   before_action :set_tag
-  # 条件分岐、path拾わなくてもパラメータ送られてるか否かで分岐すれば良くない？って結論に至る
 
   private
   def configure_permitted_parameters
