@@ -18,9 +18,15 @@ $("#totalChart").ready(function (){
       }]
     },
     options: {
-     legend: {
-        display: false
-     }
+      legend: {
+        display: false,
+      },
+      scale: {
+        ticks: {
+          min: 0,
+          max: 10
+        }
+      }
     }
   })
   return radarChart;
