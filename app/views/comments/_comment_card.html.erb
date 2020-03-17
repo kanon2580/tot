@@ -32,7 +32,7 @@
           <%= comment.user.name %>
         <% end %>
 
-        <% if issue.has_settled == false && comment.user == current_user && action_name == 'show' %>
+        <% if !issue.has_settled && comment.user == current_user && action_name == 'show' %>
           <%= link_to edit_team_issue_comment_path(team, issue, comment), class: "btn btn-outline-success btn-sm mx-1" do %>
             <i class="fas fa-edit"></i>
           <% end %>

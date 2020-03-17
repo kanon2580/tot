@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates	:name, presence: true
+  validates :name, presence: true
 
   has_many :team_members, dependent: :destroy
   has_many :teams, through: :team_members
@@ -69,36 +69,30 @@ class User < ApplicationRecord
     evaluation_classes = []
     i = min
 
-    9.times{|n|
-      i += interval
+    10.times{|n|
       evaluation_classes << i
+      i += interval
     }
-    evaluation_classes.reverse!
+    evaluation_classes << max
 
     # 度数計算、配列に渡す
     evaluation_datas = []
-    n = 0
-    i = evaluation_classes[n]
+    i = 0
 
-    validation_included_user = user_evaluations.select{|k,v| (i..max) === v}
-    count_included_user = validation_included_user.count
-    evaluation_datas << count_included_user
-    user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
-    n += 1
-
-    8.times{|m|
-    validation_included_user = user_evaluations.select{|k,v| (evaluation_classes[n]...i) === v}
-    count_included_user = validation_included_user.count
-    evaluation_datas << count_included_user
-    user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
-    i = evaluation_classes[n]
-    n += 1
+    10.times{|m|
+      n = evaluation_classes[i]
+      i += 1
+      m = evaluation_classes[i]
+      if i == 10
+        validation_included_user = user_evaluations.select{|k,v| (n..m) === v}
+      else
+        validation_included_user = user_evaluations.select{|k,v| (n...m) === v}
+      end
+      count_included_user = validation_included_user.count
+      evaluation_datas << count_included_user
+      user_score = i if validation_included_user.any? {|k,v| k == self.id}
     }
-
-    validation_included_user = user_evaluations.select{|k,v| (min...i) === v}
-    count_included_user = validation_included_user.count
-    evaluation_datas << count_included_user
-    user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
+    evaluation_datas.reverse!
 
     return evaluation_datas, user_score
   end
@@ -120,36 +114,30 @@ class User < ApplicationRecord
     evaluation_classes = []
     i = max
 
-    9.times{|n|
-      i -= interval
+    10.times{|n|
       evaluation_classes << i
-      }
-      evaluation_classes.reverse!
+      i -= interval
+    }
+    evaluation_classes << min
+    evaluation_classes.reverse!
 
     # 度数計算、配列に渡す
     evaluation_datas = []
-    n = 0
-    i = evaluation_classes[n]
+    i = 0
 
-    validation_included_user = user_evaluations.select{|k,v| (min...i) === v}
-    count_included_user = validation_included_user.count
-    evaluation_datas << count_included_user
-    user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
-    n += 1
-
-    8.times{|m|
-      validation_included_user = user_evaluations.select{|k,v| (i...evaluation_classes[n]) === v}
+    10.times{|m|
+      n = evaluation_classes[i]
+      i += 1
+      m = evaluation_classes[i]
+      if i == 10
+        validation_included_user = user_evaluations.select{|k,v| (n..m) === v}
+      else
+        validation_included_user = user_evaluations.select{|k,v| (n...m) === v}
+      end
       count_included_user = validation_included_user.count
       evaluation_datas << count_included_user
-      user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
-      i = evaluation_classes[n]
-      n += 1
+      user_score = n if validation_included_user.any? {|k,v| k == self.id}
     }
-
-    validation_included_user = user_evaluations.select{|k,v| (i..max) === v}
-    count_included_user = validation_included_user.count
-    evaluation_datas << count_included_user
-    user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
 
     return evaluation_datas, user_score
   end
@@ -194,4 +182,3 @@ class User < ApplicationRecord
     evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
   end
 end
-
