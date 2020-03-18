@@ -31,9 +31,7 @@ class User < ApplicationRecord
   def time_related_evaluation(evaluation_type)
     user_averages = evaluation_type.group(:user_id).average(:difference).map{|k,v| [k, v.to_i]}.to_h
     criteria = calculation_evaluation_criteria(user_averages)
-    if criteria == [[0], [0]]
-      return criteria
-    end
+    return [[0], [0]] unless criteria
     calculation_evaluation_datas_sort_by_max(criteria, user_averages)
   end
 
@@ -42,9 +40,7 @@ class User < ApplicationRecord
     user_issues_array = User.joins(:issues).group("users.id").map{|user| [user.id, user.issue_ids]}.to_h
     like_count_array = user_issues_array.map{|user,issues| [user, issues.map{|issue| Issue.find(issue).likes.count}.sum]}.to_h
     criteria = calculation_evaluation_criteria(like_count_array)
-    if criteria == [[0], [0]]
-      return criteria
-    end
+    return [[0], [0]] unless criteria
     calculation_evaluation_datas_sort_by_min(criteria, like_count_array)
   end
 
@@ -52,9 +48,7 @@ class User < ApplicationRecord
     # 標本不足により、総数で算出
     best_answer_count_array = Comment.group(:user_id).where(has_best_answer: true).count
     criteria = calculation_evaluation_criteria(best_answer_count_array)
-    if criteria == [[0], [0]]
-      return criteria
-    end
+    return [[0], [0]] unless criteria
     calculation_evaluation_datas_sort_by_min(criteria, best_answer_count_array)
   end
 
@@ -62,17 +56,13 @@ class User < ApplicationRecord
     # 標本不足により、総数で算出
     user_issue_viewed_count = User.joins(issues: :impressions).group("users.id").count
     criteria = calculation_evaluation_criteria(user_issue_viewed_count)
-    if criteria == [[0], [0]]
-      return criteria
-    end
+    return [[0], [0]] unless criteria
     calculation_evaluation_datas_sort_by_min(criteria, user_issue_viewed_count)
   end
 
   def calculation_evaluation_criteria(evaluation_base)
-    if evaluation_base.all? {|k,v| v == 0}
-      user_evaluations = [[0], [0]]
-      return user_evaluations
-    end
+    return false if evaluation_base.all? {|k,v| v == 0}
+
     # 階級幅の計算
     min = evaluation_base.values.min
     max = evaluation_base.values.max
