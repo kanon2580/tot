@@ -6,7 +6,10 @@
 
 <div class="row">
   <div class="offset-2 col-8">
-    <%= render 'tags/search_form', team: @team %>
+    <%= render 'tags/search_form', url: team_tags_search_path(@team), team: @team %>
+    <div class="row justify-content-end">
+      <%= link_to "Delete search conditions", team_tags_path(@team), class:"mr-3" %>
+    </div>
   </div>
 </div>
 
