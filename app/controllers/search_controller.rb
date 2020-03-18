@@ -18,4 +18,11 @@ class SearchController < ApplicationController
     @new_tag = Tag.new
     render template: "tags/index"
   end
+
+  def issue_form_tags
+    tags = Tag.search(@team, params[:q])
+    @tags = Kaminari.paginate_array(tags).page(params[:page]).per(30)
+    @new_issue = Issue.new
+    render template: "issues/new"
+  end
 end

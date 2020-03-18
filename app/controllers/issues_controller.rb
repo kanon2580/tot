@@ -5,6 +5,8 @@ class IssuesController < ApplicationController
   impressionist :actions => [:show]
 
   def new
+    @new_issue = Issue.new
+    @tags = @team.tags
   end
 
   def create
@@ -47,6 +49,8 @@ class IssuesController < ApplicationController
   end
 
   def edit
+    @new_issue = Issue.new
+    @tags = @team.tags
   end
 
   def update

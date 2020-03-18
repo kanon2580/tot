@@ -1,12 +1,17 @@
-<%= form_with model: [team, issue] do |f| %>
 
   <p class="headline pb-2">Tags</p>
   <p class="mb-3">
     <span class="rounded border border-dark bg-dark text-white px-1">Selected</span>
     <span class="rounded border border-dark px-1">Unselected</span>
   </p>
-  <div class="form-group checkboxes">
-    <%= f.collection_check_boxes :tag_ids, team.tags, :id, :name, include_hidden: false do |tag| %>
+
+  <div class="tags_search my-3">
+    <%= render 'tags/search_form', url: issue_form_tags_search_path(team), team: team %>
+  </div>
+
+<%= form_with model: [team, issue] do |f| %>
+  <div class="form-group tags-checkboxes">
+    <%= f.collection_check_boxes :tag_ids, tags, :id, :name, include_hidden: false do |tag| %>
       <%= tag.check_box %>
       <%= tag.label %>
     <% end %>
