@@ -23,6 +23,5 @@ class SearchController < ApplicationController
     tags = Tag.search(@team, params[:q])
     @tags = Kaminari.paginate_array(tags).page(params[:page]).per(30)
     @new_issue = Issue.new
-    render template: "issues/new"
   end
 end

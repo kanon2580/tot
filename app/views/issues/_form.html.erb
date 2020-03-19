@@ -1,43 +1,44 @@
-
+<div id="issue-form">
   <p class="headline pb-2">Tags</p>
-  <p class="mb-3">
-    <span class="rounded border border-dark bg-dark text-white px-1">Selected</span>
-    <span class="rounded border border-dark px-1">Unselected</span>
-  </p>
 
   <div class="tags_search my-3">
     <%= render 'tags/search_form', url: issue_form_tags_search_path(team), team: team %>
   </div>
 
-<%= form_with model: [team, issue] do |f| %>
-  <div class="form-group tags-checkboxes">
-    <%= f.collection_check_boxes :tag_ids, tags, :id, :name, include_hidden: false do |tag| %>
+  <%= form_with model: [team, issue] do |f| %>
+    <p class="mb-3">
+      <span class="rounded border border-dark bg-dark text-white px-1">Selected</span>
+      <span class="rounded border border-dark px-1">Unselected</span>
+    </p>
+    <div class="form-group tags-checkboxes">
+      <%= f.collection_check_boxes :tag_ids, tags, :id, :name, include_hidden: false do |tag| %>
       <%= tag.check_box %>
       <%= tag.label %>
     <% end %>
-  </div>
-  <div class="row flex-column align-items-end">
-    <%= link_to "Create new tag", team_tags_path(team), class:"btn btn-danger btn-sm" %>
-    <small class="text-muted">It transition another screen</small>
-  </div>
+    </div>
+    <div class="row flex-column align-items-end">
+      <%= link_to "Create new tag", team_tags_path(team), class:"btn btn-danger btn-sm" %>
+      <small class="text-muted">It transition another screen</small>
+    </div>
 
-  <p class="headline mt-5">Title</p>
-  <div class="form-group">
-    <%= f.text_field :title, class:"form-control offset-1 col-10" %>
-  </div>
+    <p class="headline mt-5">Title</p>
+    <div class="form-group">
+      <%= f.text_field :title, class:"form-control offset-1 col-10" %>
+    </div>
 
-  <p class="headline mt-5">Text</p>
-  <div class="form-group">
-    <%= f.text_area :body, class:"form-control offset-1 col-10" %>
-  </div>
+    <p class="headline mt-5">Text</p>
+    <div class="form-group">
+      <%= f.text_area :body, class:"form-control offset-1 col-10" %>
+    </div>
 
-  <div class="row flex-column align-items-center mt-5">
-    <span class="titlemark"><%= flash[:error] %></span>
-  </div>
+    <div class="row flex-column align-items-center mt-5">
+      <span class="titlemark"><%= flash[:error] %></span>
+    </div>
 
-  <% if action_name == 'new' %>
-    <%= f.submit "Create", class:"btn btn-dark btn-dark offset-2 col-8" %>
-  <% elsif action_name == 'edit' %>
-    <%= f.submit "Update", class:"btn btn-dark btn-dark offset-2 col-8" %>
+    <% if action_name == 'new' %>
+      <%= f.submit "Create", class:"btn btn-dark btn-dark offset-2 col-8" %>
+    <% elsif action_name == 'edit' %>
+      <%= f.submit "Update", class:"btn btn-dark btn-dark offset-2 col-8" %>
+    <% end %>
   <% end %>
-<% end %>
+</div>
