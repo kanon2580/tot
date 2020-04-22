@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :only_team_user, only: [:index]
   before_action :only_current_user, only: [:edit, :update]
+  before_action :barrier_trial_user, only: [:edit, :update]
 
   def show
     if @team.present? && @user.present?
@@ -68,6 +69,12 @@ class UsersController < ApplicationController
 
   def only_current_user
     unless @user == current_user
+      redirect_to mypage_path(current_user)
+    end
+  end
+
+  def barrier_trial_user
+    if  @user.id == 31
       redirect_to mypage_path(current_user)
     end
   end

@@ -5,8 +5,9 @@ class Tag < ApplicationRecord
   has_many :issues, through: :taggings
 
   def self.search(team, q)
-    splited_q = q.split(/[[:blank:]]+/)
+    return team.tags if q == ""
 
+    splited_q = q.split(/[[:blank:]]+/)
     tags = []
     splited_q.each do |q|
       next if q == ""
