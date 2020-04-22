@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates	:name, presence: true
+  validates :name, presence: true
 
   has_many :team_members, dependent: :destroy
   has_many :teams, through: :team_members
@@ -30,128 +30,124 @@ class User < ApplicationRecord
 
   def time_related_evaluation(evaluation_type)
     user_averages = evaluation_type.group(:user_id).average(:difference).map{|k,v| [k, v.to_i]}.to_h
-    evaluation_datas_sort_by_max(user_averages)
+    criteria = calculation_evaluation_criteria(user_averages)
+    return [[0], [0]] unless criteria
+    calculation_evaluation_datas_sort_by_max(criteria, user_averages)
   end
 
   def like_evaluation_datas
     # 標本不足により、総数で算出
     user_issues_array = User.joins(:issues).group("users.id").map{|user| [user.id, user.issue_ids]}.to_h
     like_count_array = user_issues_array.map{|user,issues| [user, issues.map{|issue| Issue.find(issue).likes.count}.sum]}.to_h
-    evaluation_datas_sort_by_min(like_count_array)
+    criteria = calculation_evaluation_criteria(like_count_array)
+    return [[0], [0]] unless criteria
+    calculation_evaluation_datas_sort_by_min(criteria, like_count_array)
   end
 
   def best_answer_evaluation_datas
     # 標本不足により、総数で算出
     best_answer_count_array = Comment.group(:user_id).where(has_best_answer: true).count
-    evaluation_datas_sort_by_min(best_answer_count_array)
+    criteria = calculation_evaluation_criteria(best_answer_count_array)
+    return [[0], [0]] unless criteria
+    calculation_evaluation_datas_sort_by_min(criteria, best_answer_count_array)
   end
 
   def issue_viewed_evaluation_datas
     # 標本不足により、総数で算出
     user_issue_viewed_count = User.joins(issues: :impressions).group("users.id").count
-    evaluation_datas_sort_by_min(user_issue_viewed_count)
+    criteria = calculation_evaluation_criteria(user_issue_viewed_count)
+    return [[0], [0]] unless criteria
+    calculation_evaluation_datas_sort_by_min(criteria, user_issue_viewed_count)
   end
 
-  def evaluation_datas_sort_by_max(user_evaluations)
-    user_score = 0
-    # 平均値が低いと高得点
-    if user_evaluations.all? {|k,v| v == 0}
-      evaluation_datas = [0]
-      return
-    end
+  def calculation_evaluation_criteria(evaluation_base)
+    return false if evaluation_base.all? {|k,v| v == 0}
+
     # 階級幅の計算
-    min = user_evaluations.values.min
-    max = user_evaluations.values.max
+    min = evaluation_base.values.min
+    max = evaluation_base.values.max
     diff = max - min
     interval = (diff / 10.0).round
+    return min, max, interval
+  end
 
-    # 階級が切り替わる値を計算、配列に渡す
+  def calculation_evaluation_datas_sort_by_max(criteria, user_evaluations)
+    # 個体値が低いと高得点
+    min = criteria[0]
+    max = criteria[1]
+    interval = criteria[2]
     evaluation_classes = []
     i = min
 
-    9.times{|n|
-      i += interval
+    10.times{|n|
       evaluation_classes << i
+      i += interval
     }
-    evaluation_classes.reverse!
+    evaluation_classes << max
 
-    # 度数計算、配列に渡す
-    evaluation_datas = []
-    n = 0
-    i = evaluation_classes[n]
+    validation_included_user = validation_included_user(evaluation_classes, user_evaluations)
+    validation_included_user[0].reverse!
+    validation_included_user[1].reverse!
+    user_score = calculation_user_score(validation_included_user[1])
 
-    validation_included_user = user_evaluations.select{|k,v| (i..max) === v}
-    count_included_user = validation_included_user.count
-    evaluation_datas << count_included_user
-    user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
-    n += 1
-
-    8.times{|m|
-    validation_included_user = user_evaluations.select{|k,v| (evaluation_classes[n]...i) === v}
-    count_included_user = validation_included_user.count
-    evaluation_datas << count_included_user
-    user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
-    i = evaluation_classes[n]
-    n += 1
-    }
-
-    validation_included_user = user_evaluations.select{|k,v| (min...i) === v}
-    count_included_user = validation_included_user.count
-    evaluation_datas << count_included_user
-    user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
-
-    return evaluation_datas, user_score
+    return validation_included_user[0], user_score
   end
 
-  def evaluation_datas_sort_by_min(user_evaluations)
-    user_score = 0
-    # 平均値が高いと高得点
-    if user_evaluations.all? {|k,v| v == 0}
-      user_evaluations = [0]
-      return
-    end
-    # 階級幅の計算
-    min = user_evaluations.values.min
-    max = user_evaluations.values.max
-    diff = max - min
-    interval = (diff / 10.0).round
-
-    # 階級が切り替わる値を計算、配列に渡す
+  def calculation_evaluation_datas_sort_by_min(criteria, user_evaluations)
+    # 個体値が高いと高得点
+    min = criteria[0]
+    max = criteria[1]
+    interval = criteria[2]
     evaluation_classes = []
     i = max
 
-    9.times{|n|
-      i -= interval
+    10.times{|n|
       evaluation_classes << i
-      }
-      evaluation_classes.reverse!
-
-    # 度数計算、配列に渡す
-    evaluation_datas = []
-    n = 0
-    i = evaluation_classes[n]
-
-    validation_included_user = user_evaluations.select{|k,v| (min...i) === v}
-    count_included_user = validation_included_user.count
-    evaluation_datas << count_included_user
-    user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
-    n += 1
-
-    8.times{|m|
-      validation_included_user = user_evaluations.select{|k,v| (i...evaluation_classes[n]) === v}
-      count_included_user = validation_included_user.count
-      evaluation_datas << count_included_user
-      user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
-      i = evaluation_classes[n]
-      n += 1
+      i -= interval
     }
+    evaluation_classes << min
+    evaluation_classes.reverse!
 
-    validation_included_user = user_evaluations.select{|k,v| (i..max) === v}
-    count_included_user = validation_included_user.count
-    evaluation_datas << count_included_user
-    user_score = n+1 if validation_included_user.any? {|k,v| k == self.id}
+    validation_included_user = validation_included_user(evaluation_classes, user_evaluations)
+    user_score = calculation_user_score(validation_included_user[1])
 
-    return evaluation_datas, user_score
+    return validation_included_user[0], user_score
+  end
+
+  def validation_included_user(evaluation_classes, user_evaluations)
+    evaluation_datas = []
+    user_included_status = []
+    i = 0
+    n = 0
+    m = 0
+
+    10.times{|m|
+      n = evaluation_classes[i]
+      i += 1
+      m = evaluation_classes[i]
+      if i == 10
+        validation_included_user = user_evaluations.select{|k,v| (n..m) === v}
+      else
+        validation_included_user = user_evaluations.select{|k,v| (n...m) === v}
+      end
+      count_included_user = validation_included_user.count
+      if validation_included_user.any? {|k,v| k == self.id}
+        user_included_status << 1
+      else
+        user_included_status << 0
+      end
+      evaluation_datas << count_included_user
+    }
+    return evaluation_datas, user_included_status
+  end
+
+  def calculation_user_score(score_base)
+    score_base.each_with_index{|status, i|
+      if status == 1
+        user_score = i+1
+        return user_score
+      end
+    }
   end
 
   def issue_tags_labels
@@ -194,4 +190,3 @@ class User < ApplicationRecord
     evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
   end
 end
-

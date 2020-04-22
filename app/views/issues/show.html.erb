@@ -25,7 +25,7 @@
   <div class="offset-3 col-6">
     <span class="titlemark"><%= flash[:error] %></span>
 
-    <% unless @issue.has_settled == true %>
+    <% if !@issue.has_settled %>
       <%= form_with model: @new_comment, url: team_issue_comments_path(@team, @issue) do |f| %>
         <div class="form-group">
           <%= f.text_area :comment, class: "form-control" %>
@@ -36,7 +36,7 @@
   </div>
 </div>
 
-<% if @issue.has_settled == false && @issue.user == current_user && action_name == 'show' %>
+<% if !@issue.has_settled && @issue.user == current_user && action_name == 'show' %>
   <div class="row flex-column align-items-center mt-5">
     <strong>Is the issue solved?</strong>
   </div>
