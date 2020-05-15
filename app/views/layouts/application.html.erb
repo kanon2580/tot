@@ -14,21 +14,21 @@
   </head>
 
   <body>
-<!-- responsive header -->
+    <!-- responsive header -->
     <header class="d-md-none">
       <%= render 'layouts/responsive_header' %>
     </header>
     <div class="row">
-<!-- sidebar -->
+      <!-- sidebar -->
       <div class="col-md-3 d-none d-md-block">
         <% if user_signed_in? %>
-          <%= render 'layouts/signin_header' %>
+          <%= render 'layouts/signin_sidebar' %>
         <% else %>
-          <%= render 'layouts/signout_header' %>
+          <%= render 'layouts/signout_sidebar' %>
         <% end %>
       </div>
 
-<!-- body -->
+      <!-- body -->
       <main class="col-xs-12 col-md-9">
         <p class="notice"><%= notice %></p>
         <p class="alert"><%= alert %></p>
