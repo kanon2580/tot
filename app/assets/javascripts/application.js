@@ -14,7 +14,8 @@
 //= require activestorage
 //= require turbolinks
 
-//= stub user_charts.js
+//= stub tab_charts.js
+//= stub total_chart.js
 //= require_tree .
 
 //= require jquery3
