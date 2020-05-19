@@ -46,11 +46,6 @@ class CommentsController < ApplicationController
     redirect_to team_issue_path(params[:team_id], params[:issue_id])
   end
 
-  def index
-    comments = @team.comments.order(created_at: :desc)
-    @pagenated_comments = comments.page(params[:page]).per(10)
-  end
-
   private
   def only_team_user
     unless TeamMember.where(team_id: @team).any? {|team| team.user_id == current_user.id}
