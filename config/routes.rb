@@ -11,12 +11,9 @@ Rails.application.routes.draw do
     resources :comments, only: [:index]
     resources :issues, only: [:index]
   end
-  get 'mypage/:user_id' => 'users#show', as: "mypage"
+  get 'mypage/:user_id' => 'users#mypage', as: "mypage"
   get 'mypage/:user_id/edit' => 'users#edit', as: "edit_user"
-
-  # team_members
-  resources :team_members, only: [:create]
-  get 'mypage/team_members/new' => 'team_members#new', as: "new_team_member"
+  post 'mypage/:user_id/join_team' => 'users#join_team', as: "join_team"
 
   # search
   get 'teams/:team_id/issues/search' => 'search#issues', as: "team_issues_search"
