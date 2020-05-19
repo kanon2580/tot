@@ -51,11 +51,6 @@
           <% end %>
 
         <% elsif user_signed_in? %>
-          <%= link_to new_team_member_path, class:"nav-link" do %>
-            <i class="fas fa-flag"></i>
-            Join team
-          <% end %>
-
           <%= link_to mypage_path(current_user), class:"nav-link" do %>
             <i class="fas fa-id-card"></i>
             My page
