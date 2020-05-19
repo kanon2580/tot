@@ -20,6 +20,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    @page_title = "Edit comment"
   end
 
   def update

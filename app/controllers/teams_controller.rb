@@ -2,6 +2,7 @@ class TeamsController < ApplicationController
   before_action :only_team_user
 
   def show
+    @page_title = @team.name
     @tags = @team.tags
     @issues = @team.issues.last(5).reverse
     @users = @team.users.last(4).reverse

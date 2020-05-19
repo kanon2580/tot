@@ -2,6 +2,7 @@ class TagsController < ApplicationController
   before_action :only_team_user
 
   def index
+    @page_title = "Tags"
     @pagenated_tags = @team.tags.order(created_at: :desc).page(params[:page]).per(30)
     @new_tag = Tag.new
   end

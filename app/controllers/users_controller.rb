@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @page_title = "User information"
     chart_datas
   end
 
@@ -66,6 +67,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @page_title = "Edit profile"
   end
 
   def update
@@ -78,6 +80,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    @page_title = "Users"
     users = @team.users
     @pagenated_users = users.page(params[:page]).per(12)
   end
