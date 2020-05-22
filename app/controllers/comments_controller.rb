@@ -20,6 +20,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    @page_title = "Edit comment"
   end
 
   def update
@@ -43,11 +44,6 @@ class CommentsController < ApplicationController
       flash[:error] = "コメントが削除できませんでした。もう一度お試しください。"
     end
     redirect_to team_issue_path(params[:team_id], params[:issue_id])
-  end
-
-  def index
-    comments = @team.comments.order(created_at: :desc)
-    @pagenated_comments = comments.page(params[:page]).per(10)
   end
 
   private

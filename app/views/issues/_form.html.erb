@@ -12,8 +12,10 @@
     <% end %>
   </div>
   <div class="row flex-column align-items-end">
-    <%= link_to "Create new tag", team_tags_path(team), class:"btn btn-danger btn-sm" %>
-    <small class="text-muted">It transition another screen</small>
+    <%= link_to team_tags_path(team), class:"btn btn-danger btn-sm" do %>
+      Create new tag
+      <i class="fas fa-external-link-alt"></i>
+    <% end %>
   </div>
 
   <p class="headline mt-5">Title</p>

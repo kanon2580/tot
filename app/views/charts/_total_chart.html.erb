@@ -1,0 +1,5 @@
+<canvas id="totalChart" width="100%"></canvas>
+<%= render 'charts/about_link' %>
+
+<%= Gon::Base.render_data %>
+<%= javascript_include_tag 'total_chart', 'data-turbolinks-track': 'reload' %>
