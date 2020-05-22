@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       team_member.user = current_user
       team_member.team = team
       team_member.save
-      redirect_to team_path(team)
+      redirect_to team_issues_path(team)
     else
       @join_team = TeamMember.new
       flash[:error] = "The team is not found."

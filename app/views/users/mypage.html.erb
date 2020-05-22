@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-12 col-md-8 px-5">
         <% @teams.each do |team| %>
-          <%= link_to team_path(team), class:"h4" do %>
+          <%= link_to team_issues_path(team), class:"h4" do %>
             <div class="mr-auto my-1">
               <i class="fas fa-flag"></i>
               <%= team.name %>
