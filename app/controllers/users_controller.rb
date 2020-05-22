@@ -1,15 +1,38 @@
 class UsersController < ApplicationController
-  before_action :only_team_user, only: [:index]
-  before_action :only_current_user, only: [:edit, :update]
+  before_action :only_team_user, only: [:index, :show]
+  before_action :only_current_user, only: [:edit, :update, :mypage]
   before_action :barrier_trial_user, only: [:edit, :update]
 
-  def show
-    if @team.present? && @user.present?
-      only_team_user
-    else
-      only_current_user
-    end
+  def mypage
+    @page_title = "My page"
+    @teams = current_user.teams.reverse
+    @new_team_mamber = TeamMember.new
+    chart_datas
+  end
 
+  def join_team
+    team_name = params[:team_member][:team_name]
+    team_id = params[:team_member][:team_id]
+    team = Team.find_by(id: team_id, name: team_name)
+    if team.present?
+      team_member = TeamMember.new(team_member_params)
+      team_member.user = current_user
+      team_member.team = team
+      team_member.save
+      redirect_to team_path(team)
+    else
+      @join_team = TeamMember.new
+      flash[:error] = "The team is not found."
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
+  def show
+    @page_title = "User information"
+    chart_datas
+  end
+
+  def chart_datas
     # chart.jsに渡す変数
     @user_scores = []
     gon.user_name = @user.name
@@ -44,6 +67,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @page_title = "Edit profile"
   end
 
   def update
@@ -56,6 +80,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    @page_title = "Users"
     users = @team.users
     @pagenated_users = users.page(params[:page]).per(12)
   end
@@ -81,5 +106,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :introduction, :profile_image)
+  end
+
+  def team_member_params
+    params.require(:team_member).permit(:user_id, :team_id)
   end
 end

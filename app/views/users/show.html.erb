@@ -1,56 +1,15 @@
-<div class="row flex-column align-items-center my-5">
-  <h1 class="titlemark">・</h1>
-    <% if @team.present? %>
-      <h1>User information</h1>
-    <% else %>
-      <h1>My page</h1>
-    <% end %>
-  <h1 class="titlemark">・</h1>
-</div>
-
 <div class="row mt-5 px-5">
   <div class="col-xs-12 offset-md-1 col-md-4">
     <%= render 'users/profile_card', team: @team, user: @user %>
   </div>
 
   <div class="col-12 col-md-7 mt-5">
-    <canvas id="totalChart" width="100%"></canvas>
+    <%= render 'charts/total_chart' %>
   </div>
 </div>
 
-<!-- chart tabs -->
 <div class="row mt-5 px-5">
   <div class="col-12 offset-md-1 col-md-10">
-
-    <ul id="chartTab" class="nav nav-tabs" role="tablist">
-      <li class="nav-item">
-        <a href="#questioner" id="questioner-tab" class="nav-link active" role="tab" data-toggle="tab" aria-controls="questioner" aria-selected="true">
-          Questioner
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#answerer" id="answerer-tab" class="nav-link" role="tab" data-toggle="tab" aria-controls="answerer" aria-selected="false">
-          Answerer
-        </a>
-      </li>
-    </ul>
-
-    <div id="chartTabContent" class="tab-content mt-3">
-      <div id="questioner" class="tab-pane active" role="tabpanel" aria-labelledby="questioner-tab">
-        <%= render 'users/questioner_tab' %>
-      </div>
-
-      <div id="answerer" class="tab-pane" role="tabpanel" aria-labelledby="answerer-tab">
-        <%= render 'users/answerer_tab' %>
-      </div>
-    </div>
-
-    <div class="row flex-column align-items-end">
-      <%= link_to "About evaluation criteria", root_path(anchor: "criteria") %>
-    </div>
-
+    <%= render 'charts/tab_charts' %>
   </div>
 </div>
-
-  <%= Gon::Base.render_data %>
-<%= javascript_include_tag 'user_charts', 'data-turbolinks-track': 'reload' %>

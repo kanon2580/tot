@@ -1,0 +1,27 @@
+<div class="sidebar bg-dark d-flex">
+  <nav class="nav flex-column align-items-center col-12">
+
+    <div class="row mt-5">
+      <%= link_to root_path do %>
+        <%= image_tag 'logo-white.png', width: '100' %>
+      <% end %>
+    </div>
+
+    <div class="nav-items mt-5">
+      <%= link_to new_user_session_path, class: "nav-link" do %>
+        <i class="fas fa-sign-in-alt"></i>
+        Sign in
+      <% end %>
+
+      <%= link_to new_user_registration_path, class: "nav-link" do %>
+        <i class="fas fa-user-plus"></i>
+        Sign up
+      <% end %>
+    </div>
+
+    <div class="row mt-auto mb-3">
+      <p class="text-white">© 2020 Kanon inc.</p>
+    </div>
+  </nav>
+</div>
+

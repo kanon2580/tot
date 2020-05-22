@@ -5,6 +5,7 @@ class IssuesController < ApplicationController
   impressionist :actions => [:show]
 
   def new
+    @page_title = "New issue"
   end
 
   def create
@@ -28,6 +29,7 @@ class IssuesController < ApplicationController
   end
 
   def index
+    @page_title = "Issues"
     if @team.present? && @user.present?
       issues = @team.issues.where(user_id: @user).order(created_at: :desc)
     elsif @team.present? && @tag.present?
@@ -41,12 +43,14 @@ class IssuesController < ApplicationController
   end
 
   def show
+    @page_title = "Issue"
     @new_comment = Comment.new
     @comments = @issue.comments
     impressionist(@issue, nil, unique: [:user_id])
   end
 
   def edit
+    @page_title = "Edit issue"
   end
 
   def update
@@ -67,6 +71,7 @@ class IssuesController < ApplicationController
   end
 
   def choice
+    @page_title = "Choose the best answer."
     if @issue.comments == []
       flash[:error] = "この問題にはまだコメントがされていません。もう少し待ちましょう。"
       redirect_back(fallback_location: root_path)
@@ -75,6 +80,7 @@ class IssuesController < ApplicationController
   end
 
   def confirm
+    @page_title = "Once you decide, you can't undo."
   end
 
   def settled
