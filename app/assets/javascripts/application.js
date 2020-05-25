@@ -14,7 +14,7 @@
 //= require activestorage
 //= require turbolinks
 
-//= stub tab_charts.js
+//= stub team_charts.js
 //= stub user_charts.js
 //= require_tree .
 

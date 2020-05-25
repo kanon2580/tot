@@ -14,6 +14,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
 # chart.js
-Rails.application.config.assets.precompile += ['charts/*.js']
-Rails.application.config.assets.precompile += %w( tab_charts.js )
+Rails.application.config.assets.precompile += %w( team_charts.js )
 Rails.application.config.assets.precompile += %w( user_charts.js )
