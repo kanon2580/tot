@@ -24,7 +24,7 @@
             <%= f.text_field :team_name, placeholder: "Team name", class:"form-control offset-1 col-10" %>
             <%= f.text_field :team_id, placeholder: "Team id", class:"form-control offset-1 col-10 mt-3" %>
             <div class="row flex-column align-items-center mt-3">
-              <%= f.submit "Join team !", class:"btn btn-sm btn-dark" %>
+              <%= f.submit "Join team!", class:"btn btn-sm btn-dark" %>
             </div>
           </div>
         <% end %>
@@ -46,12 +46,12 @@
     <p class="headline">Profile</p>
 
     <div class="row mt-5 px-5">
-      <div class="col-xs-12 offset-md-1 col-md-4">
+      <div class="col-xs-12 col-md-4">
         <%= render 'users/profile_card', team: @team, user: @user %>
       </div>
 
-      <div class="col-12 col-md-7 mt-5">
-        <%= render 'charts/total_chart' %>
+      <div class="col-12 mt-5 col-md-8 mt-md-0">
+        <%= render 'charts/user_charts' %>
       </div>
     </div>
   </div>
