@@ -5,7 +5,7 @@
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= f.hidden_field :email, value: "trial@mail" %>
       <%= f.hidden_field :password, value: "trialuser" %>
-      <%= f.submit "Login as a trial user", class:"btn btn-dark btn-block offset-2 col-8 my-5" %>
+      <%= f.submit "Signin as a trial user", class:"btn btn-dark btn-block offset-2 col-8 my-5" %>
     <% end %>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
