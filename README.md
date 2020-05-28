@@ -1,8 +1,9 @@
 <img src="http://tot.monster/assets/logo-white-2cb3a3a3549a9b88f45a8e94b4a7f85187229441a37952eb519798352236935c.png" width="100px">
 
-[ToTは、開発コミュニティ向けのQAサイトを想定して制作しました。](http://tot.monster/)
+[ToT](http://tot.monster/)は、開発コミュニティ向けのQAサイトを想定して制作しました。
 
-サインアップ後、メニューの"Join team"より、[Team name]test、[Team id]１をフォームに入力してご参加ください。
+※かんたんログイン("Signin as a trial user")を実装しています。
+※サインアップされた場合、メニューの"Join team"より、[Team name]test、[Team id]１をフォームに入力してご参加ください。
 
 問題解決のプロセスをドキュメントとして残す事が出来ます。
 

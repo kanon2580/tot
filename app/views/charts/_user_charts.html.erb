@@ -1,0 +1,34 @@
+<ul id="chartTab" class="nav nav-tabs" role="tablist">
+  <li>
+    <a class="nav-link px-2 py-1 active" id="total-tab" data-toggle="pill" href="#total" aria-controls="total" aria-selected="true">Total</a>
+  </li>
+
+  <li>
+    <a class="nav-link px-2 py-1" id="issues-tab" data-toggle="pill" href="#issues" aria-controls="issues" aria-selected="false">Issues</a>
+  </li>
+
+  <li>
+    <a class="nav-link px-2 py-1" id="comments-tab" data-toggle="pill" href="#comments" aria-controls="comments" aria-selected="false">Comments</a>
+  </li>
+</ul>
+
+<div id="chartTabContent" class="tab-content mt-3">
+  <div class="tab-pane fade show active" id="total" aria-labelledby="total-tab">
+    <canvas id="totalChart" width="100%"></canvas>
+  </div>
+
+  <div class="tab-pane fade" id="issues" aria-labelledby="issues-tab">
+    <canvas id="issueTagsChart"></canvas>
+  </div>
+
+  <div class="tab-pane fade" id="comments" aria-labelledby="comments-tab">
+    <canvas id="commentTagsChart"></canvas>
+  </div>
+</div>
+
+<div class="row justify-content-end">
+  <%= render 'charts/about_link' %>
+</div>
+
+<%= Gon::Base.render_data %>
+<%= javascript_include_tag 'user_charts', 'data-turbolinks-track': 'reload' %>

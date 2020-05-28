@@ -46,6 +46,11 @@
         <% end %>
 
       <% else %>
+        <%= link_to root_path, class:"nav-link" do %>
+          <i class="fas fa-home"></i>
+          Home
+        <% end %>
+
         <%= link_to mypage_path(current_user), class:"nav-link" do %>
           <i class="fas fa-id-card"></i>
           My page
