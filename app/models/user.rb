@@ -143,28 +143,19 @@ class User < ApplicationRecord
 
   def calculation_user_score(score_base)
     score_base.each_with_index{|status, i|
-      if status == 1
-        user_score = i+1
-        return user_score
-      end
+      return user_score = i+1 if status == 1
     }
   end
 
   def issue_tags_labels
     user_issue_tags_array = self.issues.map{|issue| issue.tags.map{|tag| tag.name}}.flatten
-    if user_issue_tags_array == []
-      tags_name = ["nothing issues tags"]
-      return(tags_name)
-    end
+    return tags_name = ["nothing issues tags"] if user_issue_tags_array == []
     tags_name = user_issue_tags_array.group_by(&:itself).keys
   end
 
   def issue_tags_evaluation_datas
     user_issue_tags_array = self.issues.map{|issue| issue.tags.map{|tag| tag.id}}.flatten
-    if user_issue_tags_array == []
-      evaluation_datas = [100]
-      return(evaluation_datas)
-    end
+    return evaluation_datas = [100] if user_issue_tags_array == []
     tags_count_array = user_issue_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
     base = tags_count_array.values.sum.to_f
     evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
@@ -172,19 +163,13 @@ class User < ApplicationRecord
 
   def comment_tags_labels
     user_comment_tags_array = self.comments.map{|comment| comment.issue.tags.map{|tag| tag.name}}.flatten
-    if user_comment_tags_array == []
-      tags_name = ["nothing comments tags"]
-      return(tags_name)
-    end
+    return tags_name = ["nothing comments tags"] if user_comment_tags_array == []
     tags_name = user_comment_tags_array.group_by(&:itself).keys
   end
 
   def comment_tags_evaluation_datas
     user_comment_tags_array = self.comments.map{|comment| comment.issue.tags.map{|tag| tag.id}}.flatten
-    if user_comment_tags_array == []
-      evaluation_datas = [100]
-      return(evaluation_datas)
-    end
+    return evaluation_datas = [100] if user_comment_tags_array == []
     tags_count_array = user_comment_tags_array.group_by(&:itself).map{|k,v| [k, v.count]}.to_h
     base = tags_count_array.values.sum.to_f
     evaluation_datas = tags_count_array.map{|k,v| ((v / base)*100).to_i}
