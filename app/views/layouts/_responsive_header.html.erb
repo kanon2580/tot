@@ -53,6 +53,11 @@
           <% end %>
 
         <% elsif user_signed_in? %>
+          <%= link_to root_path, class:"nav-link" do %>
+            <i class="fas fa-home"></i>
+            Home
+          <% end %>
+
           <%= link_to mypage_path(current_user), class:"nav-link" do %>
             <i class="fas fa-id-card"></i>
             My page
@@ -64,6 +69,11 @@
           <% end %>
 
         <% else %>
+          <%= link_to root_path, class:"nav-link" do %>
+            <i class="fas fa-home"></i>
+            Home
+          <% end %>
+
           <%= link_to new_user_session_path, class: "nav-link" do %>
             <i class="fas fa-sign-in-alt"></i>
             Sign in
