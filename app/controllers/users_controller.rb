@@ -37,25 +37,25 @@ class UsersController < ApplicationController
     @user_scores = []
     gon.user_name = @user.name
     # response
-    calculation_evaluation_data = @user.time_related_evaluation(ResponseEvaluation)
-    gon.response_evaluation_datas = calculation_evaluation_data[0]
-    @user_scores << calculation_evaluation_data[1]
+    calculate_evaluation_data = @user.time_related_evaluation(ResponseEvaluation)
+    gon.response_evaluation_datas = calculate_evaluation_data[0]
+    @user_scores << calculate_evaluation_data[1]
     # required time
-    calculation_evaluation_data = @user.time_related_evaluation(RequiredTimeEvaluation)
-    gon.required_time_evaluation_datas = calculation_evaluation_data[0]
-    @user_scores << calculation_evaluation_data[1]
+    calculate_evaluation_data = @user.time_related_evaluation(RequiredTimeEvaluation)
+    gon.required_time_evaluation_datas = calculate_evaluation_data[0]
+    @user_scores << calculate_evaluation_data[1]
     # like
-    calculation_evaluation_data = @user.like_evaluation_datas
-    gon.like_evaluation_datas = calculation_evaluation_data[0]
-    @user_scores << calculation_evaluation_data[1]
+    calculate_evaluation_data = @user.like_evaluation_datas
+    gon.like_evaluation_datas = calculate_evaluation_data[0]
+    @user_scores << calculate_evaluation_data[1]
     # best answer
-    calculation_evaluation_data = @user.best_answer_evaluation_datas
-    gon.best_answer_evaluation_datas = calculation_evaluation_data[0]
-    @user_scores << calculation_evaluation_data[1]
+    calculate_evaluation_data = @user.best_answer_evaluation_datas
+    gon.best_answer_evaluation_datas = calculate_evaluation_data[0]
+    @user_scores << calculate_evaluation_data[1]
     # issue viewed count
-    calculation_evaluation_data = @user.issue_viewed_evaluation_datas
-    gon.issue_viewed_evaluation_datas = calculation_evaluation_data[0]
-    @user_scores << calculation_evaluation_data[1]
+    calculate_evaluation_data = @user.issue_viewed_evaluation_datas
+    gon.issue_viewed_evaluation_datas = calculate_evaluation_data[0]
+    @user_scores << calculate_evaluation_data[1]
     # total
     gon.user_scores = @user_scores
     # issue tags
